@@ -25,6 +25,7 @@
   function go(screen) {
     document.querySelectorAll(".screen").forEach(el => el.classList.toggle("active", el.id === "screen-" + screen));
     document.querySelectorAll(".nav-item").forEach(el => el.classList.toggle("selected", el.dataset.screen === screen));
+    if (screen === "miners") renderMinerLevels();
     if (screen === "referrals") makeReferral();
     if (screen === "profile") updateProfile();
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -76,6 +77,33 @@
   $("boostButton").addEventListener("click", () => {
     state.hashrate = Math.min(99.9, state.hashrate + 1.6); saveStore(); updateMining(); notice("قدرت نمایشی ماینر افزایش یافت؛ این ارتقا خرید واقعی نیست.");
   });
+
+  function renderMinerLevels() {
+    const levels = [
+      { level: 2, name: "ماینر برنزی", tier: "BRONZE MINER", mark: "II" },
+      { level: 3, name: "ماینر نقره‌ای", tier: "SILVER MINER", mark: "III" },
+      { level: 4, name: "ماینر طلایی", tier: "GOLD MINER", mark: "IV" },
+      { level: 5, name: "ماینر پلاتینیوم", tier: "PLATINUM MINER", mark: "V" },
+      { level: 6, name: "ماینر کوروش", tier: "CYRUS ELITE", mark: "VI" }
+    ];
+    const root = $("minerLevels");
+    if (!root || root.dataset.ready === "1") return;
+    root.dataset.ready = "1";
+    levels.forEach(item => {
+      const card = document.createElement("article"); card.className = "miner-level-card";
+      const emblem = document.createElement("div"); emblem.className = "miner-level-icon"; emblem.textContent = item.mark;
+      const info = document.createElement("div"); info.className = "miner-level-info";
+      const kicker = document.createElement("span"); kicker.className = "level-kicker"; kicker.textContent = item.tier;
+      const title = document.createElement("h4"); title.textContent = item.name + " · LEVEL " + String(item.level).padStart(2,"0");
+      const desc = document.createElement("p"); desc.textContent = "قدرت استخراج بالاتر از سطح قبلی؛ مشخصات و قیمت پس از نهایی‌شدن اقتصاد ماینر اعلام می‌شود.";
+      const meta = document.createElement("div"); meta.className = "miner-level-meta";
+      const power = document.createElement("span"); power.textContent = "قدرت هش: "; const powerB = document.createElement("b"); powerB.textContent = "به‌زودی"; power.append(powerB);
+      const price = document.createElement("span"); price.textContent = "قیمت: "; const priceB = document.createElement("b"); priceB.textContent = "DRK · به‌زودی"; price.append(priceB);
+      meta.append(power, price); info.append(kicker,title,desc,meta);
+      const buy = document.createElement("button"); buy.className = "miner-level-buy"; buy.disabled = true; buy.textContent = "خرید این سطح پس از فعال‌سازی پرداخت";
+      card.append(emblem,info,buy); root.append(card);
+    });
+  }
 
   function renderQuests(quests, completions = []) {
     const done = new Set(completions.map(x => x.quest_id || x.questId));
