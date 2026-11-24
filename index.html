@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css?v=darik-miners-20261124">
+  <link rel="stylesheet" href="./style.css?v=darik-atf-ui-20261124b">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="https://unpkg.com/@tonconnect/ui@5.0.4/dist/tonconnect-ui.min.js"></script>
 </head>
@@ -26,6 +26,17 @@
     </section>
 
     <section id="screen-miner" class="screen active">
+      <div class="mine-hero">
+        <div class="mine-hero-copy"><span class="eyebrow">THE DARIK NETWORK</span><h2>قدرت از <em>جامعه</em> می‌آید</h2><p>استخراج آزمایشی خود را مدیریت کن و ماینرت را ارتقا بده.</p></div>
+        <div class="mine-seal" aria-label="نشان داریک"><span>D</span><small>DARIK</small></div>
+      </div>
+      <div class="mine-summary">
+        <div class="summary-heading"><span>وضعیت شبکه</span><b><i></i> TEST NETWORK</b></div>
+        <div class="summary-metrics"><div><small>ماینر فعال</small><strong>LEVEL 01</strong></div><div><small>قدرت فعلی</small><strong>25.6 <i>MH/s</i></strong></div><div><small>دوره استخراج</small><strong>۳ ساعت</strong></div></div>
+        <div class="summary-chart"><div><span>نمای گرافیکی عملکرد</span><small>اطلاعات آماری واقعی هنوز متصل نیست</small></div>
+          <svg viewBox="0 0 320 62" role="img" aria-label="نمودار تزئینی"><path d="M0 48 C22 45 28 18 50 28 S82 52 104 34 S137 13 157 29 S190 48 211 25 S247 17 267 28 S297 12 320 7" fill="none" stroke="#e3bd65" stroke-width="2.5" stroke-linecap="round"/><path d="M0 48 C22 45 28 18 50 28 S82 52 104 34 S137 13 157 29 S190 48 211 25 S247 17 267 28 S297 12 320 7 L320 62 L0 62Z" fill="url(#mineChartFill)" opacity=".18"/><defs><linearGradient id="mineChartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3bd65"/><stop offset="1" stop-color="#e3bd65" stop-opacity="0"/></linearGradient></defs></svg>
+        </div>
+      </div>
       <article class="miner-card">
         <div class="card-top"><span class="live-label"><i></i> وضعیت ماینر</span><span id="minerStatus" class="status-text">آماده شروع</span></div>
         <div class="balance-label">موجودی امتیاز آزمایشی</div>
@@ -116,6 +127,6 @@
     <div id="notice" class="notice" role="status"></div>
     <footer> DARIK MINER · TEST MODE · قدرت از جامعه می‌آید </footer>
   </main>
-  <script src="./app.js?v=darik-miners-20261124"></script>
+  <script src="./app.js?v=darik-atf-ui-20261124b"></script>
 </body>
 </html>
