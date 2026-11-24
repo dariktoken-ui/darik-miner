@@ -53,6 +53,7 @@
 
       <div class="section-title"><div><span class="eyebrow">قدرت بیشتر</span><h2>مرکز ارتقا</h2></div><span class="section-note">ویژگی‌های داریک</span></div>
       <div class="feature-grid">
+        <button class="feature-card" data-screen="miners"><span class="feature-icon">♜</span><b>ماینرها</b><small>انتخاب و خرید سطح</small><span class="feature-arrow">←</span></button>
         <button class="feature-card" data-screen="boost"><span class="feature-icon">⚡</span><b>بوست</b><small>افزایش قدرت هش</small><span class="feature-arrow">←</span></button>
         <button class="feature-card" data-screen="tasks"><span class="feature-icon">✓</span><b>مأموریت‌ها</b><small>فعالیت و امتیاز</small><span class="feature-arrow">←</span></button>
         <button class="feature-card" data-screen="referrals"><span class="feature-icon">♧</span><b>دعوت دوستان</b><small>گسترش جامعه</small><span class="feature-arrow">←</span></button>
@@ -60,6 +61,17 @@
         <button class="feature-card" data-screen="leaderboard"><span class="feature-icon">♛</span><b>رتبه‌بندی</b><small>جدول کاربران</small><span class="feature-arrow">←</span></button>
         <button class="feature-card" data-screen="profile"><span class="feature-icon">◎</span><b>پروفایل</b><small>حساب کاربری</small><span class="feature-arrow">←</span></button>
       </div>
+    </section>
+
+    <section id="screen-miners" class="screen">
+      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">DARIK MINER GARAGE</span><h2>ماینرهای داریک</h2><p>ماینر فعال خودت را ببین و برای سطح بالاتر آماده شو.</p></div></div>
+      <article class="active-miner-panel">
+        <div class="active-miner-top"><span>ماینر فعال تو</span><b>ACTIVE</b></div>
+        <div class="active-miner-body"><div class="miner-emblem">D</div><div><small>سطح فعلی</small><h3>ماینر پایه · LEVEL 01</h3><strong>25.6 MH/s</strong></div></div>
+        <p>با انتخاب ماینر سطح بالاتر، قدرت استخراج حساب افزایش پیدا می‌کند. خرید واقعی تا تکمیل تأیید پرداخت بلاکچین فعال نمی‌شود.</p>
+      </article>
+      <div class="miner-shop-heading"><div><span class="eyebrow">UPGRADE YOUR MINER</span><h3>انتخاب ماینر بعدی</h3></div><span>سطح‌های بالاتر</span></div>
+      <div id="minerLevels" class="miner-level-list"></div>
     </section>
 
     <section id="screen-tasks" class="screen">
@@ -95,6 +107,7 @@
 
     <nav class="bottom-nav">
       <button class="nav-item selected" data-screen="miner"><span>⌂</span><small>ماینر</small></button>
+      <button class="nav-item" data-screen="miners"><span>♜</span><small>ماینرها</small></button>
       <button class="nav-item" data-screen="tasks"><span>✓</span><small>مأموریت</small></button>
       <button class="nav-item" data-screen="referrals"><span>♧</span><small>دعوت</small></button>
       <button class="nav-item" data-screen="leaderboard"><span>♛</span><small>رتبه‌ها</small></button>
