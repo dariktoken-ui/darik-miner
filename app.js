@@ -9,7 +9,7 @@
   const STORE = "darik_miner_test_v1";
   const state = { points: 0, hashrate: 25.6, miningStart: 0, miningEnd: 0, activeSession: null, claimInFlight: false, nextClaimRetryAt: 0, wallet: null, user: null, tonUI: null, quests: [], questCompletions: [] };
   let noticeTimer, audioContext = null;
-  let soundEnabled = localStorage.getItem("darik_sound") !== "off";
+  let soundEnabled = localStorage.getItem("darik_sound") === "on";
   let language = localStorage.getItem("darik_language") === "en" ? "en" : "fa";
   const tr = (faText, enText) => language === "en" ? enText : faText;
   function playUiSound(kind = "tap") {
