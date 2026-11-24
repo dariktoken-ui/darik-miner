@@ -250,7 +250,8 @@
   }
 
   function renderQuests(quests, completions = []) {
-    state.quests = quests || []; state.questCompletions = completions || [];\n    const done = new Set(completions.map(x => x.quest_id || x.questId));
+    state.quests = quests || []; state.questCompletions = completions || [];
+    const done = new Set(completions.map(x => x.quest_id || x.questId));
     const icons = ["✈","𝕏","◎","◆","★"];
     $("quests").innerHTML = "";
     if (!quests?.length) { $("quests").innerHTML = '<div class="loading">فعلاً مأموریتی ثبت نشده است.</div>'; return; }
