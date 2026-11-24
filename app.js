@@ -41,6 +41,57 @@
       oscillator.connect(gain); gain.connect(audioContext.destination);
     } catch (_) {}
   }
+  // Original, locally synthesized Darik ambient theme. Starts only after a user gesture.
+  let musicTimer = null, musicMaster = null, musicNodes = [];
+  let musicStep = 0;
+  function stopBackgroundMusic() {
+    if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
+    if (musicMaster && audioContext) {
+      try { musicMaster.gain.setTargetAtTime(0.0001, audioContext.currentTime, 0.25); } catch (_) {}
+    }
+    musicNodes.forEach(node => { try { node.stop?.(audioContext.currentTime + 0.8); } catch (_) {} });
+    musicNodes = [];
+    musicMaster = null;
+  }
+  function startBackgroundMusic() {
+    if (!soundEnabled || musicTimer) return;
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      audioContext ||= new AudioCtx();
+      if (audioContext.state === "suspended") audioContext.resume();
+      const now = audioContext.currentTime;
+      musicMaster = audioContext.createGain();
+      musicMaster.gain.setValueAtTime(0.0001, now);
+      musicMaster.gain.setTargetAtTime(0.038, now + 0.15, 1.8);
+      musicMaster.connect(audioContext.destination);
+      const pad = audioContext.createOscillator();
+      const padGain = audioContext.createGain();
+      pad.type = "sine"; pad.frequency.value = 73.42;
+      padGain.gain.value = 0.20;
+      pad.connect(padGain); padGain.connect(musicMaster); pad.start();
+      musicNodes.push(pad);
+      const notes = [293.66, 349.23, 392.00, 440.00, 392.00, 349.23, 261.63, 293.66, 349.23, 440.00, 523.25, 440.00, 392.00, 349.23, 293.66, 261.63];
+      const playNote = () => {
+        if (!soundEnabled || !musicMaster || !audioContext) return;
+        const t = audioContext.currentTime + 0.04;
+        const osc = audioContext.createOscillator();
+        const overtone = audioContext.createOscillator();
+        const env = audioContext.createGain();
+        const tone = notes[musicStep % notes.length];
+        musicStep++;
+        osc.type = "sine"; osc.frequency.setValueAtTime(tone, t);
+        overtone.type = "sine"; overtone.frequency.setValueAtTime(tone * 2.01, t);
+        env.gain.setValueAtTime(0.0001, t);
+        env.gain.linearRampToValueAtTime(0.22, t + 0.35);
+        env.gain.setTargetAtTime(0.0001, t + 1.25, 0.55);
+        osc.connect(env); overtone.connect(env); env.connect(musicMaster);
+        osc.start(t); overtone.start(t); osc.stop(t + 4.2); overtone.stop(t + 4.2);
+      };
+      playNote();
+      musicTimer = setInterval(playNote, 2400);
+    } catch (_) {}
+  }
   function notice(message, type = "info") {
     $("notice").textContent = message; $("notice").classList.add("show");
     if (type === "success") {
@@ -337,7 +388,14 @@
   }
   $("walletButton").addEventListener("click", connectWallet);
   $("languageButton").addEventListener("click", () => { language = language === "fa" ? "en" : "fa"; localStorage.setItem("darik_language", language); applyLanguage(); });
-  $("soundButton").addEventListener("click", () => { soundEnabled = !soundEnabled; localStorage.setItem("darik_sound", soundEnabled ? "on" : "off"); applyLanguage(); if (soundEnabled) playUiSound("success"); });
+  $("soundButton").addEventListener("click", () => {
+    soundEnabled = !soundEnabled;
+    localStorage.setItem("darik_sound", soundEnabled ? "on" : "off");
+    if (soundEnabled) { startBackgroundMusic(); playUiSound("success"); }
+    else stopBackgroundMusic();
+    applyLanguage();
+  });
+  document.addEventListener("pointerdown", () => { if (soundEnabled) startBackgroundMusic(); }, { once: true });
   setupWallet();
   applyLanguage();
   updateMining(); setInterval(updateMining, 1000);
