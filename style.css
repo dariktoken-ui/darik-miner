@@ -129,3 +129,16 @@ body{background:radial-gradient(ellipse at 50% -10%,#1a687455,transparent 42%),r
 /* Server-verified miner presence indicator */
 .live-label i.is-online{background:#39d66f;box-shadow:0 0 10px #39d66f,0 0 18px #39d66f66}
 .live-label i.is-offline{background:#c99a43;box-shadow:0 0 8px #c99a43}
+
+/* Read-only referral network */
+.referral-network-card{margin-top:14px;padding:18px;border:1px solid #294451;border-radius:18px;background:linear-gradient(145deg,#172832,#101722);box-shadow:0 12px 30px #0003}
+.referral-network-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.referral-network-heading b{color:#ffe39a;font-size:14px}
+.referral-network-heading small{color:#8fa7ad;font-size:11px}
+#referralNote{margin:0 0 12px;color:#a9c1c5;font-size:12px;line-height:1.8}
+.referral-list{display:grid;gap:8px}
+.referral-user-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;border:1px solid #294451;border-radius:12px;background:#0b131d}
+.referral-user-row span{color:#e8f5f2;font-size:13px;font-weight:700;direction:ltr;text-align:left}
+.referral-user-row small{color:#8afff0;font-size:11px;white-space:nowrap}
+.referral-load-more{display:block;width:100%;margin-top:12px;padding:11px;border:1px solid #347c78;border-radius:12px;background:#17484a;color:#8afff0;font:inherit;font-weight:700}
+.referral-load-more[hidden]{display:none}
