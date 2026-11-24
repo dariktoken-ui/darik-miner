@@ -226,7 +226,7 @@
   let lastPresencePing = 0;
   async function pingPresence(force = false) {
     if (!tg?.initData) return;
-    if (document.visibilityState !== "visible" || !document.hasFocus()) {
+    if (document.visibilityState !== "visible") {
       updatePresence(null, true);
       return;
     }
