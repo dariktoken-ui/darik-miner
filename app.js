@@ -3,7 +3,7 @@
   const BOT_USERNAME = "DarikQuestBot";
   const tg = window.Telegram?.WebApp;
   const $ = (id) => document.getElementById(id);
-  const fa = (n) => new Intl.NumberFormat("fa-IR").format(Number(n || 0));
+  const fa = (n) => new Intl.NumberFormat(language === "en" ? "en-US" : "fa-IR").format(Number(n || 0));
   const STORE = "darik_miner_test_v1";
   const state = { points: 0, hashrate: 25.6, miningStart: 0, miningEnd: 0, activeSession: null, claimInFlight: false, nextClaimRetryAt: 0, wallet: null, user: null, tonUI: null, quests: [] };
   let noticeTimer, audioContext = null;
@@ -129,7 +129,7 @@
   }
   document.querySelectorAll("[data-screen]").forEach(el => el.addEventListener("click", () => go(el.dataset.screen)));
   function shortWallet(address) {
-    return address ? address.slice(0, 6) + "…" + address.slice(-6) : "اتصال کیف پول";
+    return address ? address.slice(0, 6) + "…" + address.slice(-6) : tr("اتصال کیف پول", "Connect wallet");
   }
   function updateProfile() {
     renderPoints();
@@ -193,10 +193,10 @@
     const h = Math.floor(seconds / 3600), m = Math.floor((seconds % 3600) / 60), sec = seconds % 60;
     $("timer").textContent = [h,m,sec].map(x => String(x).padStart(2,"0")).join(":");
     $("progressBar").style.width = progress + "%"; $("progressText").textContent = fa(Math.floor(progress)) + "٪";
-    $("minerStatus").textContent = active ? "در حال استخراج و جمع‌آوری امتیاز" : finished ? "پایان استخراج؛ ثبت پاداش…" : "آماده شروع";
+    $("minerStatus").textContent = active ? tr("در حال استخراج و جمع‌آوری امتیاز","Mining and earning points") : finished ? tr("پایان استخراج؛ ثبت پاداش…","Mining complete; recording reward…") : tr("آماده شروع","Ready to start");
     $("mineButton").classList.toggle("running", active || finished || state.claimInFlight);
     $("mineButton").disabled = active || finished || state.claimInFlight;
-    $("mineButton").innerHTML = active ? "استخراج در حال انجام است…" : finished || state.claimInFlight ? "در حال ثبت پاداش…" : "شروع استخراج <span>↗</span>";
+    $("mineButton").innerHTML = active ? tr("استخراج در حال انجام است…","Mining in progress…") : finished || state.claimInFlight ? tr("در حال ثبت پاداش…","Recording reward…") : tr("شروع استخراج <span>↗</span>","Start mining <span>↗</span>");
     $("hashrate").innerHTML = Number(session?.hash_rate || state.hashrate).toFixed(1) + " <i>MH/s</i>";
     $("boostRate").textContent = Number(session?.hash_rate || state.hashrate).toFixed(1) + " MH/s";
     renderPoints();
