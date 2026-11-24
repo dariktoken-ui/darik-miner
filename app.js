@@ -6,10 +6,107 @@
   const fa = (n) => new Intl.NumberFormat("fa-IR").format(Number(n || 0));
   const STORE = "darik_miner_test_v1";
   const state = { points: 0, hashrate: 25.6, miningStart: 0, miningEnd: 0, activeSession: null, claimInFlight: false, nextClaimRetryAt: 0, wallet: null, user: null, tonUI: null, quests: [] };
-  let noticeTimer;
-  function notice(message) {
+  let noticeTimer, audioContext = null;
+  let soundEnabled = localStorage.getItem("darik_sound") !== "off";
+  let language = localStorage.getItem("darik_language") === "en" ? "en" : "fa";
+  const tr = (faText, enText) => language === "en" ? enText : faText;
+  function playUiSound(kind = "tap") {
+    if (!soundEnabled) return;
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      audioContext ||= new AudioCtx();
+      if (audioContext.state === "suspended") audioContext.resume();
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      const now = audioContext.currentTime;
+      oscillator.type = "sine";
+      if (kind === "success") {
+        oscillator.frequency.setValueAtTime(880, now);
+        oscillator.frequency.setValueAtTime(1174.66, now + 0.085);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.linearRampToValueAtTime(0.075, now + 0.012);
+        gain.gain.setValueAtTime(0.065, now + 0.085);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.19);
+        oscillator.start(now); oscillator.stop(now + 0.2);
+      } else {
+        oscillator.frequency.setValueAtTime(720, now);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.linearRampToValueAtTime(0.045, now + 0.008);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.055);
+        oscillator.start(now); oscillator.stop(now + 0.06);
+      }
+      oscillator.connect(gain); gain.connect(audioContext.destination);
+    } catch (_) {}
+  }
+  function notice(message, type = "info") {
     $("notice").textContent = message; $("notice").classList.add("show");
+    if (type === "success") {
+      playUiSound("success");
+      try { tg?.HapticFeedback?.notificationOccurred("success"); } catch (_) {}
+    }
     clearTimeout(noticeTimer); noticeTimer = setTimeout(() => $("notice").classList.remove("show"), 3800);
+  }
+  document.addEventListener("click", event => {
+    const button = event.target.closest("button");
+    if (!button || button.disabled) return;
+    playUiSound("tap");
+    try { tg?.HapticFeedback?.impactOccurred("light"); } catch (_) {}
+  }, true);
+  function applyLanguage() {
+    const en = language === "en";
+    document.documentElement.lang = language;
+    document.documentElement.dir = en ? "ltr" : "rtl";
+    const set = (selector, values, html = false) => {
+      document.querySelectorAll(selector).forEach((el, i) => {
+        const value = Array.isArray(values) ? values[i] : values;
+        if (value !== undefined) html ? el.innerHTML = value : el.textContent = value;
+      });
+    };
+    set(".test-tag", en ? '<i></i> PRIVATE PREVIEW' : '<i></i> نسخه خصوصی', true);
+    set(".welcome .eyebrow", en ? "WELCOME TO DARIK" : "خوش آمدی به دنیای داریک");
+    set(".welcome h1", en ? 'Mine the <em>future</em>' : 'آینده را <em>استخراج کن</em>', true);
+    set(".welcome p", en ? "Stay active, complete missions and grow your mining power." : "هر روز فعال باش، مأموریت انجام بده و قدرت استخراجت را افزایش بده.");
+    set(".mine-hero h2", en ? 'Power comes from the <em>community</em>' : 'قدرت از <em>جامعه</em> می‌آید', true);
+    set(".mine-hero p", en ? "Manage your private mining session and miner." : "استخراج خصوصی خود را مدیریت کن و ماینرت را ارتقا بده.");
+    set(".summary-heading > span", en ? "Network status" : "وضعیت شبکه");
+    set(".summary-heading b", en ? '<i></i> PRIVATE NETWORK' : '<i></i> شبکه خصوصی', true);
+    set(".summary-metrics small", en ? ["Active miner", "Current power", "Session length"] : ["ماینر فعال", "قدرت فعلی", "دوره استخراج"]);
+    set(".summary-chart span", en ? "Performance overview" : "نمای گرافیکی عملکرد");
+    set(".summary-chart small", en ? "Live network analytics not connected" : "اطلاعات آماری واقعی هنوز متصل نیست");
+    set(".miner-card .live-label", en ? ["Miner status", "Darik withdrawal"] : ["وضعیت ماینر", "برداشت داریک"]);
+    set(".miner-card .balance-label", en ? ["Mining points balance", "Minimum real withdrawal"] : ["موجودی امتیاز آزمایشی", "حداقل برداشت واقعی"]);
+    set(".balance-line span", en ? ["TEST POINTS", "DRK"] : ["امتیاز آزمایشی", "DRK"]);
+    set(".miner-stats small", en ? ["Mining power", "Miner level", "Session length"] : ["قدرت استخراج", "سطح ماینر", "زمان دوره"]);
+    set(".progress-meta span", en ? "Mining progress" : "پیشرفت استخراج");
+    set(".section-title .eyebrow", en ? "MORE POWER" : "قدرت بیشتر");
+    set(".section-title h2", en ? "Upgrade center" : "مرکز ارتقا");
+    set(".section-note", en ? "Darik features" : "ویژگی‌های داریک");
+    set(".feature-card b", en ? ["Miners", "Boost", "Missions", "Invite friends", "Shop", "Leaderboard", "Profile"] : ["ماینرها", "بوست", "مأموریت‌ها", "دعوت دوستان", "فروشگاه", "رتبه‌بندی", "پروفایل"]);
+    set(".feature-card small", en ? ["Choose a level", "Increase hash power", "Earn test points", "Grow the community", "Future upgrades", "User rankings", "Your account"] : ["انتخاب و خرید سطح", "افزایش قدرت هش", "فعالیت و امتیاز", "گسترش جامعه", "ارتقاهای آزمایشی", "جدول کاربران", "حساب کاربری"]);
+    set(".bottom-nav small", en ? ["Mine", "Miners", "Tasks", "Friends", "Ranks", "Profile"] : ["ماینر", "ماینرها", "مأموریت", "دعوت", "رتبه‌ها", "پروفایل"]);
+    set("#screen-miners .page-heading h2", en ? "Darik miners" : "ماینرهای داریک");
+    set("#screen-miners .page-heading p", en ? "View your active miner and prepare for the next level." : "ماینر فعال خودت را ببین و برای سطح بالاتر آماده شو.");
+    set("#screen-tasks .page-heading h2", en ? "Missions" : "مأموریت‌ها");
+    set("#screen-boost .page-heading h2", en ? "Mining boost" : "بوست قدرت استخراج");
+    set("#screen-referrals .page-heading h2", en ? "Invite friends" : "دعوت دوستان");
+    set("#screen-shop .page-heading h2", en ? "Darik shop" : "فروشگاه");
+    set("#screen-leaderboard .page-heading h2", en ? "Leaderboard" : "رتبه‌بندی");
+    set("#screen-profile .page-heading h2", en ? "Profile" : "پروفایل");
+    set(".active-miner-top span", en ? "Your active miner" : "ماینر فعال تو");
+    set(".active-miner-body small", en ? "Current level" : "سطح فعلی");
+    set(".active-miner-body h3", en ? "Base miner · LEVEL 01" : "ماینر پایه · LEVEL 01");
+    set(".miner-shop-heading h3", en ? "Choose your next miner" : "انتخاب ماینر بعدی");
+    set("#screen-boost .info-card h3", en ? 'Current power: <b id="boostRate">' + Number(state.hashrate).toFixed(1) + ' MH/s</b>' : 'قدرت فعلی: <b id="boostRate">' + Number(state.hashrate).toFixed(1) + ' MH/s</b>', true);
+    set("#screen-profile .profile-row span", en ? ["Test points", "Account status"] : ["امتیاز آزمایشی", "وضعیت حساب"]);
+    set("#screen-profile .profile-row b:last-child", en ? "PRIVATE PREVIEW" : "نسخه خصوصی");
+    set("#mineButton", en ? "Start mining ↗" : "شروع استخراج ↗");
+    set("#walletButton", state.wallet ? shortWallet(state.wallet) : (en ? "Connect wallet" : "اتصال کیف پول"));
+    $("languageButton").textContent = en ? "FA" : "EN";
+    $("soundButton").textContent = soundEnabled ? "🔊" : "🔇";
+    $("soundButton").setAttribute("aria-label", soundEnabled ? (en ? "Mute sounds" : "خاموش کردن صدا") : (en ? "Enable sounds" : "روشن کردن صدا"));
+    $("soundButton").title = soundEnabled ? (en ? "Sound on" : "صدا روشن") : (en ? "Sound off" : "صدا خاموش");
+    updateMining();
   }
   function readStore() {
     try { const saved = JSON.parse(localStorage.getItem(STORE) || "{}"); state.hashrate = saved.hashrate || 25.6; }
@@ -45,7 +142,7 @@
   }
   $("copyRef").addEventListener("click", async () => {
     const value = $("refLink").textContent;
-    try { await navigator.clipboard.writeText(value); notice("لینک دعوت کپی شد."); }
+    try { await navigator.clipboard.writeText(value); notice(tr("لینک دعوت کپی شد.","Invite link copied."), "success"); }
     catch (_) { notice("کپی خودکار ممکن نیست؛ لینک را انتخاب و کپی کن."); }
   });
   $("shareRef").addEventListener("click", () => {
@@ -76,7 +173,7 @@
       state.miningStart = 0; state.miningEnd = 0;
       renderPoints();
       updateMining();
-      notice("پاداش آزمایشی استخراج در حساب ثبت شد: " + fa(result.points || 0) + " امتیاز.");
+      notice(tr("پاداش آزمایشی استخراج در حساب ثبت شد: ","Test mining reward credited: ") + fa(result.points || 0) + tr(" امتیاز."," points."), "success");
       await bootstrap();
     } catch (e) {
       state.nextClaimRetryAt = Date.now() + 30000;
@@ -114,7 +211,7 @@
       state.activeSession = { id: result.id, started_at: result.started_at, ends_at: result.ends_at, hash_rate: result.hash_rate || 25.6 };
       state.miningStart = new Date(result.started_at).getTime();
       state.miningEnd = new Date(result.ends_at).getTime();
-      notice(result.existing ? "استخراج فعال قبلی بازیابی شد." : "استخراج ۳ ساعته شروع شد.");
+      notice(result.existing ? tr("استخراج فعال قبلی بازیابی شد.","Previous active mining session restored.") : tr("استخراج ۳ ساعته شروع شد.","3-hour mining session started."), "success");
       updateMining();
     } catch (e) {
       $("mineButton").disabled = false;
@@ -122,7 +219,7 @@
     }
   });
   $("boostButton").addEventListener("click", () => {
-    state.hashrate = Math.min(99.9, state.hashrate + 1.6); saveStore(); updateMining(); notice("قدرت نمایشی ماینر افزایش یافت؛ این ارتقا خرید واقعی نیست.");
+    state.hashrate = Math.min(99.9, state.hashrate + 1.6); saveStore(); updateMining(); notice(tr("قدرت نمایشی ماینر افزایش یافت؛ این ارتقا خرید واقعی نیست.","Preview miner power increased; this is not a real purchase."), "success");
   });
 
   function renderMinerLevels() {
@@ -141,13 +238,13 @@
       const emblem = document.createElement("div"); emblem.className = "miner-level-icon"; emblem.textContent = item.mark;
       const info = document.createElement("div"); info.className = "miner-level-info";
       const kicker = document.createElement("span"); kicker.className = "level-kicker"; kicker.textContent = item.tier;
-      const title = document.createElement("h4"); title.textContent = item.name + " · LEVEL " + String(item.level).padStart(2,"0");
-      const desc = document.createElement("p"); desc.textContent = "ماینر اختصاصی این سطح با قدرت استخراج بالاتر. قیمت و نرخ هش پس از نهایی‌شدن اقتصاد DRK اعلام می‌شود.";
+      const title = document.createElement("h4"); title.textContent = (language === "en" ? ["", "", "Bronze Miner", "Silver Miner", "Gold Miner", "Platinum Miner", "Cyrus Elite"][item.level] : item.name) + " · LEVEL " + String(item.level).padStart(2,"0");
+      const desc = document.createElement("p"); desc.textContent = tr("ماینر اختصاصی این سطح با قدرت استخراج بالاتر. قیمت و نرخ هش پس از نهایی‌شدن اقتصاد DRK اعلام می‌شود.","A dedicated miner tier with higher hash power. Price and hash rate will be announced after DRK tokenomics are finalized.");
       const meta = document.createElement("div"); meta.className = "miner-level-meta";
-      const power = document.createElement("span"); power.textContent = "قدرت هش: "; const powerB = document.createElement("b"); powerB.textContent = "به‌زودی"; power.append(powerB);
-      const price = document.createElement("span"); price.textContent = "قیمت: "; const priceB = document.createElement("b"); priceB.textContent = "قیمت تعیین نشده"; price.append(priceB);
+      const power = document.createElement("span"); power.textContent = tr("قدرت هش: ","Hash power: "); const powerB = document.createElement("b"); powerB.textContent = tr("به‌زودی","Coming soon"); power.append(powerB);
+      const price = document.createElement("span"); price.textContent = tr("قیمت: ","Price: "); const priceB = document.createElement("b"); priceB.textContent = tr("قیمت تعیین نشده","Not set"); price.append(priceB);
       meta.append(power, price); info.append(kicker,title,desc,meta);
-      const buy = document.createElement("button"); buy.className = "miner-level-buy"; buy.disabled = true; buy.textContent = "خرید پس از تعیین قیمت و تکمیل پرداخت امن";
+      const buy = document.createElement("button"); buy.className = "miner-level-buy"; buy.disabled = true; buy.textContent = tr("خرید پس از تعیین قیمت و تکمیل پرداخت امن","Purchases unlock after pricing and secure payments are ready");
       card.append(emblem,info,buy); root.append(card);
     });
   }
@@ -162,16 +259,16 @@
       const card = document.createElement("article"); card.className = "quest";
       const icon = document.createElement("div"); icon.className = "quest-icon"; icon.textContent = icons[i % icons.length];
       const info = document.createElement("div"); info.className = "quest-info";
-      const title = document.createElement("b"); title.textContent = q.title_fa || q.title || q.name || "مأموریت داریک";
-      const desc = document.createElement("small"); desc.textContent = q.description_fa || q.description || "برای دریافت امتیاز آزمایشی انجام بده.";
+      const title = document.createElement("b"); title.textContent = (language === "en" ? (q.title_en || q.title || q.name) : (q.title_fa || q.title || q.name)) || tr("مأموریت داریک","Darik mission");
+      const desc = document.createElement("small"); desc.textContent = (language === "en" ? (q.description_en || q.description) : (q.description_fa || q.description)) || tr("برای دریافت امتیاز آزمایشی انجام بده.","Complete this mission to earn test points.");
       info.append(title, desc);
       const reward = document.createElement("span"); reward.className = "reward"; reward.textContent = "+" + fa(q.reward_points || q.points || q.reward || 50);
-      const btn = document.createElement("button"); btn.textContent = isDone ? "ثبت شده" : "ارسال";
+      const btn = document.createElement("button"); btn.textContent = isDone ? tr("ثبت شده","Submitted") : tr("ارسال","Submit");
       btn.disabled = isDone;
       btn.addEventListener("click", async () => {
-        btn.disabled = true; btn.textContent = "در حال ارسال…";
-        try { await api("submit_quest", { questId: id }); btn.textContent = "در انتظار بررسی"; notice("مأموریت برای بررسی ثبت شد."); }
-        catch (e) { btn.disabled = false; btn.textContent = "ارسال"; notice(e.message); }
+        btn.disabled = true; btn.textContent = tr("در حال ارسال…","Submitting…");
+        try { await api("submit_quest", { questId: id }); btn.textContent = tr("در انتظار بررسی","Pending review"); notice(tr("مأموریت برای بررسی ثبت شد.","Mission submitted for review."), "success"); }
+        catch (e) { btn.disabled = false; btn.textContent = tr("ارسال","Submit"); notice(e.message); }
       });
       card.append(icon, info, reward, btn); $("quests").append(card);
     });
@@ -195,7 +292,7 @@
       state.miningEnd = state.activeSession?.ends_at ? new Date(state.activeSession.ends_at).getTime() : 0;
       renderPoints(); updateMining();
       renderQuests(data.quests || [], data.questCompletions || []);
-      if (data.mode === "TEST" || data.realDrkRewardsEnabled === false) notice("حالت آزمایشی فعال است؛ پاداش واقعی DRK غیرفعال است.");
+      if (data.mode === "TEST" || data.realDrkRewardsEnabled === false) notice(tr("امتیازها آزمایشی‌اند؛ پاداش واقعی DRK غیرفعال است.","Points are for private testing; real DRK rewards are disabled."));
     } catch (e) { $("quests").innerHTML = '<div class="loading">دریافت اطلاعات سرور ناموفق بود. اتصال اینترنت را بررسی کن.</div>'; notice(e.message); }
   }
 
@@ -204,7 +301,7 @@
     $("walletButton").textContent = shortWallet(state.wallet);
     $("walletButton").title = state.wallet || "اتصال کیف پول";
     $("walletButton").classList.toggle("wallet-connected", Boolean(state.wallet));
-    if (state.wallet && !restored) notice("کیف پول با موفقیت متصل شد.");
+    if (state.wallet && !restored) notice(tr("کیف پول با موفقیت متصل شد.","Wallet connected successfully."), "success");
     updateProfile();
   }
   function setupWallet() {
@@ -235,7 +332,7 @@
     if (!state.tonUI) { notice("اتصال تون‌کیپر بارگذاری نشد؛ صفحه را دوباره باز کن."); return; }
     try { await state.tonUI.openModal(); } catch (_) { notice("اتصال کیف پول انجام نشد."); }
   }
-  $("walletButton").addEventListener("click", connectWallet);
+  $("walletButton").addEventListener("click", connectWallet);\n  $("languageButton").addEventListener("click", () => { language = language === "fa" ? "en" : "fa"; localStorage.setItem("darik_language", language); applyLanguage(); });\n  $("soundButton").addEventListener("click", () => { soundEnabled = !soundEnabled; localStorage.setItem("darik_sound", soundEnabled ? "on" : "off"); applyLanguage(); if (soundEnabled) playUiSound("success"); });
   setupWallet();
   updateMining(); setInterval(updateMining, 1000);
   bootstrap();
