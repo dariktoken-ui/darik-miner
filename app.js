@@ -332,8 +332,11 @@
     if (!state.tonUI) { notice("اتصال تون‌کیپر بارگذاری نشد؛ صفحه را دوباره باز کن."); return; }
     try { await state.tonUI.openModal(); } catch (_) { notice("اتصال کیف پول انجام نشد."); }
   }
-  $("walletButton").addEventListener("click", connectWallet);\n  $("languageButton").addEventListener("click", () => { language = language === "fa" ? "en" : "fa"; localStorage.setItem("darik_language", language); applyLanguage(); });\n  $("soundButton").addEventListener("click", () => { soundEnabled = !soundEnabled; localStorage.setItem("darik_sound", soundEnabled ? "on" : "off"); applyLanguage(); if (soundEnabled) playUiSound("success"); });
+  $("walletButton").addEventListener("click", connectWallet);
+  $("languageButton").addEventListener("click", () => { language = language === "fa" ? "en" : "fa"; localStorage.setItem("darik_language", language); applyLanguage(); });
+  $("soundButton").addEventListener("click", () => { soundEnabled = !soundEnabled; localStorage.setItem("darik_sound", soundEnabled ? "on" : "off"); applyLanguage(); if (soundEnabled) playUiSound("success"); });
   setupWallet();
+  applyLanguage();
   updateMining(); setInterval(updateMining, 1000);
   bootstrap();
 })();
