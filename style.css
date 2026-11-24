@@ -31,3 +31,30 @@ body{background:radial-gradient(ellipse at 50% -12%,#72501c55,transparent 42%),r
 .bottom-nav{border-top:1px solid #574323;background:#0b0a08f5;box-shadow:0 -8px 25px #0006}.nav-item.selected{color:#f4d88e}.nav-item.selected span{filter:drop-shadow(0 0 7px #d5a74766)}
 footer{letter-spacing:.4px;padding-bottom:4px}
 @media(max-width:380px){.welcome{padding:13px 11px}.coin-art{width:78px;height:78px;flex-basis:78px}.welcome h1{font-size:22px}.balance-line strong{font-size:42px}}
+
+/* Separate miner levels page — preserved existing mining timer and wallet logic */
+.active-miner-panel{border:1px solid #9c7738;border-radius:20px;padding:17px;background:radial-gradient(ellipse at 15% 0,#76501e55,transparent 55%),linear-gradient(145deg,#21190d,#100f0c);box-shadow:0 14px 32px #0007}
+.active-miner-top{display:flex;justify-content:space-between;align-items:center;color:#d8c69e;font-size:10px}
+.active-miner-top b{font-size:9px;letter-spacing:1px;color:#f4d88e;border:1px solid #8d6b32;border-radius:20px;padding:5px 8px}
+.active-miner-body{display:flex;align-items:center;gap:13px;margin:17px 0}
+.miner-emblem{width:58px;height:58px;display:grid;place-items:center;border:1px solid #d5a747;border-radius:16px;background:linear-gradient(145deg,#6b4a1b,#1a1208);color:#f4d88e;font:900 30px Georgia;box-shadow:0 0 22px #d5a74722}
+.active-miner-body small{color:#a99c80;font-size:9px}
+.active-miner-body h3{font-size:13px;margin:3px 0;color:#fff0cc}
+.active-miner-body strong{font-size:12px;color:#f4d88e;direction:ltr;display:inline-block}
+.active-miner-panel>p{font-size:10px;line-height:1.9;color:#a99f8c;margin:0}
+.miner-shop-heading{display:flex;align-items:end;justify-content:space-between;margin:23px 2px 12px}
+.miner-shop-heading h3{font-size:17px;margin:4px 0 0}
+.miner-shop-heading>span{font-size:9px;color:#aa9d82}
+.miner-level-list{display:grid;gap:11px}
+.miner-level-card{position:relative;display:grid;grid-template-columns:54px 1fr;gap:12px;padding:14px;border:1px solid #49371f;border-radius:17px;background:linear-gradient(125deg,#1d180f,#100f0c);overflow:hidden}
+.miner-level-card:after{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:linear-gradient(#f4d88e,#9b702c);opacity:.7}
+.miner-level-icon{width:52px;height:52px;display:grid;place-items:center;border:1px solid #8b682e;border-radius:14px;background:radial-gradient(circle,#503817,#1c1409);color:#f4d88e;font:900 22px Georgia}
+.miner-level-info{min-width:0}
+.miner-level-info .level-kicker{font-size:8px;color:#d5a747;letter-spacing:1px}
+.miner-level-info h4{font-size:13px;margin:2px 0 5px;color:#fff0d1}
+.miner-level-info p{font-size:9px;line-height:1.7;color:#a99f8c;margin:0 0 9px}
+.miner-level-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:9px;color:#d7c69f}
+.miner-level-meta b{color:#f4d88e;font-weight:700}
+.miner-level-buy{grid-column:1/-1;width:100%;border:1px solid #65502c;border-radius:10px;padding:10px;background:#282014;color:#d9c69b;font:700 10px Vazirmatn;opacity:.75}
+.miner-level-buy:disabled{cursor:not-allowed}
+@media(max-width:380px){.miner-level-card{grid-template-columns:46px 1fr;padding:11px}.miner-level-icon{width:44px;height:44px}}
