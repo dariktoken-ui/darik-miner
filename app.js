@@ -6,8 +6,7 @@
   const tg = window.Telegram?.WebApp;
   const $ = (id) => document.getElementById(id);
   const fa = (n) => new Intl.NumberFormat(language === "en" ? "en-US" : "fa-IR").format(Number(n || 0));
-  const STORE = "darik_miner_test_v1";
-  const state = { points: 0, hashrate: 25.6, miningStart: 0, miningEnd: 0, activeSession: null, claimInFlight: false, nextClaimRetryAt: 0, wallet: null, user: null, tonUI: null, quests: [], questCompletions: [] };
+    const state = { drkBalance: 0, hashrate: 25.6, miningStart: 0, activeSession: null, wallet: null, user: null, tonUI: null, quests: [], questCompletions: [] };
   let noticeTimer, audioContext = null;
   let soundEnabled = localStorage.getItem("darik_sound") === "on";
   let language = localStorage.getItem("darik_language") === "en" ? "en" : "fa";
@@ -128,15 +127,15 @@
     set(".summary-chart span", en ? "Performance overview" : "نمای گرافیکی عملکرد");
     set(".summary-chart small", en ? "Live network analytics not connected" : "اطلاعات آماری واقعی هنوز متصل نیست");
     set(".miner-card .live-label", en ? ["Miner status", "Darik withdrawal"] : ["وضعیت ماینر", "برداشت داریک"]);
-    set(".miner-card .balance-label", en ? ["Mining points balance", "Minimum real withdrawal"] : ["موجودی امتیاز آزمایشی", "حداقل برداشت واقعی"]);
-    set(".balance-line span", en ? ["TEST POINTS", "DRK"] : ["امتیاز آزمایشی", "DRK"]);
-    set(".miner-stats small", en ? ["Mining power", "Miner level", "Session length"] : ["قدرت استخراج", "سطح ماینر", "زمان دوره"]);
+    set(".miner-card .balance-label", en ? ["Darik balance", "Minimum withdrawal threshold"] : ["موجودی داریک", "حداقل برداشت"]);
+    set(".balance-line span", "DRK");
+    set(".miner-stats small", en ? ["Mining power", "Miner level", "Mining time"] : ["قدرت استخراج", "سطح ماینر", "مدت استخراج"]);
     set(".progress-meta span", en ? "Mining progress" : "پیشرفت استخراج");
     set(".section-title .eyebrow", en ? "MORE POWER" : "قدرت بیشتر");
     set(".section-title h2", en ? "Upgrade center" : "مرکز ارتقا");
     set(".section-note", en ? "Darik features" : "ویژگی‌های داریک");
     set(".feature-card b", en ? ["Miners", "Boost", "Missions", "Invite friends", "Shop", "Leaderboard", "Profile"] : ["ماینرها", "بوست", "مأموریت‌ها", "دعوت دوستان", "فروشگاه", "رتبه‌بندی", "پروفایل"]);
-    set(".feature-card small", en ? ["Choose a level", "Increase hash power", "Earn test points", "Grow the community", "Future upgrades", "User rankings", "Your account"] : ["انتخاب و خرید سطح", "افزایش قدرت هش", "فعالیت و امتیاز", "گسترش جامعه", "ارتقاهای آزمایشی", "جدول کاربران", "حساب کاربری"]);
+    set(".feature-card small", en ? ["Choose a level", "Increase hash power", "Complete missions", "Grow the community", "Future upgrades", "User rankings", "Your account"] : ["انتخاب سطح ماینر", "افزایش قدرت هش", "انجام مأموریت‌ها", "گسترش جامعه", "ارتقاهای آینده", "جدول کاربران", "حساب کاربری"]);
     set(".bottom-nav small", en ? ["Mine", "Miners", "Tasks", "Friends", "Ranks", "Profile"] : ["ماینر", "ماینرها", "مأموریت", "دعوت", "رتبه‌ها", "پروفایل"]);
     set("#screen-miners .page-heading h2", en ? "Darik miners" : "ماینرهای داریک");
     set("#screen-miners .page-heading p", en ? "View your active miner and prepare for the next level." : "ماینر فعال خودت را ببین و برای سطح بالاتر آماده شو.");
@@ -151,7 +150,7 @@
     set(".active-miner-body h3", en ? "Base miner · LEVEL 01" : "ماینر پایه · LEVEL 01");
     set(".miner-shop-heading h3", en ? "Choose your next miner" : "انتخاب ماینر بعدی");
     set("#screen-boost .info-card h3", en ? 'Current power: <b id="boostRate">' + Number(state.hashrate).toFixed(1) + ' MH/s</b>' : 'قدرت فعلی: <b id="boostRate">' + Number(state.hashrate).toFixed(1) + ' MH/s</b>', true);
-    set("#screen-profile .profile-row span", en ? ["Test points", "Account status"] : ["امتیاز آزمایشی", "وضعیت حساب"]);
+    set("#screen-profile .profile-row span", en ? ["Darik balance", "Account status"] : ["موجودی داریک", "وضعیت حساب"]);
     set("#screen-profile .profile-row b:last-child", en ? "PRIVATE PREVIEW" : "نسخه خصوصی");
     set("#mineButton", en ? "Start mining ↗" : "شروع استخراج ↗");
     set("#walletButton", state.wallet ? shortWallet(state.wallet) : (en ? "Connect wallet" : "اتصال کیف پول"));
@@ -161,16 +160,10 @@
     $("soundButton").title = soundEnabled ? (en ? "Sound on" : "صدا روشن") : (en ? "Sound off" : "صدا خاموش");
     updateMining();
   }
-  function readStore() {
-    try { const saved = JSON.parse(localStorage.getItem(STORE) || "{}"); state.hashrate = saved.hashrate || 25.6; }
-    catch (_) {}
-  }
-  function saveStore() { localStorage.setItem(STORE, JSON.stringify({ hashrate: state.hashrate })); }
   if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor?.("#080807"); tg.setBackgroundColor?.("#080807"); }
   state.user = tg?.initDataUnsafe?.user || null;
   $("profileName").textContent = state.user ? [state.user.first_name, state.user.last_name].filter(Boolean).join(" ") : "کاربر داریک";
   $("username")?.textContent;
-  readStore();
 
   function go(screen) {
     document.querySelectorAll(".screen").forEach(el => el.classList.toggle("active", el.id === "screen-" + screen));
@@ -204,76 +197,54 @@
     if (tg?.openTelegramLink) tg.openTelegramLink(share); else window.open(share, "_blank");
   });
 
+  function formatDrk(value) {
+    return new Intl.NumberFormat(language === "en" ? "en-US" : "fa-IR", { minimumFractionDigits: 8, maximumFractionDigits: 8 }).format(Math.max(0, Number(value) || 0));
+  }
   function renderPoints() {
     const session = state.activeSession;
     let pending = 0;
-    if (session?.started_at) {
-      const elapsed = Math.max(0, Math.min(10800, (Date.now() - new Date(session.started_at).getTime()) / 1000));
-      pending = Math.floor((elapsed / 60) * (Number(session.hash_rate || 25.6) / 25.6));
+    if (session?.last_accrued_at) {
+      const elapsed = Math.max(0, (Date.now() - new Date(session.last_accrued_at).getTime()) / 1000);
+      pending = (elapsed / 86400) * (Number(session.hash_rate || 25.6) / 25.6);
     }
-    const shown = state.points + pending;
-    $("points").textContent = fa(shown);
-    $("profilePoints").textContent = fa(shown);
-  }
-  async function claimMining() {
-    if (state.claimInFlight || Date.now() < state.nextClaimRetryAt) return;
-    state.claimInFlight = true;
-    try {
-      const result = await api("claim_mining");
-      if (!result?.ok) throw new Error(result?.error || "ثبت پاداش ناموفق بود.");
-      state.points += Number(result.points || 0);
-      state.activeSession = null;
-      state.miningStart = 0; state.miningEnd = 0;
-      renderPoints();
-      updateMining();
-      notice(tr("پاداش آزمایشی استخراج در حساب ثبت شد: ","Test mining reward credited: ") + fa(result.points || 0) + tr(" امتیاز."," points."), "success");
-      await bootstrap();
-    } catch (e) {
-      state.nextClaimRetryAt = Date.now() + 30000;
-      notice(e.message || "ثبت پاداش انجام نشد؛ دوباره تلاش می‌کنیم.");
-    } finally { state.claimInFlight = false; }
+    const shown = state.drkBalance + pending;
+    $("points").textContent = formatDrk(shown);
+    $("profilePoints").textContent = formatDrk(shown);
   }
   function updateMining() {
     const now = Date.now(), session = state.activeSession;
     const start = session?.started_at ? new Date(session.started_at).getTime() : 0;
-    const end = session?.ends_at ? new Date(session.ends_at).getTime() : 0;
-    const active = Boolean(session && end > now);
-    const finished = Boolean(session && end && now >= end);
-    let progress = 0, remaining = 3 * 60 * 60 * 1000;
-    if (active) { remaining = end - now; progress = Math.min(100, ((now - start) / (3 * 60 * 60 * 1000)) * 100); }
-    else if (finished) { progress = 100; remaining = 0; }
-    const seconds = Math.max(0, Math.floor(remaining / 1000));
-    const h = Math.floor(seconds / 3600), m = Math.floor((seconds % 3600) / 60), sec = seconds % 60;
+    const active = Boolean(session && start && start <= now);
+    const elapsed = active ? Math.max(0, Math.floor((now - start) / 1000)) : 0;
+    const h = Math.floor(elapsed / 3600), m = Math.floor((elapsed % 3600) / 60), sec = elapsed % 60;
     $("timer").textContent = [h,m,sec].map(x => String(x).padStart(2,"0")).join(":");
-    $("progressBar").style.width = progress + "%"; $("progressText").textContent = fa(Math.floor(progress)) + "٪";
-    $("minerStatus").textContent = active ? tr("در حال استخراج و جمع‌آوری امتیاز","Mining and earning points") : finished ? tr("پایان استخراج؛ ثبت پاداش…","Mining complete; recording reward…") : tr("آماده شروع","Ready to start");
-    $("mineButton").classList.toggle("running", active || finished || state.claimInFlight);
-    $("mineButton").disabled = active || finished || state.claimInFlight;
-    $("mineButton").innerHTML = active ? tr("استخراج در حال انجام است…","Mining in progress…") : finished || state.claimInFlight ? tr("در حال ثبت پاداش…","Recording reward…") : tr("شروع استخراج <span>↗</span>","Start mining <span>↗</span>");
+    $("progressBar").style.width = active ? "100%" : "0%";
+    $("progressText").textContent = active ? tr("پیوسته","LIVE") : "۰٪";
+    $("minerStatus").textContent = active ? tr("در حال استخراج DRK","Mining DRK") : tr("آماده شروع","Ready to start");
+    $("mineButton").classList.toggle("running", active);
+    $("mineButton").disabled = active;
+    $("mineButton").innerHTML = active ? tr("استخراج فعال است…","Mining is active…") : tr("شروع استخراج <span>↗</span>","Start mining <span>↗</span>");
     $("hashrate").innerHTML = Number(session?.hash_rate || state.hashrate).toFixed(1) + " <i>MH/s</i>";
     $("boostRate").textContent = Number(session?.hash_rate || state.hashrate).toFixed(1) + " MH/s";
     renderPoints();
-    if (finished) claimMining();
   }
   $("mineButton").addEventListener("click", async () => {
     if (state.activeSession) return;
     $("mineButton").disabled = true;
     try {
       const result = await api("start_mining");
-      if (!result?.ok || !result.started_at || !result.ends_at) throw new Error(result?.error || "شروع استخراج ناموفق بود.");
-      state.activeSession = { id: result.id, started_at: result.started_at, ends_at: result.ends_at, hash_rate: result.hash_rate || 25.6 };
+      if (!result?.ok || !result.started_at) throw new Error(result?.error || "شروع استخراج ناموفق بود.");
+      state.activeSession = { id: result.id, started_at: result.started_at, last_accrued_at: result.last_accrued_at || result.started_at, hash_rate: result.hash_rate || 25.6 };
       state.miningStart = new Date(result.started_at).getTime();
-      state.miningEnd = new Date(result.ends_at).getTime();
-      notice(result.existing ? tr("استخراج فعال قبلی بازیابی شد.","Previous active mining session restored.") : tr("استخراج ۳ ساعته شروع شد.","3-hour mining session started."), "success");
+      state.hashrate = Number(result.hash_rate || 25.6);
+      notice(result.existing ? tr("استخراج فعال قبلی بازیابی شد.","Previous mining restored.") : tr("استخراج پیوسته داریک شروع شد.","Continuous Darik mining started."), "success");
       updateMining();
     } catch (e) {
       $("mineButton").disabled = false;
       notice(e.message || "شروع استخراج انجام نشد.");
     }
   });
-  $("boostButton").addEventListener("click", () => {
-    state.hashrate = Math.min(99.9, state.hashrate + 1.6); saveStore(); updateMining(); notice(tr("قدرت نمایشی ماینر افزایش یافت؛ این ارتقا خرید واقعی نیست.","Preview miner power increased; this is not a real purchase."), "success");
-  });
+  $("boostButton").addEventListener("click", () => { notice(tr("ارتقای هش پس از تعیین قیمت و راه‌اندازی پرداخت امن فعال می‌شود.","Hash upgrades will unlock after pricing and secure payments are ready.")); });
 
   function renderMinerLevels() {
     const levels = [
@@ -314,9 +285,9 @@
       const icon = document.createElement("div"); icon.className = "quest-icon"; icon.textContent = icons[i % icons.length];
       const info = document.createElement("div"); info.className = "quest-info";
       const title = document.createElement("b"); title.textContent = (language === "en" ? (q.title_en || q.title || q.name) : (q.title_fa || q.title || q.name)) || tr("مأموریت داریک","Darik mission");
-      const desc = document.createElement("small"); desc.textContent = (language === "en" ? (q.description_en || q.description) : (q.description_fa || q.description)) || tr("برای دریافت امتیاز آزمایشی انجام بده.","Complete this mission to earn test points.");
+      const desc = document.createElement("small"); desc.textContent = (language === "en" ? (q.description_en || q.description) : (q.description_fa || q.description)) || tr("برای تکمیل مأموریت انجام بده.","Complete this mission.");
       info.append(title, desc);
-      const reward = document.createElement("span"); reward.className = "reward"; reward.textContent = "+" + fa(q.reward_points || q.points || q.reward || 50);
+      const reward = document.createElement("span"); reward.className = "reward"; reward.textContent = tr("بررسی پاداش","Reward review");
       const btn = document.createElement("button"); btn.textContent = isDone ? tr("ثبت شده","Submitted") : tr("ارسال","Submit");
       btn.disabled = isDone;
       btn.addEventListener("click", async () => {
@@ -340,13 +311,13 @@
     try {
       const data = await api("bootstrap");
       const profile = data.profile || {};
-      state.points = Number(data.testPoints ?? profile.test_points ?? profile.points ?? 0);
+      state.drkBalance = Number(profile.drk_balance || 0);
       state.activeSession = data.activeSession || null;
+      state.hashrate = Number(state.activeSession?.hash_rate || 25.6);
       state.miningStart = state.activeSession?.started_at ? new Date(state.activeSession.started_at).getTime() : 0;
-      state.miningEnd = state.activeSession?.ends_at ? new Date(state.activeSession.ends_at).getTime() : 0;
       renderPoints(); updateMining();
       renderQuests(data.quests || [], data.questCompletions || []);
-      if (data.mode === "TEST" || data.realDrkRewardsEnabled === false) notice(tr("امتیازها آزمایشی‌اند؛ پاداش واقعی DRK غیرفعال است.","Points are for private testing; real DRK rewards are disabled."));
+      if (data.realDrkRewardsEnabled === false) notice(tr("موجودی DRK داخل برنامه محاسبه می‌شود؛ برداشت روی بلاکچین هنوز فعال نیست.","DRK accrues in-app; on-chain withdrawals are not enabled yet."));
     } catch (e) { $("quests").innerHTML = '<div class="loading">دریافت اطلاعات سرور ناموفق بود. اتصال اینترنت را بررسی کن.</div>'; notice(e.message); }
   }
 
@@ -398,6 +369,19 @@
   document.addEventListener("pointerdown", () => { if (soundEnabled) startBackgroundMusic(); }, { once: true });
   setupWallet();
   applyLanguage();
-  updateMining(); setInterval(updateMining, 1000);
+  updateMining();
+  let lastMiningSync = 0;
+  setInterval(() => {
+    updateMining();
+    if (tg?.initData && Date.now() - lastMiningSync >= 30000) {
+      lastMiningSync = Date.now();
+      api("sync_mining").then(data => {
+        if (!data?.ok) return;
+        state.drkBalance = Number(data.balance || 0);
+        state.activeSession = data.activeSession || null;
+        renderPoints(); updateMining();
+      }).catch(error => console.warn("Mining sync:", error));
+    }
+  }, 1000);
   bootstrap();
 })();
