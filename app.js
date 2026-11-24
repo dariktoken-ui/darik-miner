@@ -180,17 +180,64 @@
   function updateProfile() {
     renderPoints();
   }
-  function makeReferral() {
+  let referralOffset = 0, referralTotal = 0, referralBusy = false;
+  async function makeReferral(reset = true) {
     const id = state.user?.id;
     const link = id ? "https://t.me/" + BOT_USERNAME + "?startapp=ref_" + id : "لینک دعوت پس از ورود از تلگرام ساخته می‌شود";
     $("refLink").textContent = link;
-    $("refCount").textContent = "۰";
+    if (!tg?.initData) {
+      $("referralList").textContent = tr("برای مشاهده زیرمجموعه‌ها، برنامه را از داخل تلگرام باز کن.", "Open the Mini App inside Telegram to view your downline.");
+      return;
+    }
+    if (referralBusy) return;
+    referralBusy = true;
+    const list = $("referralList");
+    const meta = $("referralMeta");
+    const more = $("loadMoreReferrals");
+    if (reset) {
+      referralOffset = 0;
+      list.innerHTML = '<div class="loading">' + tr("در حال دریافت فهرست زیرمجموعه‌ها…", "Loading your downline…") + '</div>';
+    }
+    try {
+      const data = await api("referral_network", { limit: 50, offset: referralOffset });
+      const items = Array.isArray(data.items) ? data.items : [];
+      if (reset) list.innerHTML = "";
+      items.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "referral-user-row";
+        const identity = document.createElement("span");
+        identity.textContent = "ID · " + fa(item.telegram_user_id);
+        const depth = document.createElement("small");
+        depth.textContent = tr("سطح زیرمجموعه ", "Downline level ") + fa(item.depth);
+        row.append(identity, depth);
+        list.append(row);
+      });
+      referralTotal = Number(data.total || 0);
+      referralOffset += items.length;
+      $("refCount").textContent = fa(referralTotal);
+      meta.textContent = tr("نمایش ", "Showing ") + fa(Math.min(referralOffset, referralTotal)) + tr(" از ", " of ") + fa(referralTotal);
+      if (!referralTotal) {
+        list.innerHTML = '<div class="loading">' + tr("هنوز زیرمجموعه‌ای ثبت نشده است.", "No invited members have registered yet.") + '</div>';
+      }
+      more.hidden = referralOffset >= referralTotal;
+    } catch (error) {
+      if (reset) list.innerHTML = "";
+      const message = document.createElement("div");
+      message.className = "loading";
+      message.textContent = tr("دریافت فهرست زیرمجموعه‌ها ناموفق بود؛ دوباره تلاش کن.", "Could not load your downline. Please try again.");
+      list.append(message);
+      more.hidden = true;
+      console.warn("Referral network:", error);
+    } finally {
+      referralBusy = false;
+    }
   }
   $("copyRef").addEventListener("click", async () => {
     const value = $("refLink").textContent;
     try { await navigator.clipboard.writeText(value); notice(tr("لینک دعوت کپی شد.","Invite link copied."), "success"); }
     catch (_) { notice("کپی خودکار ممکن نیست؛ لینک را انتخاب و کپی کن."); }
   });
+  $("loadMoreReferrals").addEventListener("click", () => makeReferral(false));
   $("shareRef").addEventListener("click", () => {
     const link = $("refLink").textContent;
     const share = "https://t.me/share/url?url=" + encodeURIComponent(link) + "&text=" + encodeURIComponent("به داریک ماینر بپیوند!");
@@ -337,7 +384,9 @@
     try {
       const data = await api("bootstrap");
       const profile = data.profile || {};
-      state.drkBalance = Number(profile.drk_balance || 0);\n      state.minerLevel = Number(profile.miner_level || 1);\n      renderMinerLevels();
+      state.drkBalance = Number(profile.drk_balance || 0);
+      state.minerLevel = Number(profile.miner_level || 1);
+      renderMinerLevels();
       state.activeSession = data.activeSession || null;
       state.hashrate = Number(state.activeSession?.hash_rate || 25.6);
       state.miningStart = state.activeSession?.started_at ? new Date(state.activeSession.started_at).getTime() : 0;
