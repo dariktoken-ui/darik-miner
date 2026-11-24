@@ -1,4 +1,6 @@
 (() => {
+  if (window.__DARIK_MINER_APP_INITIALIZED__) return;
+  window.__DARIK_MINER_APP_INITIALIZED__ = true;
   const API_URL = "https://fntppqmximwnwfmncdnl.supabase.co/functions/v1/darik-api";
   const BOT_USERNAME = "DarikQuestBot";
   const tg = window.Telegram?.WebApp;
