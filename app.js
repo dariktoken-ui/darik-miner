@@ -6,7 +6,7 @@
   const tg = window.Telegram?.WebApp;
   const $ = (id) => document.getElementById(id);
   const fa = (n) => new Intl.NumberFormat(language === "en" ? "en-US" : "fa-IR").format(Number(n || 0));
-    const state = { drkBalance: 0, hashrate: 25.6, miningStart: 0, activeSession: null, wallet: null, user: null, tonUI: null, quests: [], questCompletions: [] };
+    const state = { drkBalance: 0, hashrate: 25.6, minerLevel: 1, miningStart: 0, activeSession: null, wallet: null, user: null, tonUI: null, quests: [], questCompletions: [] };
   let noticeTimer, audioContext = null;
   let soundEnabled = localStorage.getItem("darik_sound") !== "off";
   let language = localStorage.getItem("darik_language") === "en" ? "en" : "fa";
@@ -277,30 +277,26 @@
   $("boostButton").addEventListener("click", () => { notice(tr("ارتقای هش پس از تعیین قیمت و راه‌اندازی پرداخت امن فعال می‌شود.","Hash upgrades will unlock after pricing and secure payments are ready.")); });
 
   function renderMinerLevels() {
-    const levels = [
-      { level: 2, name: "ماینر برنزی", tier: "BRONZE MINER", mark: "II" },
-      { level: 3, name: "ماینر نقره‌ای", tier: "SILVER MINER", mark: "III" },
-      { level: 4, name: "ماینر طلایی", tier: "GOLD MINER", mark: "IV" },
-      { level: 5, name: "ماینر پلاتینیوم", tier: "PLATINUM MINER", mark: "V" },
-      { level: 6, name: "ماینر کوروش", tier: "CYRUS ELITE", mark: "VI" }
-    ];
     const root = $("minerLevels");
-    if (!root || root.dataset.ready === "1") return;
-    root.dataset.ready = "1";
-    levels.forEach(item => {
-      const card = document.createElement("article"); card.className = "miner-level-card";
-      const emblem = document.createElement("div"); emblem.className = "miner-level-icon"; emblem.textContent = item.mark;
-      const info = document.createElement("div"); info.className = "miner-level-info";
-      const kicker = document.createElement("span"); kicker.className = "level-kicker"; kicker.textContent = item.tier;
-      const title = document.createElement("h4"); title.textContent = (language === "en" ? ["", "", "Bronze Miner", "Silver Miner", "Gold Miner", "Platinum Miner", "Cyrus Elite"][item.level] : item.name) + " · LEVEL " + String(item.level).padStart(2,"0");
-      const desc = document.createElement("p"); desc.textContent = tr("ماینر اختصاصی این سطح با قدرت استخراج بالاتر. قیمت و نرخ هش پس از نهایی‌شدن اقتصاد DRK اعلام می‌شود.","A dedicated miner tier with higher hash power. Price and hash rate will be announced after DRK tokenomics are finalized.");
-      const meta = document.createElement("div"); meta.className = "miner-level-meta";
-      const power = document.createElement("span"); power.textContent = tr("قدرت هش: ","Hash power: "); const powerB = document.createElement("b"); powerB.textContent = tr("به‌زودی","Coming soon"); power.append(powerB);
-      const price = document.createElement("span"); price.textContent = tr("قیمت: ","Price: "); const priceB = document.createElement("b"); priceB.textContent = tr("قیمت تعیین نشده","Not set"); price.append(priceB);
-      meta.append(power, price); info.append(kicker,title,desc,meta);
-      const buy = document.createElement("button"); buy.className = "miner-level-buy"; buy.disabled = true; buy.textContent = tr("خرید پس از تعیین قیمت و تکمیل پرداخت امن","Purchases unlock after pricing and secure payments are ready");
-      card.append(emblem,info,buy); root.append(card);
-    });
+    if (!root) return;
+    const level = Math.min(1000, Math.max(1, Number(state.minerLevel || 1)));
+    root.innerHTML = "";
+    const card = document.createElement("article"); card.className = "miner-level-card";
+    const emblem = document.createElement("div"); emblem.className = "miner-level-icon"; emblem.textContent = String(level).padStart(3, "0");
+    const info = document.createElement("div"); info.className = "miner-level-info";
+    const kicker = document.createElement("span"); kicker.className = "level-kicker"; kicker.textContent = tr("مسیر پیشرفت داریک · ۱۰۰۰ سطح", "DARIK PROGRESSION · 1000 LEVELS");
+    const title = document.createElement("h4"); title.textContent = tr("ماینر سطح ", "Miner Level ") + fa(level) + " / " + fa(1000);
+    const desc = document.createElement("p"); desc.textContent = tr("سطح فعلی حساب تو. ظرفیت شارژ، قدرت استخراج و مزایای هر سطح طبق قوانین نهایی سرور فعال می‌شوند.", "Your current account level. Charge capacity, mining power and level perks will be controlled by the finalized server rules.");
+    const track = document.createElement("div"); track.className = "miner-level-meta";
+    const progress = document.createElement("span"); progress.textContent = tr("پیشرفت سطح", "Level progress");
+    const value = document.createElement("b"); value.textContent = fa(level) + " / " + fa(1000);
+    track.append(progress, value);
+    info.append(kicker, title, desc, track);
+    card.append(emblem, info); root.append(card);
+    const milestones = document.createElement("div"); milestones.className = "miner-level-meta";
+    milestones.style.marginTop = "12px";
+    milestones.textContent = tr("مراحل پیشرفت: ۱ تا ۱۰۰۰ · جزئیات ارتقا پس از نهایی‌شدن قوانین اقتصادی فعال می‌شود.", "Progression range: 1–1000 · Upgrade details unlock after the economy rules are finalized.");
+    root.append(milestones);
   }
 
   function renderQuests(quests, completions = []) {
@@ -341,7 +337,7 @@
     try {
       const data = await api("bootstrap");
       const profile = data.profile || {};
-      state.drkBalance = Number(profile.drk_balance || 0);
+      state.drkBalance = Number(profile.drk_balance || 0);\n      state.minerLevel = Number(profile.miner_level || 1);\n      renderMinerLevels();
       state.activeSession = data.activeSession || null;
       state.hashrate = Number(state.activeSession?.hash_rate || 25.6);
       state.miningStart = state.activeSession?.started_at ? new Date(state.activeSession.started_at).getTime() : 0;
