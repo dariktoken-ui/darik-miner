@@ -58,3 +58,25 @@ footer{letter-spacing:.4px;padding-bottom:4px}
 .miner-level-buy{grid-column:1/-1;width:100%;border:1px solid #65502c;border-radius:10px;padding:10px;background:#282014;color:#d9c69b;font:700 10px Vazirmatn;opacity:.75}
 .miner-level-buy:disabled{cursor:not-allowed}
 @media(max-width:380px){.miner-level-card{grid-template-columns:46px 1fr;padding:11px}.miner-level-icon{width:44px;height:44px}}
+
+
+/* ATF-inspired Darik Mine + Miner Garage interface refresh */
+.mine-hero{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 16px;margin:0 0 12px;border:1px solid #75572a;border-radius:20px;background:radial-gradient(ellipse at 85% 0,#76501d55,transparent 52%),linear-gradient(120deg,#21190e,#0e0d0a);box-shadow:0 12px 30px #0006;overflow:hidden}
+.mine-hero-copy{min-width:0}.mine-hero h2{font-size:19px;margin:5px 0;color:#fff0cf}.mine-hero h2 em{font-style:normal;color:#f4d88e}.mine-hero p{font-size:10px;line-height:1.8;color:#aaa18f;margin:0;max-width:235px}
+.mine-seal{width:84px;height:84px;flex:0 0 84px;border:2px solid #c99b45;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,#69491b,#211606 68%,#0b0906);box-shadow:0 0 0 5px #d5a74712,0 0 28px #d5a74725,inset 0 0 15px #e7c36a44;position:relative}
+.mine-seal:before,.mine-seal:after{content:"";position:absolute;inset:5px;border:1px solid #e3bd65;border-radius:50%}.mine-seal:after{inset:10px;border-style:dashed;opacity:.65}.mine-seal span{font:900 37px Georgia;color:#f4d88e;line-height:1}.mine-seal small{font:700 7px Vazirmatn;letter-spacing:2px;color:#d8b66a;margin-top:3px}
+.mine-summary{border:1px solid #594321;border-radius:18px;padding:14px 14px 10px;margin-bottom:13px;background:linear-gradient(145deg,#19150e,#0e0d0a);box-shadow:inset 0 1px #f4d88e0b}
+.summary-heading{display:flex;justify-content:space-between;align-items:center;color:#c8b78f;font-size:10px}.summary-heading b{font-size:8px;letter-spacing:1px;color:#e5c77d}.summary-heading i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#d5a747;margin-left:4px}
+.summary-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:13px 0 11px}.summary-metrics>div{text-align:center;padding:8px 2px;border-left:1px solid #ffffff12}.summary-metrics>div:last-child{border:0}.summary-metrics small,.summary-metrics strong{display:block}.summary-metrics small{font-size:8px;color:#9d927e;margin-bottom:5px}.summary-metrics strong{font-size:11px;color:#f2dfb5}.summary-metrics strong i{font-size:8px;font-style:normal;color:#d5a747}
+.summary-chart{border-top:1px solid #ffffff12;padding-top:9px}.summary-chart>div{display:flex;justify-content:space-between;gap:6px;align-items:center}.summary-chart span{font-size:9px;color:#d9c69e}.summary-chart small{font-size:8px;color:#8d8372}.summary-chart svg{display:block;width:100%;height:54px;margin-top:5px;overflow:visible}
+#screen-miners .active-miner-panel{position:relative;overflow:hidden;background:radial-gradient(ellipse at 15% 0,#76501e66,transparent 55%),linear-gradient(145deg,#21190d,#100f0c);padding:18px}
+#screen-miners .active-miner-panel:after{content:"D";position:absolute;left:13px;top:18px;font:900 82px Georgia;color:#e5bd6510;pointer-events:none}
+#screen-miners .miner-shop-heading{padding:0 3px}
+#screen-miners .miner-level-card{grid-template-columns:58px minmax(0,1fr);padding:15px;border-radius:18px;background:radial-gradient(ellipse at 0 0,#4b351533,transparent 65%),linear-gradient(130deg,#1c170f,#0e0d0b);box-shadow:0 8px 22px #0005,inset 0 1px #f4d88e0b}
+#screen-miners .miner-level-icon{width:56px;height:56px;border-radius:16px;font-size:23px;box-shadow:inset 0 0 12px #e5bd6518,0 0 16px #d5a74712}
+#screen-miners .miner-level-info h4{font-size:14px}
+#screen-miners .miner-level-info p{font-size:10px;line-height:1.85}
+#screen-miners .miner-level-meta{gap:7px 14px;font-size:9px}
+#screen-miners .miner-level-buy{grid-column:1/-1;margin-top:2px;padding:11px;border-radius:11px;background:linear-gradient(100deg,#302515,#21190e);border-color:#71572a;color:#e4cf9e;opacity:1;font-size:10px}
+#screen-miners .miner-level-buy:disabled{opacity:.8}
+@media(max-width:380px){.mine-hero{padding:14px 12px}.mine-hero h2{font-size:17px}.mine-seal{width:72px;height:72px;flex-basis:72px}.mine-seal span{font-size:32px}.summary-metrics strong{font-size:10px}#screen-miners .miner-level-card{grid-template-columns:48px minmax(0,1fr);padding:12px}#screen-miners .miner-level-icon{width:46px;height:46px}}
