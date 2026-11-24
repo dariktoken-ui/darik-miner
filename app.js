@@ -95,12 +95,12 @@
       const info = document.createElement("div"); info.className = "miner-level-info";
       const kicker = document.createElement("span"); kicker.className = "level-kicker"; kicker.textContent = item.tier;
       const title = document.createElement("h4"); title.textContent = item.name + " · LEVEL " + String(item.level).padStart(2,"0");
-      const desc = document.createElement("p"); desc.textContent = "قدرت استخراج بالاتر از سطح قبلی؛ مشخصات و قیمت پس از نهایی‌شدن اقتصاد ماینر اعلام می‌شود.";
+      const desc = document.createElement("p"); desc.textContent = "ماینر اختصاصی این سطح با قدرت استخراج بالاتر. قیمت و نرخ هش پس از نهایی‌شدن اقتصاد DRK اعلام می‌شود.";
       const meta = document.createElement("div"); meta.className = "miner-level-meta";
       const power = document.createElement("span"); power.textContent = "قدرت هش: "; const powerB = document.createElement("b"); powerB.textContent = "به‌زودی"; power.append(powerB);
-      const price = document.createElement("span"); price.textContent = "قیمت: "; const priceB = document.createElement("b"); priceB.textContent = "DRK · به‌زودی"; price.append(priceB);
+      const price = document.createElement("span"); price.textContent = "قیمت: "; const priceB = document.createElement("b"); priceB.textContent = "قیمت تعیین نشده"; price.append(priceB);
       meta.append(power, price); info.append(kicker,title,desc,meta);
-      const buy = document.createElement("button"); buy.className = "miner-level-buy"; buy.disabled = true; buy.textContent = "خرید این سطح پس از فعال‌سازی پرداخت";
+      const buy = document.createElement("button"); buy.className = "miner-level-buy"; buy.disabled = true; buy.textContent = "خرید پس از تعیین قیمت و تکمیل پرداخت امن";
       card.append(emblem,info,buy); root.append(card);
     });
   }
