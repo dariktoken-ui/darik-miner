@@ -35,11 +35,11 @@
       const title = document.createElement("b"); title.textContent = q.title_fa || q.title || q.name || "مأموریت داریک";
       const desc = document.createElement("small"); desc.textContent = q.description_fa || q.description || "برای دریافت امتیاز آزمایشی انجام دهید.";
       info.append(title, desc);
-      const reward = document.createElement("span"); reward.className = "reward"; reward.textContent = "+" + fa(q.points || q.reward || 50);
+      const reward = document.createElement("span"); reward.className = "reward"; reward.textContent = "+" + fa(q.reward_points || q.points || q.reward || 50);
       const btn = document.createElement("button"); btn.textContent = isDone ? "ثبت شده" : "ارسال برای بررسی"; btn.disabled = isDone;
       btn.addEventListener("click", async () => {
         btn.disabled = true; btn.textContent = "در حال ارسال…";
-        try { await api("submit_quest", { quest_id: id }); btn.textContent = "در انتظار بررسی"; notice("مأموریت ارسال شد و پس از بررسی تأیید می‌شود."); }
+        try { await api("submit_quest", { questId: id }); btn.textContent = "در انتظار بررسی"; notice("مأموریت ارسال شد و پس از بررسی تأیید می‌شود."); }
         catch (e) { btn.disabled = false; btn.textContent = "ارسال برای بررسی"; notice(e.message); }
       });
       card.append(icon, info, reward, btn); $("quests").append(card);
