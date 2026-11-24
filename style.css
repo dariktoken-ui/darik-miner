@@ -125,3 +125,7 @@ body{background:radial-gradient(ellipse at 50% -10%,#1a687455,transparent 42%),r
 .notice{border-color:#32847d;background:#122b32;color:#cffff8}
 .utility-button{border-color:#28666b;background:#14252d;color:#8afff0}
 .utility-button:active{background:#1d484b}
+
+/* Server-verified miner presence indicator */
+.live-label i.is-online{background:#39d66f;box-shadow:0 0 10px #39d66f,0 0 18px #39d66f66}
+.live-label i.is-offline{background:#c99a43;box-shadow:0 0 8px #c99a43}
