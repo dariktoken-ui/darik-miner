@@ -12,10 +12,10 @@
     clearTimeout(noticeTimer); noticeTimer = setTimeout(() => $("notice").classList.remove("show"), 3800);
   }
   function readStore() {
-    try { const saved = JSON.parse(localStorage.getItem(STORE) || "{}"); state.miningStart = saved.miningStart || 0; state.miningEnd = saved.miningEnd || 0; state.hashrate = saved.hashrate || 25.6; }
+    try { const saved = JSON.parse(localStorage.getItem(STORE) || "{}"); state.hashrate = saved.hashrate || 25.6; }
     catch (_) {}
   }
-  function saveStore() { localStorage.setItem(STORE, JSON.stringify({ miningStart: state.miningStart, miningEnd: state.miningEnd, hashrate: state.hashrate })); }
+  function saveStore() { localStorage.setItem(STORE, JSON.stringify({ hashrate: state.hashrate })); }
   if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor?.("#080807"); tg.setBackgroundColor?.("#080807"); }
   state.user = tg?.initDataUnsafe?.user || null;
   $("profileName").textContent = state.user ? [state.user.first_name, state.user.last_name].filter(Boolean).join(" ") : "کاربر داریک";
@@ -35,7 +35,7 @@
     return address ? address.slice(0, 6) + "…" + address.slice(-6) : "اتصال کیف پول";
   }
   function updateProfile() {
-    $("profilePoints").textContent = fa(state.points);
+    renderPoints();
   }
   function makeReferral() {
     const id = state.user?.id;
