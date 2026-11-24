@@ -182,11 +182,10 @@
   }
   let referralOffset = 0, referralTotal = 0, referralBusy = false;
   async function makeReferral(reset = true) {
-    const id = state.user?.id;
-    const link = id ? "https://t.me/" + BOT_USERNAME + "?startapp=ref_" + id : "لینک دعوت پس از ورود از تلگرام ساخته می‌شود";
-    $("refLink").textContent = link;
+    // Referral sharing stays disabled during private preparation.
+    $("refLink").textContent = tr("لینک دعوت پس از تکمیل و آزمایش نسخه خصوصی فعال می‌شود.", "Invite links will be enabled after private testing.");
     if (!tg?.initData) {
-      $("referralList").textContent = tr("برای مشاهده زیرمجموعه‌ها، برنامه را از داخل تلگرام باز کن.", "Open the Mini App inside Telegram to view your downline.");
+      $("referralList").textContent = tr("برای مشاهده شبکه دعوت، برنامه را از داخل تلگرام باز کن.", "Open the Mini App inside Telegram to view your downline.");
       return;
     }
     if (referralBusy) return;
@@ -207,15 +206,25 @@
         row.className = "referral-user-row";
         const identity = document.createElement("span");
         identity.textContent = "ID · " + fa(item.telegram_user_id);
+        const details = document.createElement("div");
+        details.className = "referral-row-details";
         const depth = document.createElement("small");
-        depth.textContent = tr("سطح زیرمجموعه ", "Downline level ") + fa(item.depth);
-        row.append(identity, depth);
+        depth.textContent = tr("سطح ", "Level ") + fa(item.depth);
+        const status = document.createElement("b");
+        const qualified = item.status === "qualified";
+        status.className = "referral-status " + (qualified ? "qualified" : "pending");
+        status.textContent = qualified
+          ? tr("تأیید شده", "Qualified")
+          : tr("در انتظار تکمیل مأموریت‌ها", "Missions pending");
+        details.append(depth, status);
+        row.append(identity, details);
         list.append(row);
       });
       referralTotal = Number(data.total || 0);
+      const qualifiedTotal = Number(data.qualified_total || 0);
       referralOffset += items.length;
-      $("refCount").textContent = fa(referralTotal);
-      meta.textContent = tr("نمایش ", "Showing ") + fa(Math.min(referralOffset, referralTotal)) + tr(" از ", " of ") + fa(referralTotal);
+      $("refCount").textContent = fa(qualifiedTotal) + " / " + fa(referralTotal);
+      meta.textContent = tr("تأییدشده / کل · نمایش ", "Qualified / total · Showing ") + fa(Math.min(referralOffset, referralTotal)) + tr(" از ", " of ") + fa(referralTotal);
       if (!referralTotal) {
         list.innerHTML = '<div class="loading">' + tr("هنوز زیرمجموعه‌ای ثبت نشده است.", "No invited members have registered yet.") + '</div>';
       }
@@ -384,6 +393,10 @@
     try {
       const data = await api("bootstrap");
       const profile = data.profile || {};
+      if (!state.user?.id || String(profile.telegram_user_id) !== String(state.user.id)) {
+        throw new Error(tr("شناسه حساب تلگرام با پروفایل سرور یکسان نیست؛ ورود متوقف شد.", "Telegram account ID does not match the server profile. Sign-in stopped."));
+      }
+      $("profileName").textContent = [profile.first_name || state.user.first_name, state.user.last_name].filter(Boolean).join(" ");
       state.drkBalance = Number(profile.drk_balance || 0);
       state.minerLevel = Number(profile.miner_level || 1);
       renderMinerLevels();
