@@ -121,20 +121,37 @@
     } catch (e) { $("quests").innerHTML = '<div class="loading">دریافت اطلاعات سرور ناموفق بود. اتصال اینترنت را بررسی کن.</div>'; notice(e.message); }
   }
 
+  function updateWalletUI(wallet, restored = false) {
+    state.wallet = wallet?.account?.address || null;
+    $("walletButton").textContent = shortWallet(state.wallet);
+    $("walletButton").title = state.wallet || "اتصال کیف پول";
+    $("walletButton").classList.toggle("wallet-connected", Boolean(state.wallet));
+    if (state.wallet && !restored) notice("کیف پول با موفقیت متصل شد.");
+    updateProfile();
+  }
   function setupWallet() {
     const manifestUrl = "https://dariktoken-ui.github.io/darik-miner/tonconnect-manifest.json";
     try {
-      if (window.TON_CONNECT_UI?.TonConnectUI) {
-        state.tonUI = new window.TON_CONNECT_UI.TonConnectUI({ manifestUrl, buttonRootId: null });
-        state.tonUI.onStatusChange(wallet => {
-          state.wallet = wallet?.account?.address || null;
-          $("walletButton").textContent = shortWallet(state.wallet);
-          $("walletButton").title = state.wallet || "اتصال کیف پول";
-          if (state.wallet) notice("کیف پول با موفقیت متصل شد.");
-          updateProfile();
-        });
+      if (!window.TON_CONNECT_UI?.TonConnectUI) {
+        notice("سرویس اتصال کیف پول بارگذاری نشد؛ اتصال اینترنت را بررسی کن.");
+        return;
       }
-    } catch (e) { console.warn("TON Connect init:", e); }
+      state.tonUI = new window.TON_CONNECT_UI.TonConnectUI({
+        manifestUrl,
+        buttonRootId: null,
+        restoreConnection: true
+      });
+      state.tonUI.onStatusChange(wallet => updateWalletUI(wallet));
+      state.tonUI.connectionRestored?.then(() => {
+        updateWalletUI(state.tonUI.wallet, true);
+      }).catch(error => {
+        console.warn("TON Connect restore:", error);
+        updateWalletUI(null, true);
+      });
+    } catch (e) {
+      console.warn("TON Connect init:", e);
+      notice("راه‌اندازی اتصال کیف پول ناموفق بود.");
+    }
   }
   async function connectWallet() {
     if (!state.tonUI) { notice("اتصال تون‌کیپر بارگذاری نشد؛ صفحه را دوباره باز کن."); return; }
