@@ -17,7 +17,7 @@
   <main class="app-shell">
     <header class="topbar">
       <a class="brand" href="#" aria-label="Darik Miner"><span class="brand-mark">D</span><span><b>DARIK</b><small>MINER</small></span></a>
-      <div class="top-actions"><span class="test-tag"><i></i> TEST MODE</span><button id="walletButton" class="wallet-button">اتصال کیف پول</button></div>
+      <div class="top-actions"><span class="test-tag"><i></i> نسخه خصوصی</span><button id="languageButton" class="utility-button" type="button" aria-label="Change language">EN</button><button id="soundButton" class="utility-button" type="button" aria-label="Toggle sound">🔊</button><button id="walletButton" class="wallet-button">اتصال کیف پول</button></div>
     </header>
 
     <section class="welcome">
@@ -27,11 +27,11 @@
 
     <section id="screen-miner" class="screen active">
       <div class="mine-hero">
-        <div class="mine-hero-copy"><span class="eyebrow">THE DARIK NETWORK</span><h2>قدرت از <em>جامعه</em> می‌آید</h2><p>استخراج آزمایشی خود را مدیریت کن و ماینرت را ارتقا بده.</p></div>
+        <div class="mine-hero-copy"><span class="eyebrow">THE DARIK NETWORK</span><h2>قدرت از <em>جامعه</em> می‌آید</h2><p>استخراج خصوصی خود را مدیریت کن و ماینرت را ارتقا بده.</p></div>
         <div class="mine-seal" aria-label="نشان داریک"><span>D</span><small>DARIK</small></div>
       </div>
       <div class="mine-summary">
-        <div class="summary-heading"><span>وضعیت شبکه</span><b><i></i> TEST NETWORK</b></div>
+        <div class="summary-heading"><span>وضعیت شبکه</span><b><i></i> PRIVATE NETWORK</b></div>
         <div class="summary-metrics"><div><small>ماینر فعال</small><strong>LEVEL 01</strong></div><div><small>قدرت فعلی</small><strong>25.6 <i>MH/s</i></strong></div><div><small>دوره استخراج</small><strong>۳ ساعت</strong></div></div>
         <div class="summary-chart"><div><span>نمای گرافیکی عملکرد</span><small>اطلاعات آماری واقعی هنوز متصل نیست</small></div>
           <svg viewBox="0 0 320 62" role="img" aria-label="نمودار تزئینی"><path d="M0 48 C22 45 28 18 50 28 S82 52 104 34 S137 13 157 29 S190 48 211 25 S247 17 267 28 S297 12 320 7" fill="none" stroke="#e3bd65" stroke-width="2.5" stroke-linecap="round"/><path d="M0 48 C22 45 28 18 50 28 S82 52 104 34 S137 13 157 29 S190 48 211 25 S247 17 267 28 S297 12 320 7 L320 62 L0 62Z" fill="url(#mineChartFill)" opacity=".18"/><defs><linearGradient id="mineChartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3bd65"/><stop offset="1" stop-color="#e3bd65" stop-opacity="0"/></linearGradient></defs></svg>
@@ -50,7 +50,7 @@
         <div class="progress-track"><span id="progressBar"></span></div>
         <div id="timer" class="timer">۰۳:۰۰:۰۰</div>
         <button id="mineButton" class="mine-button">شروع استخراج <span>↗</span></button>
-        <p class="card-footnote">این نسخه آزمایشی است؛ استخراج و امتیازها پاداش واقعی DRK نیستند.</p>
+        <p class="card-footnote">این نسخه خصوصی است؛ امتیازها آزمایشی‌اند و پاداش واقعی DRK نیستند.</p>
       </article>
 
       <article class="miner-card" style="margin-top:16px">
@@ -59,7 +59,7 @@
         <div class="balance-line"><strong>۱٬۰۰۰</strong><span>DRK</span></div>
         <p class="card-footnote">پس از اتصال و تأیید مالکیت Tonkeeper، حل کپچا و پرداخت کارمزد GRAM، درخواست برداشت ثبت می‌شود. کارمزد از موجودی DRK کسر نمی‌شود.</p>
         <button class="mine-button" type="button" disabled style="opacity:.55;cursor:not-allowed">برداشت واقعی به‌زودی فعال می‌شود</button>
-        <p class="card-footnote">فعلاً TEST MODE فعال است؛ این دکمه عمداً غیرفعال است تا مبلغ کارمزد، کپچا و تأیید پرداخت روی بلاکچین کامل و آزمایش شوند.</p>
+        <p class="card-footnote">این بخش تا تکمیل و بررسی امن کارمزد، کپچا و تأیید پرداخت روی بلاکچین غیرفعال می‌ماند.</p>
       </article>
 
       <div class="section-title"><div><span class="eyebrow">قدرت بیشتر</span><h2>مرکز ارتقا</h2></div><span class="section-note">ویژگی‌های داریک</span></div>
@@ -92,7 +92,7 @@
 
     <section id="screen-boost" class="screen">
       <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">MINER POWER</span><h2>بوست قدرت استخراج</h2><p>ارتقای آزمایشی برای نمایش ساختار ماینر.</p></div></div>
-      <article class="info-card"><span class="big-icon">⚡</span><h3>قدرت فعلی: <b id="boostRate">25.6 MH/s</b></h3><p>در نسخه آزمایشی، ارتقا فقط نمایشی است و خرید یا پرداختی انجام نمی‌شود.</p><button id="boostButton" class="primary-button">افزایش آزمایشی قدرت</button></article>
+      <article class="info-card"><span class="big-icon">⚡</span><h3>قدرت فعلی: <b id="boostRate">25.6 MH/s</b></h3><p>در نسخه خصوصی، ارتقا فقط نمایشی است و خرید یا پرداختی انجام نمی‌شود.</p><button id="boostButton" class="primary-button">افزایش آزمایشی قدرت</button></article>
     </section>
 
     <section id="screen-referrals" class="screen">
@@ -113,7 +113,7 @@
 
     <section id="screen-profile" class="screen">
       <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">YOUR ACCOUNT</span><h2>پروفایل</h2><p>اطلاعات حساب تلگرام و کیف پول.</p></div></div>
-      <article class="info-card profile-card"><div class="avatar">D</div><h3 id="profileName">کاربر داریک</h3><div class="profile-row"><span>امتیاز آزمایشی</span><b id="profilePoints">۰</b></div><div class="profile-row"><span>وضعیت حساب</span><b>TEST MODE</b></div></article>
+      <article class="info-card profile-card"><div class="avatar">D</div><h3 id="profileName">کاربر داریک</h3><div class="profile-row"><span>امتیاز آزمایشی</span><b id="profilePoints">۰</b></div><div class="profile-row"><span>وضعیت حساب</span><b>نسخه خصوصی</b></div></article>
     </section>
 
     <nav class="bottom-nav">
@@ -125,8 +125,8 @@
       <button class="nav-item" data-screen="profile"><span>◎</span><small>پروفایل</small></button>
     </nav>
     <div id="notice" class="notice" role="status"></div>
-    <footer> DARIK MINER · TEST MODE · قدرت از جامعه می‌آید </footer>
+    <footer> DARIK MINER · PRIVATE PREVIEW · قدرت از جامعه می‌آید </footer>
   </main>
-  <script src="./app.js?v=darik-mining-reward-20261124e"></script>
+  <script src="./app.js?v=darik-private-ui-20261124f"></script>
 </body>
 </html>
