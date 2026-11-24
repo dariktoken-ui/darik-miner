@@ -8,7 +8,7 @@
   const fa = (n) => new Intl.NumberFormat(language === "en" ? "en-US" : "fa-IR").format(Number(n || 0));
     const state = { drkBalance: 0, hashrate: 25.6, miningStart: 0, activeSession: null, wallet: null, user: null, tonUI: null, quests: [], questCompletions: [] };
   let noticeTimer, audioContext = null;
-  let soundEnabled = localStorage.getItem("darik_sound") === "on";
+  let soundEnabled = localStorage.getItem("darik_sound") !== "off";
   let language = localStorage.getItem("darik_language") === "en" ? "en" : "fa";
   const tr = (faText, enText) => language === "en" ? enText : faText;
   function playUiSound(kind = "tap") {
