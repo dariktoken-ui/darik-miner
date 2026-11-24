@@ -52,7 +52,7 @@
     const pending = state.miningSessionId ? Math.floor((elapsed / 60000) * (state.hashrate / 25.6)) : 0;
     let progress = 0, remaining = 3 * 60 * 60 * 1000;
     if (active) { remaining = state.miningEnd - now; progress = Math.min(100, (elapsed / (3 * 60 * 60 * 1000)) * 100); }
-    else if (state.miningSessionId && state.miningEnd && now >= state.miningEnd) { progress = 100; }
+    else if (state.miningSessionId && state.miningEnd && now >= state.miningEnd) { progress = 100; remaining = 0; }
     const seconds = Math.max(0, Math.floor(remaining / 1000));
     const h = Math.floor(seconds / 3600), m = Math.floor((seconds % 3600) / 60), s = seconds % 60;
     $("timer").textContent = [h,m,s].map(x => String(x).padStart(2,"0")).join(":");
