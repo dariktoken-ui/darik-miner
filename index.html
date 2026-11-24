@@ -3,25 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#090909">
+  <meta name="theme-color" content="#080807">
   <title>Darik Miner | داریک ماینر</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
-  <main class="app">
-    <header class="topbar"><div class="brand"><span class="coin">D</span><div><b>DARIK MINER</b><small>گام‌به‌گام تا آینده</small></div></div><span class="test-pill">حالت آزمایشی</span></header>
-    <section class="hero">
-      <div class="eyebrow">DARIK COMMUNITY</div>
-      <h1>استخراج آزمایشی داریک</h1>
-      <p>فعالیت کن، مأموریت‌ها را انجام بده و امتیاز آزمایشی جمع کن.</p>
-      <div class="balance"><span>امتیاز آزمایشی شما</span><strong id="points">۰</strong><small>این امتیازها توکن واقعی DRK نیستند.</small></div>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Darik Miner"><span class="brand-mark">D</span><span><b>DARIK</b><small>MINER</small></span></a>
+      <div class="top-actions"><span class="test-tag"><i></i> TEST MODE</span><button id="walletButton" class="wallet-button">اتصال کیف پول</button></div>
+    </header>
+
+    <section class="welcome">
+      <div><span class="eyebrow">خوش آمدی به دنیای داریک</span><h1>آینده را <em>استخراج کن</em></h1><p>هر روز فعال باش، مأموریت انجام بده و قدرت استخراجت را افزایش بده.</p></div>
+      <div class="coin-art" aria-hidden="true"><span>D</span></div>
     </section>
-    <section class="panel account"><div><span class="muted">وضعیت اتصال</span><b id="connection">در انتظار اتصال تلگرام</b></div><div><span class="muted">کاربر</span><b id="username">مهمان</b></div></section>
-    <section class="section-head"><div><h2>مأموریت‌ها</h2><p>پس از ارسال، مأموریت برای بررسی ثبت می‌شود.</p></div></section>
-    <section id="quests" class="quests"><div class="loading">در حال دریافت مأموریت‌ها…</div></section>
+
+    <section id="screen-miner" class="screen active">
+      <article class="miner-card">
+        <div class="card-top"><span class="live-label"><i></i> وضعیت ماینر</span><span id="minerStatus" class="status-text">آماده شروع</span></div>
+        <div class="balance-label">موجودی امتیاز آزمایشی</div>
+        <div class="balance-line"><strong id="points">۰</strong><span>TEST POINTS</span></div>
+        <div class="miner-stats">
+          <div><small>قدرت استخراج</small><b id="hashrate">25.6 <i>MH/s</i></b></div>
+          <div><small>سطح ماینر</small><b>LEVEL 01</b></div>
+          <div><small>زمان دوره</small><b>۳ ساعت</b></div>
+        </div>
+        <div class="progress-meta"><span>پیشرفت استخراج</span><b id="progressText">۰٪</b></div>
+        <div class="progress-track"><span id="progressBar"></span></div>
+        <div id="timer" class="timer">۰۳:۰۰:۰۰</div>
+        <button id="mineButton" class="mine-button">شروع استخراج <span>↗</span></button>
+        <p class="card-footnote">این نسخه آزمایشی است؛ استخراج و امتیازها پاداش واقعی DRK نیستند.</p>
+      </article>
+
+      <div class="section-title"><div><span class="eyebrow">قدرت بیشتر</span><h2>مرکز ارتقا</h2></div><span class="section-note">ویژگی‌های داریک</span></div>
+      <div class="feature-grid">
+        <button class="feature-card" data-screen="boost"><span class="feature-icon">⚡</span><b>بوست</b><small>افزایش قدرت هش</small><span class="feature-arrow">←</span></button>
+        <button class="feature-card" data-screen="tasks"><span class="feature-icon">✓</span><b>مأموریت‌ها</b><small>فعالیت و امتیاز</small><span class="feature-arrow">←</span></button>
+        <button class="feature-card" data-screen="referrals"><span class="feature-icon">♧</span><b>دعوت دوستان</b><small>گسترش جامعه</small><span class="feature-arrow">←</span></button>
+        <button class="feature-card" data-screen="shop"><span class="feature-icon">◇</span><b>فروشگاه</b><small>ارتقاهای آزمایشی</small><span class="feature-arrow">←</span></button>
+        <button class="feature-card" data-screen="leaderboard"><span class="feature-icon">♛</span><b>رتبه‌بندی</b><small>جدول کاربران</small><span class="feature-arrow">←</span></button>
+        <button class="feature-card" data-screen="profile"><span class="feature-icon">◎</span><b>پروفایل</b><small>حساب کاربری</small><span class="feature-arrow">←</span></button>
+      </div>
+    </section>
+
+    <section id="screen-tasks" class="screen">
+      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">DARIK MISSIONS</span><h2>مأموریت‌ها</h2><p>فعالیت‌ها را انجام بده و برای بررسی بفرست.</p></div></div>
+      <div id="quests" class="quests"><div class="loading">در حال دریافت مأموریت‌ها…</div></div>
+    </section>
+
+    <section id="screen-boost" class="screen">
+      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">MINER POWER</span><h2>بوست قدرت استخراج</h2><p>ارتقای آزمایشی برای نمایش ساختار ماینر.</p></div></div>
+      <article class="info-card"><span class="big-icon">⚡</span><h3>قدرت فعلی: <b id="boostRate">25.6 MH/s</b></h3><p>در نسخه آزمایشی، ارتقا فقط نمایشی است و خرید یا پرداختی انجام نمی‌شود.</p><button id="boostButton" class="primary-button">افزایش آزمایشی قدرت</button></article>
+    </section>
+
+    <section id="screen-referrals" class="screen">
+      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">DARIK COMMUNITY</span><h2>دعوت دوستان</h2><p>دوستانت را به جامعه داریک دعوت کن.</p></div></div>
+      <article class="info-card"><span class="big-icon">♧</span><h3>با هم قوی‌تریم</h3><p>لینک اختصاصی دعوتت را برای دوستانت بفرست.</p><div class="ref-link"><span id="refLink">در حال آماده‌سازی لینک…</span><button id="copyRef">کپی</button></div><button id="shareRef" class="primary-button">اشتراک‌گذاری در تلگرام</button><small class="disclaimer">پاداش معرفی در این نسخه آزمایشی فعال نیست.</small></article>
+      <div class="mini-stat"><span>تعداد دعوت‌های ثبت‌شده</span><b id="refCount">۰</b></div>
+    </section>
+
+    <section id="screen-shop" class="screen">
+      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">DARIK SHOP</span><h2>فروشگاه</h2><p>بخش ارتقاهای آینده داریک.</p></div></div>
+      <article class="info-card"><span class="big-icon">◇</span><h3>فروشگاه به‌زودی</h3><p>خرید بوست و ارتقا پس از تکمیل اتصال امن کیف پول و سیستم پرداخت فعال می‌شود. فعلاً هیچ پرداختی انجام نده.</p></article>
+    </section>
+
+    <section id="screen-leaderboard" class="screen">
+      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">TOP MINERS</span><h2>رتبه‌بندی</h2><p>جدول رتبه‌بندی کاربران داریک.</p></div></div>
+      <article class="info-card"><span class="big-icon">♛</span><h3>جدول رتبه‌بندی</h3><p>برای نمایش رتبه‌های واقعی، باید داده کاربران از سرور دریافت شود. این بخش هنوز به دیتابیس متصل نشده است.</p></article>
+    </section>
+
+    <section id="screen-profile" class="screen">
+      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">YOUR ACCOUNT</span><h2>پروفایل</h2><p>اطلاعات حساب تلگرام و کیف پول.</p></div></div>
+      <article class="info-card profile-card"><div class="avatar">D</div><h3 id="profileName">کاربر داریک</h3><p id="profileWallet">کیف پول متصل نیست</p><div class="profile-row"><span>امتیاز آزمایشی</span><b id="profilePoints">۰</b></div><div class="profile-row"><span>وضعیت حساب</span><b>TEST MODE</b></div><button id="profileWalletButton" class="primary-button">اتصال تون‌کیپر</button></article>
+    </section>
+
+    <nav class="bottom-nav">
+      <button class="nav-item selected" data-screen="miner"><span>⌂</span><small>ماینر</small></button>
+      <button class="nav-item" data-screen="tasks"><span>✓</span><small>مأموریت</small></button>
+      <button class="nav-item" data-screen="referrals"><span>♧</span><small>دعوت</small></button>
+      <button class="nav-item" data-screen="leaderboard"><span>♛</span><small>رتبه‌ها</small></button>
+      <button class="nav-item" data-screen="profile"><span>◎</span><small>پروفایل</small></button>
+    </nav>
     <div id="notice" class="notice" role="status"></div>
-    <footer>داریک ماینر · نسخه آزمایشی · پاداش واقعی DRK غیرفعال است</footer>
+    <footer> DARIK MINER · TEST MODE · قدرت از جامعه می‌آید </footer>
   </main>
   <script src="./app.js"></script>
 </body>
