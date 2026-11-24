@@ -5,7 +5,7 @@
   const $ = (id) => document.getElementById(id);
   const fa = (n) => new Intl.NumberFormat(language === "en" ? "en-US" : "fa-IR").format(Number(n || 0));
   const STORE = "darik_miner_test_v1";
-  const state = { points: 0, hashrate: 25.6, miningStart: 0, miningEnd: 0, activeSession: null, claimInFlight: false, nextClaimRetryAt: 0, wallet: null, user: null, tonUI: null, quests: [] };
+  const state = { points: 0, hashrate: 25.6, miningStart: 0, miningEnd: 0, activeSession: null, claimInFlight: false, nextClaimRetryAt: 0, wallet: null, user: null, tonUI: null, quests: [], questCompletions: [] };
   let noticeTimer, audioContext = null;
   let soundEnabled = localStorage.getItem("darik_sound") !== "off";
   let language = localStorage.getItem("darik_language") === "en" ? "en" : "fa";
@@ -250,7 +250,7 @@
   }
 
   function renderQuests(quests, completions = []) {
-    const done = new Set(completions.map(x => x.quest_id || x.questId));
+    state.quests = quests || []; state.questCompletions = completions || [];\n    const done = new Set(completions.map(x => x.quest_id || x.questId));
     const icons = ["✈","𝕏","◎","◆","★"];
     $("quests").innerHTML = "";
     if (!quests?.length) { $("quests").innerHTML = '<div class="loading">فعلاً مأموریتی ثبت نشده است.</div>'; return; }
