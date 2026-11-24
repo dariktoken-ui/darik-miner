@@ -211,6 +211,36 @@
     $("points").textContent = formatDrk(shown);
     $("profilePoints").textContent = formatDrk(shown);
   }
+  function updatePresence(presence, locallyHidden = false) {
+    const dot = $("presenceDot");
+    if (!dot) return;
+    const online = !locallyHidden && Boolean(presence?.is_online);
+    dot.classList.toggle("is-online", online);
+    dot.classList.toggle("is-offline", !online);
+    const label = dot.parentElement;
+    if (label) label.lastChild.textContent = online
+      ? tr(" آنلاین · ماینر فعال", " Online · Miner active")
+      : tr(" برای سبز شدن، ۵ دقیقه فعال بمان", " Stay active for 5 minutes to turn green");
+  }
+
+  let lastPresencePing = 0;
+  async function pingPresence(force = false) {
+    if (!tg?.initData) return;
+    if (document.visibilityState !== "visible" || !document.hasFocus()) {
+      updatePresence(null, true);
+      return;
+    }
+    if (!force && Date.now() - lastPresencePing < 15000) return;
+    lastPresencePing = Date.now();
+    try {
+      const result = await api("presence_ping");
+      if (result?.ok) updatePresence(result.presence);
+    } catch (error) {
+      console.warn("Presence heartbeat:", error);
+      updatePresence(null, true);
+    }
+  }
+
   function updateMining() {
     const now = Date.now(), session = state.activeSession;
     const start = session?.started_at ? new Date(session.started_at).getTime() : 0;
@@ -384,4 +414,12 @@
     }
   }, 1000);
   bootstrap();
+  pingPresence(true);
+  setInterval(() => pingPresence(), 45000);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") pingPresence(true);
+    else updatePresence(null, true);
+  });
+  window.addEventListener("focus", () => pingPresence(true));
+  window.addEventListener("blur", () => updatePresence(null, true));
 })();
