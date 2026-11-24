@@ -142,3 +142,11 @@ body{background:radial-gradient(ellipse at 50% -10%,#1a687455,transparent 42%),r
 .referral-user-row small{color:#8afff0;font-size:11px;white-space:nowrap}
 .referral-load-more{display:block;width:100%;margin-top:12px;padding:11px;border:1px solid #347c78;border-radius:12px;background:#17484a;color:#8afff0;font:inherit;font-weight:700}
 .referral-load-more[hidden]{display:none}
+
+/* Referral qualification state */
+.referral-row-details{display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:0}
+.referral-row-details small{color:#8fa7ad;font-size:10px}
+.referral-status{font-size:10px;line-height:1.5;font-weight:700;text-align:right}
+.referral-status.qualified{color:#7ee0a0}
+.referral-status.pending{color:#e9bf70}
+#copyRef:disabled,#shareRef:disabled{opacity:.48;filter:saturate(.35);cursor:not-allowed}
