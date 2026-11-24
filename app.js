@@ -4,23 +4,16 @@
   const tg = window.Telegram?.WebApp;
   const $ = (id) => document.getElementById(id);
   const fa = (n) => new Intl.NumberFormat("fa-IR").format(Number(n || 0));
-  const STORE = "darik_miner_test_v1";
-  const state = { points: 0, hashrate: 25.6, miningStart: 0, miningEnd: 0, wallet: null, user: null, tonUI: null, quests: [] };
+  const state = { points: 0, hashrate: 25.6, miningStart: 0, miningEnd: 0, miningSessionId: null, wallet: null, user: null, tonUI: null, quests: [] };
   let noticeTimer;
   function notice(message) {
     $("notice").textContent = message; $("notice").classList.add("show");
     clearTimeout(noticeTimer); noticeTimer = setTimeout(() => $("notice").classList.remove("show"), 3800);
   }
-  function readStore() {
-    try { const saved = JSON.parse(localStorage.getItem(STORE) || "{}"); state.miningStart = saved.miningStart || 0; state.miningEnd = saved.miningEnd || 0; state.hashrate = saved.hashrate || 25.6; }
-    catch (_) {}
-  }
-  function saveStore() { localStorage.setItem(STORE, JSON.stringify({ miningStart: state.miningStart, miningEnd: state.miningEnd, hashrate: state.hashrate })); }
   if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor?.("#080807"); tg.setBackgroundColor?.("#080807"); }
   state.user = tg?.initDataUnsafe?.user || null;
   $("profileName").textContent = state.user ? [state.user.first_name, state.user.last_name].filter(Boolean).join(" ") : "کاربر داریک";
   $("username")?.textContent;
-  readStore();
 
   function go(screen) {
     document.querySelectorAll(".screen").forEach(el => el.classList.toggle("active", el.id === "screen-" + screen));
@@ -55,26 +48,47 @@
 
   function updateMining() {
     const now = Date.now(), active = state.miningEnd > now;
+    const elapsed = state.miningStart ? Math.max(0, Math.min(3 * 60 * 60 * 1000, now - state.miningStart)) : 0;
+    const pending = state.miningSessionId ? Math.floor((elapsed / 60000) * (state.hashrate / 25.6)) : 0;
     let progress = 0, remaining = 3 * 60 * 60 * 1000;
-    if (active) { remaining = state.miningEnd - now; progress = Math.min(100, ((now - state.miningStart) / (3 * 60 * 60 * 1000)) * 100); }
-    else if (state.miningEnd && now >= state.miningEnd) { progress = 100; }
+    if (active) { remaining = state.miningEnd - now; progress = Math.min(100, (elapsed / (3 * 60 * 60 * 1000)) * 100); }
+    else if (state.miningSessionId && state.miningEnd && now >= state.miningEnd) { progress = 100; }
     const seconds = Math.max(0, Math.floor(remaining / 1000));
     const h = Math.floor(seconds / 3600), m = Math.floor((seconds % 3600) / 60), s = seconds % 60;
     $("timer").textContent = [h,m,s].map(x => String(x).padStart(2,"0")).join(":");
     $("progressBar").style.width = progress + "%"; $("progressText").textContent = fa(Math.floor(progress)) + "٪";
-    $("minerStatus").textContent = active ? "در حال استخراج" : progress === 100 ? "دوره آزمایشی تمام شد" : "آماده شروع";
+    $("minerStatus").textContent = active ? "در حال استخراج" : progress === 100 ? "آماده دریافت امتیاز" : "آماده شروع";
     $("mineButton").classList.toggle("running", active);
-    $("mineButton").innerHTML = active ? "توقف دوره آزمایشی <span>Ⅱ</span>" : progress === 100 ? "شروع دوره جدید <span>↗</span>" : "شروع استخراج <span>↗</span>";
+    $("mineButton").disabled = active;
+    $("mineButton").innerHTML = active ? "استخراج در حال انجام <span>Ⅱ</span>" : progress === 100 ? "دریافت امتیاز آزمایشی <span>↗</span>" : "شروع استخراج <span>↗</span>";
+    $("points").textContent = fa(state.points + pending);
     $("hashrate").innerHTML = state.hashrate.toFixed(1) + " <i>MH/s</i>";
     $("boostRate").textContent = state.hashrate.toFixed(1) + " MH/s";
   }
-  $("mineButton").addEventListener("click", () => {
-    if (state.miningEnd > Date.now()) { state.miningStart = 0; state.miningEnd = 0; saveStore(); notice("دوره آزمایشی متوقف شد."); }
-    else { state.miningStart = Date.now(); state.miningEnd = state.miningStart + 3 * 60 * 60 * 1000; saveStore(); notice("دوره ۳ ساعته آزمایشی شروع شد."); }
-    updateMining();
+  $("mineButton").addEventListener("click", async () => {
+    const button = $("mineButton");
+    button.disabled = true;
+    try {
+      if (state.miningSessionId && Date.now() >= state.miningEnd) {
+        const result = await api("claim_mining");
+        if (!result.ok) throw new Error("دوره استخراج برای دریافت امتیاز آماده نیست.");
+        notice("امتیاز آزمایشی در حساب ثبت شد.");
+        state.miningSessionId = null; state.miningStart = 0; state.miningEnd = 0;
+        await bootstrap();
+      } else if (!state.miningSessionId) {
+        const result = await api("start_mining");
+        if (!result?.ok || !result.id) throw new Error("شروع استخراج از سرور تأیید نشد.");
+        state.miningSessionId = result.id;
+        state.miningStart = Date.parse(result.started_at);
+        state.miningEnd = Date.parse(result.ends_at);
+        state.hashrate = Number(result.hash_rate || 25.6);
+        notice("استخراج سه‌ساعته روی سرور شروع شد.");
+      }
+    } catch (e) { notice(e.message || "عملیات استخراج ناموفق بود."); }
+    finally { button.disabled = false; updateMining(); }
   });
   $("boostButton").addEventListener("click", () => {
-    state.hashrate = Math.min(99.9, state.hashrate + 1.6); saveStore(); updateMining(); notice("قدرت نمایشی ماینر افزایش یافت؛ این ارتقا خرید واقعی نیست.");
+    notice("افزایش قدرت فقط پس از خرید واقعی DRK و تأیید موجودی کیف پول فعال می‌شود.");
   });
 
   function renderQuests(quests, completions = []) {
@@ -117,7 +131,13 @@
       state.points = Number(data.testPoints ?? profile.test_points ?? profile.points ?? 0);
       $("points").textContent = fa(state.points); $("profilePoints").textContent = fa(state.points);
       renderQuests(data.quests || [], data.questCompletions || []);
-      if (data.mode === "TEST" || data.realDrkRewardsEnabled === false) notice("حالت آزمایشی فعال است؛ پاداش واقعی DRK غیرفعال است.");
+      const session = data.activeSession;
+      state.miningSessionId = session?.id || null;
+      state.miningStart = session ? Date.parse(session.started_at) : 0;
+      state.miningEnd = session ? Date.parse(session.ends_at) : 0;
+      state.hashrate = Number(session?.hash_rate || 25.6);
+      updateMining();
+      if (data.mode === "TEST" || data.realDrkRewardsEnabled === false) notice("حالت آزمایشی فعال است؛ امتیازها آزمایشی‌اند و پاداش واقعی DRK غیرفعال است.");
     } catch (e) { $("quests").innerHTML = '<div class="loading">دریافت اطلاعات سرور ناموفق بود. اتصال اینترنت را بررسی کن.</div>'; notice(e.message); }
   }
 
