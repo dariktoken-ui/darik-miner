@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css?v=darik-presence-20261125b">
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="./style.css?v=darik-referrals-20261125c">
+  <script src="https://telegram.org/js/telegram-web-app.js?v=darik-referrals-20261125c"></script>
   <script src="https://unpkg.com/@tonconnect/ui@5.0.4/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
@@ -101,7 +101,13 @@
     <section id="screen-referrals" class="screen">
       <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">DARIK COMMUNITY</span><h2>دعوت دوستان</h2><p>دوستانت را به جامعه داریک دعوت کن.</p></div></div>
       <article class="info-card"><span class="big-icon">♧</span><h3>با هم قوی‌تریم</h3><p>لینک اختصاصی دعوتت را برای دوستانت بفرست.</p><div class="ref-link"><span id="refLink">در حال آماده‌سازی لینک…</span><button id="copyRef">کپی</button></div><button id="shareRef" class="primary-button">اشتراک‌گذاری در تلگرام</button><small class="disclaimer">پاداش معرفی در این نسخه آزمایشی فعال نیست.</small></article>
-      <div class="mini-stat"><span>تعداد دعوت‌های ثبت‌شده</span><b id="refCount">۰</b></div>
+      <div class="mini-stat"><span>تعداد کل زیرمجموعه‌ها</span><b id="refCount">۰</b></div>
+      <article class="referral-network-card">
+        <div class="referral-network-heading"><b>شناسه‌های زیرمجموعه‌ها</b><small id="referralMeta">در حال آماده‌سازی…</small></div>
+        <p id="referralNote">فقط شناسه تلگرام و سطح زیرمجموعه نمایش داده می‌شود؛ دسترسی به حساب، کیف پول یا اطلاعات خصوصی اعضا وجود ندارد.</p>
+        <div id="referralList" class="referral-list"><div class="loading">برای دریافت فهرست وارد تلگرام شو.</div></div>
+        <button id="loadMoreReferrals" class="referral-load-more" type="button" hidden>نمایش موارد بیشتر</button>
+      </article>
     </section>
 
     <section id="screen-shop" class="screen">
