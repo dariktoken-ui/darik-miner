@@ -30,9 +30,11 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
   document.querySelectorAll("[data-screen]").forEach(el => el.addEventListener("click", () => go(el.dataset.screen)));
+  function shortWallet(address) {
+    return address ? address.slice(0, 6) + "…" + address.slice(-6) : "اتصال کیف پول";
+  }
   function updateProfile() {
     $("profilePoints").textContent = fa(state.points);
-    $("profileWallet").textContent = state.wallet ? state.wallet : "کیف پول متصل نیست";
   }
   function makeReferral() {
     const id = state.user?.id;
@@ -126,8 +128,8 @@
         state.tonUI = new window.TON_CONNECT_UI.TonConnectUI({ manifestUrl, buttonRootId: null });
         state.tonUI.onStatusChange(wallet => {
           state.wallet = wallet?.account?.address || null;
-          $("walletButton").textContent = state.wallet ? "کیف پول متصل" : "اتصال کیف پول";
-          $("profileWallet").textContent = state.wallet || "کیف پول متصل نیست";
+          $("walletButton").textContent = shortWallet(state.wallet);
+          $("walletButton").title = state.wallet || "اتصال کیف پول";
           if (state.wallet) notice("کیف پول با موفقیت متصل شد.");
           updateProfile();
         });
@@ -139,7 +141,6 @@
     try { await state.tonUI.openModal(); } catch (_) { notice("اتصال کیف پول انجام نشد."); }
   }
   $("walletButton").addEventListener("click", connectWallet);
-  $("profileWalletButton").addEventListener("click", connectWallet);
   setupWallet();
   updateMining(); setInterval(updateMining, 1000);
   bootstrap();
