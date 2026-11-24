@@ -1,61 +1,146 @@
 (() => {
   const API_URL = "https://fntppqmximwnwfmncdnl.supabase.co/functions/v1/darik-api";
+  const BOT_USERNAME = "DarikQuestBot";
   const tg = window.Telegram?.WebApp;
   const $ = (id) => document.getElementById(id);
   const fa = (n) => new Intl.NumberFormat("fa-IR").format(Number(n || 0));
-  const notice = (message) => { $("notice").textContent = message; $("notice").classList.add("show"); };
-  const initData = tg?.initData || "";
-  if (tg) { tg.ready(); tg.expand(); }
-  const user = tg?.initDataUnsafe?.user;
-  $("username").textContent = user ? (user.first_name || user.username || "کاربر تلگرام") : "حالت پیش‌نمایش";
-  $("connection").textContent = initData ? "متصل به تلگرام" : "برای استفاده، از داخل تلگرام باز کنید";
-
-  async function api(action, extra = {}) {
-    if (!initData) throw new Error("این برنامه باید از داخل ربات تلگرام باز شود.");
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": "tma " + initData },
-      body: JSON.stringify({ action, ...extra })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error || data.message || "ارتباط با سرور ناموفق بود.");
-    return data;
+  const STORE = "darik_miner_test_v1";
+  const state = { points: 0, hashrate: 25.6, miningStart: 0, miningEnd: 0, wallet: null, user: null, tonUI: null, quests: [] };
+  let noticeTimer;
+  function notice(message) {
+    $("notice").textContent = message; $("notice").classList.add("show");
+    clearTimeout(noticeTimer); noticeTimer = setTimeout(() => $("notice").classList.remove("show"), 3800);
   }
+  function readStore() {
+    try { const saved = JSON.parse(localStorage.getItem(STORE) || "{}"); state.miningStart = saved.miningStart || 0; state.miningEnd = saved.miningEnd || 0; state.hashrate = saved.hashrate || 25.6; }
+    catch (_) {}
+  }
+  function saveStore() { localStorage.setItem(STORE, JSON.stringify({ miningStart: state.miningStart, miningEnd: state.miningEnd, hashrate: state.hashrate })); }
+  if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor?.("#080807"); tg.setBackgroundColor?.("#080807"); }
+  state.user = tg?.initDataUnsafe?.user || null;
+  $("profileName").textContent = state.user ? [state.user.first_name, state.user.last_name].filter(Boolean).join(" ") : "کاربر داریک";
+  $("username")?.textContent;
+  readStore();
+
+  function go(screen) {
+    document.querySelectorAll(".screen").forEach(el => el.classList.toggle("active", el.id === "screen-" + screen));
+    document.querySelectorAll(".nav-item").forEach(el => el.classList.toggle("selected", el.dataset.screen === screen));
+    if (screen === "referrals") makeReferral();
+    if (screen === "profile") updateProfile();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  document.querySelectorAll("[data-screen]").forEach(el => el.addEventListener("click", () => go(el.dataset.screen)));
+  function updateProfile() {
+    $("profilePoints").textContent = fa(state.points);
+    $("profileWallet").textContent = state.wallet ? state.wallet : "کیف پول متصل نیست";
+  }
+  function makeReferral() {
+    const id = state.user?.id;
+    const link = id ? "https://t.me/" + BOT_USERNAME + "?startapp=ref_" + id : "لینک دعوت پس از ورود از تلگرام ساخته می‌شود";
+    $("refLink").textContent = link;
+    $("refCount").textContent = "۰";
+  }
+  $("copyRef").addEventListener("click", async () => {
+    const value = $("refLink").textContent;
+    try { await navigator.clipboard.writeText(value); notice("لینک دعوت کپی شد."); }
+    catch (_) { notice("کپی خودکار ممکن نیست؛ لینک را انتخاب و کپی کن."); }
+  });
+  $("shareRef").addEventListener("click", () => {
+    const link = $("refLink").textContent;
+    const share = "https://t.me/share/url?url=" + encodeURIComponent(link) + "&text=" + encodeURIComponent("به داریک ماینر بپیوند!");
+    if (tg?.openTelegramLink) tg.openTelegramLink(share); else window.open(share, "_blank");
+  });
+
+  function updateMining() {
+    const now = Date.now(), active = state.miningEnd > now;
+    let progress = 0, remaining = 3 * 60 * 60 * 1000;
+    if (active) { remaining = state.miningEnd - now; progress = Math.min(100, ((now - state.miningStart) / (3 * 60 * 60 * 1000)) * 100); }
+    else if (state.miningEnd && now >= state.miningEnd) { progress = 100; }
+    const seconds = Math.max(0, Math.floor(remaining / 1000));
+    const h = Math.floor(seconds / 3600), m = Math.floor((seconds % 3600) / 60), s = seconds % 60;
+    $("timer").textContent = [h,m,s].map(x => String(x).padStart(2,"0")).join(":");
+    $("progressBar").style.width = progress + "%"; $("progressText").textContent = fa(Math.floor(progress)) + "٪";
+    $("minerStatus").textContent = active ? "در حال استخراج" : progress === 100 ? "دوره آزمایشی تمام شد" : "آماده شروع";
+    $("mineButton").classList.toggle("running", active);
+    $("mineButton").innerHTML = active ? "توقف دوره آزمایشی <span>Ⅱ</span>" : progress === 100 ? "شروع دوره جدید <span>↗</span>" : "شروع استخراج <span>↗</span>";
+    $("hashrate").innerHTML = state.hashrate.toFixed(1) + " <i>MH/s</i>";
+    $("boostRate").textContent = state.hashrate.toFixed(1) + " MH/s";
+  }
+  $("mineButton").addEventListener("click", () => {
+    if (state.miningEnd > Date.now()) { state.miningStart = 0; state.miningEnd = 0; saveStore(); notice("دوره آزمایشی متوقف شد."); }
+    else { state.miningStart = Date.now(); state.miningEnd = state.miningStart + 3 * 60 * 60 * 1000; saveStore(); notice("دوره ۳ ساعته آزمایشی شروع شد."); }
+    updateMining();
+  });
+  $("boostButton").addEventListener("click", () => {
+    state.hashrate = Math.min(99.9, state.hashrate + 1.6); saveStore(); updateMining(); notice("قدرت نمایشی ماینر افزایش یافت؛ این ارتقا خرید واقعی نیست.");
+  });
+
   function renderQuests(quests, completions = []) {
     const done = new Set(completions.map(x => x.quest_id || x.questId));
     const icons = ["✈","𝕏","◎","◆","★"];
     $("quests").innerHTML = "";
     if (!quests?.length) { $("quests").innerHTML = '<div class="loading">فعلاً مأموریتی ثبت نشده است.</div>'; return; }
     quests.forEach((q, i) => {
-      const id = q.id || q.quest_id;
-      const isDone = done.has(id) || q.status === "pending" || q.completed === true;
+      const id = q.id || q.quest_id, isDone = done.has(id) || q.status === "pending" || q.completed === true;
       const card = document.createElement("article"); card.className = "quest";
       const icon = document.createElement("div"); icon.className = "quest-icon"; icon.textContent = icons[i % icons.length];
       const info = document.createElement("div"); info.className = "quest-info";
       const title = document.createElement("b"); title.textContent = q.title_fa || q.title || q.name || "مأموریت داریک";
-      const desc = document.createElement("small"); desc.textContent = q.description_fa || q.description || "برای دریافت امتیاز آزمایشی انجام دهید.";
+      const desc = document.createElement("small"); desc.textContent = q.description_fa || q.description || "برای دریافت امتیاز آزمایشی انجام بده.";
       info.append(title, desc);
       const reward = document.createElement("span"); reward.className = "reward"; reward.textContent = "+" + fa(q.reward_points || q.points || q.reward || 50);
-      const btn = document.createElement("button"); btn.textContent = isDone ? "ثبت شده" : "ارسال برای بررسی"; btn.disabled = isDone;
+      const btn = document.createElement("button"); btn.textContent = isDone ? "ثبت شده" : "ارسال";
+      btn.disabled = isDone;
       btn.addEventListener("click", async () => {
         btn.disabled = true; btn.textContent = "در حال ارسال…";
-        try { await api("submit_quest", { questId: id }); btn.textContent = "در انتظار بررسی"; notice("مأموریت ارسال شد و پس از بررسی تأیید می‌شود."); }
-        catch (e) { btn.disabled = false; btn.textContent = "ارسال برای بررسی"; notice(e.message); }
+        try { await api("submit_quest", { questId: id }); btn.textContent = "در انتظار بررسی"; notice("مأموریت برای بررسی ثبت شد."); }
+        catch (e) { btn.disabled = false; btn.textContent = "ارسال"; notice(e.message); }
       });
       card.append(icon, info, reward, btn); $("quests").append(card);
     });
   }
-  async function start() {
+  async function api(action, extra = {}) {
+    const initData = tg?.initData || "";
+    if (!initData) throw new Error("برای استفاده از مأموریت‌ها، برنامه را از داخل ربات تلگرام باز کن.");
+    const response = await fetch(API_URL, { method:"POST", headers:{ "Content-Type":"application/json", "Authorization":"tma " + initData }, body:JSON.stringify({ action, ...extra }) });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || data.message || "ارتباط با سرور ناموفق بود.");
+    return data;
+  }
+  async function bootstrap() {
+    if (!tg?.initData) { $("quests").innerHTML = '<div class="loading">برای دریافت مأموریت‌ها، از داخل ربات @DarikQuestBot وارد شو.</div>'; return; }
     try {
       const data = await api("bootstrap");
       const profile = data.profile || {};
-      $("points").textContent = fa(data.testPoints ?? profile.test_points ?? profile.points ?? 0);
+      state.points = Number(data.testPoints ?? profile.test_points ?? profile.points ?? 0);
+      $("points").textContent = fa(state.points); $("profilePoints").textContent = fa(state.points);
       renderQuests(data.quests || [], data.questCompletions || []);
-      if (data.mode === "TEST" || data.realDrkRewardsEnabled === false) notice("حالت آزمایشی فعال است؛ هیچ DRK واقعی توزیع نمی‌شود.");
-    } catch (e) {
-      $("quests").innerHTML = '<div class="loading">برای دریافت اطلاعات، برنامه را از دکمه منوی ربات @DarikQuestBot باز کنید.</div>';
-      if (initData) notice(e.message);
-    }
+      if (data.mode === "TEST" || data.realDrkRewardsEnabled === false) notice("حالت آزمایشی فعال است؛ پاداش واقعی DRK غیرفعال است.");
+    } catch (e) { $("quests").innerHTML = '<div class="loading">دریافت اطلاعات سرور ناموفق بود. اتصال اینترنت را بررسی کن.</div>'; notice(e.message); }
   }
-  start();
+
+  function setupWallet() {
+    const manifestUrl = "https://dariktoken-ui.github.io/darik-miner/tonconnect-manifest.json";
+    try {
+      if (window.TON_CONNECT_UI?.TonConnectUI) {
+        state.tonUI = new window.TON_CONNECT_UI.TonConnectUI({ manifestUrl, buttonRootId: null });
+        state.tonUI.onStatusChange(wallet => {
+          state.wallet = wallet?.account?.address || null;
+          $("walletButton").textContent = state.wallet ? "کیف پول متصل" : "اتصال کیف پول";
+          $("profileWallet").textContent = state.wallet || "کیف پول متصل نیست";
+          if (state.wallet) notice("کیف پول با موفقیت متصل شد.");
+          updateProfile();
+        });
+      }
+    } catch (e) { console.warn("TON Connect init:", e); }
+  }
+  async function connectWallet() {
+    if (!state.tonUI) { notice("اتصال تون‌کیپر بارگذاری نشد؛ صفحه را دوباره باز کن."); return; }
+    try { await state.tonUI.openModal(); } catch (_) { notice("اتصال کیف پول انجام نشد."); }
+  }
+  $("walletButton").addEventListener("click", connectWallet);
+  $("profileWalletButton").addEventListener("click", connectWallet);
+  setupWallet();
+  updateMining(); setInterval(updateMining, 1000);
+  bootstrap();
 })();
