@@ -9,7 +9,7 @@
     const DRK_MASTER_RAW = "0:9a5dd3ecd2a79f15dce6dbd5c1a0ffb024213fe47294b60660633b15ac590cdb";
   const state = { drkBalance: 0, walletDrkBalance: null, walletBalanceUpdatedAt: 0, walletBalanceLoading: false, hashrate: 25.6, minerLevel: 1, miningStart: 0, activeSession: null, wallet: null, user: null, tonUI: null, quests: [], questCompletions: [] };
   let noticeTimer, audioContext = null;
-  let soundEnabled = localStorage.getItem("darik_sound") !== "off";
+  let soundEnabled = localStorage.getItem("darik_sound") === "on";
   let language = localStorage.getItem("darik_language") === "en" ? "en" : "fa";
   const tr = (faText, enText) => language === "en" ? enText : faText;
   function playUiSound(kind = "tap") {
@@ -206,8 +206,11 @@
   }
   let referralOffset = 0, referralTotal = 0, referralBusy = false;
   async function makeReferral(reset = true) {
-    // Referral sharing stays disabled during private preparation.
-    $("refLink").textContent = tr("لینک دعوت پس از تکمیل و آزمایش نسخه خصوصی فعال می‌شود.", "Invite links will be enabled after private testing.");
+    const inviteUrl = state.user && state.user.id ? "https://t.me/" + BOT_USERNAME + "?startapp=ref_" + state.user.id : "";
+    $("refLink").textContent = inviteUrl || tr("برای ساخت لینک دعوت، از داخل تلگرام وارد شو.", "Open inside Telegram to create your invite link.");
+    $("copyRef").disabled = !inviteUrl;
+    $("shareRef").disabled = !inviteUrl;
+    $("shareRef").textContent = tr("اشتراک‌گذاری لینک دعوت", "Share invite link");
     if (!tg?.initData) {
       $("referralList").textContent = tr("برای مشاهده شبکه دعوت، برنامه را از داخل تلگرام باز کن.", "Open the Mini App inside Telegram to view your downline.");
       return;
@@ -273,6 +276,7 @@
   $("loadMoreReferrals").addEventListener("click", () => makeReferral(false));
   $("shareRef").addEventListener("click", () => {
     const link = $("refLink").textContent;
+    if (!link.startsWith("https://t.me/")) { notice(tr("لینک دعوت هنوز ساخته نشده است.", "Invite link is not ready.")); return; }
     const share = "https://t.me/share/url?url=" + encodeURIComponent(link) + "&text=" + encodeURIComponent("به داریک ماینر بپیوند!");
     if (tg?.openTelegramLink) tg.openTelegramLink(share); else window.open(share, "_blank");
   });
@@ -449,7 +453,7 @@
       const title = document.createElement("b"); title.textContent = (language === "en" ? (q.title_en || q.title || q.name) : (q.title_fa || q.title || q.name)) || tr("مأموریت داریک","Darik mission");
       const desc = document.createElement("small"); desc.textContent = (language === "en" ? (q.description_en || q.description) : (q.description_fa || q.description)) || tr("برای تکمیل مأموریت انجام بده.","Complete this mission.");
       info.append(title, desc);
-      const reward = document.createElement("span"); reward.className = "reward"; reward.textContent = tr("بررسی پاداش","Reward review");
+      const reward = document.createElement("span"); reward.className = "reward"; reward.textContent = tr("۵ DRK · پس از تأیید","5 DRK · after approval");
       const btn = document.createElement("button"); btn.textContent = isDone ? tr("ثبت شده","Submitted") : tr("ارسال","Submit");
       btn.disabled = isDone;
       btn.addEventListener("click", async () => {
@@ -594,11 +598,11 @@
   $("soundButton").addEventListener("click", () => {
     soundEnabled = !soundEnabled;
     localStorage.setItem("darik_sound", soundEnabled ? "on" : "off");
-    if (soundEnabled) { startBackgroundMusic(); playUiSound("success"); }
+    if (soundEnabled) playUiSound("success");
     else stopBackgroundMusic();
     applyLanguage();
   });
-  document.addEventListener("pointerdown", () => { if (soundEnabled) startBackgroundMusic(); }, { once: true });
+  stopBackgroundMusic(); // Ambient music disabled; only optional short UI feedback remains.
   setupWallet();
   applyLanguage();
   updateMining();
