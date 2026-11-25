@@ -443,12 +443,15 @@
   ["minerNext","minerNextBottom"].forEach(id => $(id)?.addEventListener("click",()=>setMinerPage(minerPage+1)));
   function renderQuests(quests, completions = []) {
     state.quests = quests || []; state.questCompletions = completions || [];
-    const done = new Set(completions.map(x => x.quest_id || x.questId));
+    const statusByQuest = new Map(completions.map(x => [x.quest_id || x.questId, x.status || "pending"]));
     const icons = ["✈","𝕏","◎","◆","★"];
     $("quests").innerHTML = "";
     if (!quests?.length) { $("quests").innerHTML = '<div class="loading">فعلاً مأموریتی ثبت نشده است.</div>'; return; }
     quests.forEach((q, i) => {
-      const id = q.id || q.quest_id, isDone = done.has(id) || q.status === "pending" || q.completed === true;
+      const id = q.id || q.quest_id;
+      const completionStatus = statusByQuest.get(id);
+      const isDone = completionStatus === "pending" || completionStatus === "approved" || q.status === "pending" || q.completed === true;
+      const isRejected = completionStatus === "rejected";
       const card = document.createElement("article"); card.className = "quest";
       const icon = document.createElement("div"); icon.className = "quest-icon"; icon.textContent = icons[i % icons.length];
       const info = document.createElement("div"); info.className = "quest-info";
@@ -458,12 +461,20 @@
       const reward = document.createElement("span"); reward.className = "reward"; reward.textContent = tr("۵ DRK · پس از تأیید","5 DRK · after approval");
       const actions = document.createElement("div"); actions.className = "quest-actions";
       if (q.target_url) { const open = document.createElement("a"); open.className = "quest-open"; open.href = q.target_url; open.target = "_blank"; open.rel = "noopener noreferrer"; open.textContent = tr("انجام مأموریت","Open task"); actions.append(open); }
-      const btn = document.createElement("button"); btn.textContent = isDone ? tr("ثبت شده","Submitted") : tr("ارسال برای بررسی","Submit for review");
+      const btn = document.createElement("button");
+      btn.textContent = completionStatus === "approved" ? tr("تأیید و تکمیل شد","Approved") : completionStatus === "pending" ? tr("در انتظار بررسی","Pending review") : isRejected ? tr("ارسال مجدد","Resubmit") : tr("ارسال برای بررسی","Submit for review");
       btn.disabled = isDone;
       btn.addEventListener("click", async () => {
         btn.disabled = true; btn.textContent = tr("در حال ارسال…","Submitting…");
-        try { await api("submit_quest", { questId: id }); btn.textContent = tr("در انتظار بررسی","Pending review"); notice(tr("مأموریت برای بررسی ثبت شد.","Mission submitted for review."), "success"); }
-        catch (e) { btn.disabled = false; btn.textContent = tr("ارسال","Submit"); notice(e.message); }
+        try {
+          const result = await api("submit_quest", { questId: id });
+          const nextStatus = result?.completion?.status || result?.status || "pending";
+          const existingIndex = state.questCompletions.findIndex(x => (x.quest_id || x.questId) === id);
+          const record = { quest_id: id, status: nextStatus };
+          if (existingIndex >= 0) state.questCompletions[existingIndex] = record; else state.questCompletions.push(record);
+          renderQuests(state.quests, state.questCompletions);
+          notice(tr("درخواست مأموریت ثبت شد و پس از بررسی اعلام می‌شود.","Mission submitted. Its review result will appear here."), "success");
+        } catch (e) { btn.disabled = false; btn.textContent = tr("ارسال مجدد","Retry submission"); notice(e.message); }
       });
       actions.append(btn); card.append(icon, info, reward, actions); $("quests").append(card);
     });
@@ -495,7 +506,14 @@
       renderPoints(); updateMining();
       renderQuests(data.quests || [], data.questCompletions || []);
       if (data.realDrkRewardsEnabled === false) notice(tr("موجودی DRK داخل برنامه محاسبه می‌شود؛ برداشت روی بلاکچین هنوز فعال نیست.","DRK accrues in-app; on-chain withdrawals are not enabled yet."));
-    } catch (e) { $("quests").innerHTML = '<div class="loading">دریافت اطلاعات سرور ناموفق بود. اتصال اینترنت را بررسی کن.</div>'; notice(e.message); }
+    } catch (e) {
+      const root = $("quests"); root.innerHTML = "";
+      const message = document.createElement("div"); message.className = "loading";
+      message.textContent = tr("دریافت اطلاعات از سرور ناموفق بود: ", "Could not load account data: ") + (e?.message || tr("خطای نامشخص", "Unknown error"));
+      const retry = document.createElement("button"); retry.type = "button"; retry.className = "primary-button";
+      retry.textContent = tr("تلاش دوباره", "Retry"); retry.addEventListener("click", bootstrap);
+      root.append(message, retry); notice(e.message);
+    }
   }
 
   function normalizeTonAddress(value) {
