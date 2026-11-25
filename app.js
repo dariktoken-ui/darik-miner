@@ -129,6 +129,8 @@
     set(".miner-card .live-label", en ? ["Miner status", "Darik withdrawal"] : ["وضعیت ماینر", "برداشت داریک"]);
     set(".miner-card .balance-label", en ? ["Darik balance", "Minimum withdrawal threshold"] : ["موجودی داریک", "حداقل برداشت"]);
     set(".balance-line span", "DRK");
+    set("#walletDrkLabel", en ? "DRK in Tonkeeper" : "موجودی DRK در Tonkeeper");
+    set("#combinedDrkLabel", en ? "Wallet + in-app total" : "مجموع موجودی کیف پول و برنامه");
     set(".miner-stats small", en ? ["Mining power", "Miner level", "Mining time"] : ["قدرت استخراج", "سطح ماینر", "مدت استخراج"]);
     set(".progress-meta span", en ? "Mining progress" : "پیشرفت استخراج");
     set(".section-title .eyebrow", en ? "MORE POWER" : "قدرت بیشتر");
