@@ -335,7 +335,7 @@
     const minutes = Math.floor((elapsed % 3600) / 60);
     const seconds = elapsed % 60;
     const clock = [hours, minutes, seconds].map(x => String(x).padStart(2, "0")).join(":");
-    $("timer").textContent = days ? tr(fa(days) + " روز · " + clock, days + "d · " + clock) : clock;
+    $("timer").hidden = true;
     $("progressBar").style.width = active ? "100%" : "0%";
     $("progressText").textContent = active ? tr("استخراج فعال · شمارش پیوسته","Mining active · elapsed time") : "۰٪";
     $("minerStatus").textContent = active ? tr("در حال استخراج DRK","Mining DRK") : tr("آماده شروع","Ready to start");
