@@ -558,3 +558,8 @@ body{
  .wallet-balance-detail b{font-size:9px}
  .feature-card{padding:12px}
 }
+
+/* Mission action layout */
+.quest-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;grid-column:1/-1;margin-top:10px}
+.quest-open{display:inline-flex;align-items:center;justify-content:center;padding:9px 13px;border:1px solid rgba(227,189,101,.42);border-radius:10px;color:#f0d18a;text-decoration:none;font-weight:700;font-size:12px}
+.quest-actions button{padding:9px 13px;border-radius:10px}
