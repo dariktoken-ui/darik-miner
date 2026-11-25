@@ -189,3 +189,87 @@ html[dir="ltr"] .boost-multiplier{text-align:left}
 .wallet-balance-detail b{color:#8afff0;font-size:11px;text-align:left;direction:ltr}
 .wallet-balance-detail.total{border-color:#80652f;background:#211b10}
 .wallet-balance-detail.total b{color:#ffe39a}
+
+
+/* DARIK MAIN BUILD — ATF-inspired black and antique gold visual overhaul */
+:root{color-scheme:dark;--bg:#070604;--surface:#12100b;--surface2:#1d170d;--line:#57421f;--gold:#e9b94e;--gold2:#ffe4a0;--muted:#b6a88e;--text:#fff7e8;--green:#54d69a;--cyan:#e9b94e;--cyan2:#ffe4a0}
+body{background:radial-gradient(ellipse at 50% 2%,#79501e55,transparent 34%),radial-gradient(ellipse at 0 48%,#5c391c28,transparent 35%),radial-gradient(ellipse at 100% 80%,#8b5d1720,transparent 38%),#070604}
+.app-shell{padding-top:10px}
+.topbar{padding:7px 3px 12px;border-bottom:1px solid #6c5023;margin-bottom:15px}
+.brand-mark{border-color:#f5d27c;background:radial-gradient(circle,#9b671b,#1b1106 70%);box-shadow:0 0 26px #e9b94e55,inset 0 0 14px #ffe4a044}
+.test-tag{color:#f6d88f;border-color:#8e682b;background:#9a6a1b1c}
+.test-tag i,.live-label i{background:#f2c45f;box-shadow:0 0 10px #f2c45f}
+.wallet-button{background:linear-gradient(120deg,#fff0bd,#e8b64b 55%,#b97920);color:#211505;box-shadow:0 6px 22px #e9b94e40}
+.welcome{border:1px solid #80602b;background:radial-gradient(ellipse at 80% 20%,#88591966,transparent 48%),linear-gradient(120deg,#21170a,#100c07 72%);box-shadow:0 14px 34px #0009,inset 0 1px #ffe8b022}
+.welcome h1 em,.mine-hero h2 em{color:#ffe3a0}
+.coin-art,.mine-seal{border-color:#f5d27c;background:radial-gradient(circle,#a66d1d,#241606 67%,#090603);box-shadow:0 0 0 5px #e9b94e18,0 0 36px #e9b94e55,inset 0 0 18px #ffe4a066}
+.coin-art span,.mine-seal span{color:#fff0bd;text-shadow:0 2px 12px #000}
+.mine-hero{border:1px solid #8b632a;background:radial-gradient(ellipse at 82% 0,#a46b2555,transparent 55%),linear-gradient(125deg,#26190b,#0f0b07);box-shadow:0 12px 32px #0009}
+.mine-summary{border-color:#715323;background:linear-gradient(145deg,#21180c,#100d08);box-shadow:inset 0 1px #ffe7b018,0 10px 25px #0007}
+.summary-heading b,.summary-metrics strong i{color:#f5d27c}
+.summary-chart span{color:#f0ddb6}
+.miner-card{border:1px solid #9b7133;background:radial-gradient(ellipse at 50% 0,#8c5b2444,transparent 55%),linear-gradient(145deg,#261a0c,#100d08 70%);box-shadow:0 15px 40px #000b,0 0 26px #e9b94e12,inset 0 1px #fff0c01a}
+.miner-card:after{border-color:#f1c86b26}
+.balance-line strong{color:#ffe7a5;text-shadow:0 0 28px #e9b94e66}
+.wallet-balance-detail{border-color:#725222;background:#120e08;color:#c9b58e}
+.wallet-balance-detail b{color:#ffe6a0}
+.wallet-balance-detail.total{border-color:#a17a37;background:#2a1c0a}
+.wallet-balance-detail.total b{color:#fff0bd}
+.miner-stats b{color:#fff0d2}.miner-stats i,.progress-meta b{color:#ffe19a}
+.progress-track{background:#3b2b16}.progress-track span{background:linear-gradient(90deg,#a36a1b,#f1c45c,#fff0b7);box-shadow:0 0 12px #e9b94e77}
+.timer{color:#ffe5a1;text-shadow:0 0 16px #e9b94e66}
+.mine-button,.primary-button{background:linear-gradient(110deg,#fff0bd,#e8b84e 55%,#b97b24);color:#241605;box-shadow:0 7px 22px #e9b94e3b}
+.mine-button.running{background:linear-gradient(100deg,#285d3c,#4b9b5e);color:#f2ffe9}
+.feature-card{border:1px solid #60471f;background:radial-gradient(ellipse at 100% 0,#80521d33,transparent 55%),linear-gradient(145deg,#21180d,#100d08);box-shadow:inset 0 1px #fff0c010,0 8px 20px #0006}
+.feature-card:hover{border-color:#d6a648;box-shadow:0 0 22px #e9b94e25}
+.feature-icon{background:linear-gradient(145deg,#674316,#281a09);border:1px solid #9b702e;color:#ffe4a0}
+.feature-arrow{color:#ffe4a0}
+.page-heading{padding:10px 0 14px;border-bottom:1px solid #4d391c}
+.back-button{border-color:#8c6428;background:#21170b;color:#ffe4a0}
+.active-miner-panel,.info-card{border-color:#89642d;background:radial-gradient(ellipse at 50% 0,#895a243d,transparent 58%),linear-gradient(145deg,#24190c,#100d08);box-shadow:0 14px 32px #0008}
+.active-miner-top b{color:#ffe4a0;border-color:#9b742f}
+.miner-emblem,.big-icon,.avatar{border-color:#d5a448;background:radial-gradient(circle,#8a5719,#1b1006);color:#ffe8a6;box-shadow:0 0 22px #e9b94e33}
+.active-miner-body h3{color:#fff0ce}.active-miner-body strong{color:#ffe4a0}
+.miner-level-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.miner-showcase-card{display:flex;flex-direction:column;gap:9px;min-width:0;padding:11px;border:1px solid #62471f;border-radius:16px;background:radial-gradient(ellipse at 50% 0,#9b641f3d,transparent 58%),linear-gradient(155deg,#21170b,#0e0b07);box-shadow:0 9px 22px #0008,inset 0 1px #ffe8b014}
+.miner-showcase-card.is-current{border-color:#28b58b;box-shadow:0 0 0 1px #28b58b55,0 0 22px #28b58b22}
+.miner-crate-art{height:108px;position:relative;display:grid;place-items:center;overflow:hidden;border-radius:11px;background:radial-gradient(ellipse at 50% 72%,#c58b333d,transparent 58%),linear-gradient(180deg,#080705,#171006)}
+.crate-glow{position:absolute;width:90px;height:90px;border-radius:50%;background:#e7ad3b20;filter:blur(13px)}
+.crate-box{position:absolute;width:70px;height:55px;top:31px;left:50%;transform:translateX(-50%) skewY(-7deg);border:2px solid #d6a64b;border-radius:7px;background:linear-gradient(145deg,#624016,#211407 58%,#0b0906);box-shadow:inset 0 0 0 5px #e7b34a18,0 12px 18px #000b}
+.crate-box:before{content:"";position:absolute;left:8px;right:8px;top:7px;height:6px;border:1px solid #f1ce7b;border-radius:3px;background:#a8752b}
+.crate-box:after{content:"";position:absolute;top:0;bottom:0;left:50%;width:8px;transform:translateX(-50%);background:linear-gradient(90deg,#6b481a,#e6b957,#6b481a);border-left:1px solid #f8d98b;border-right:1px solid #3b260d}
+.crate-seal{position:absolute;top:48px;left:50%;transform:translateX(-50%);width:28px;height:28px;display:grid;place-items:center;border:1px solid #ffe29a;border-radius:50%;background:radial-gradient(circle,#a06a1d,#251606);color:#fff0bd;font:900 16px Georgia;text-shadow:0 1px 4px #000}
+.miner-showcase-card .miner-level-info{flex:1;text-align:center}
+.miner-showcase-card .level-kicker{font-size:8px;color:#e9bf64;letter-spacing:.7px}
+.miner-showcase-card h4{font-size:12px;margin:3px 0 4px;color:#fff0cf}
+.miner-card-speed{font-size:9px!important;color:#d8c49b!important;margin:0 0 6px!important;direction:ltr}
+.miner-showcase-card .miner-level-meta{justify-content:center;color:#d8c49b;font-size:8px}
+.miner-showcase-card .miner-level-buy{margin-top:auto;padding:8px 5px;font-size:8px;border-color:#7c5a27;background:linear-gradient(100deg,#30200c,#1b1308);color:#e7c981}
+.miner-showcase-card.is-current .miner-level-buy{border-color:#258c6b;background:#143426;color:#a8f0ce}
+.miner-level-note{grid-column:1/-1;margin:4px 0 0;color:#aa9a7d;font-size:9px;line-height:1.9;text-align:center}
+.quest{border-color:#62471f;background:linear-gradient(120deg,#21180d,#100d08)}
+.quest-icon{background:#493012;color:#ffe4a0;border:1px solid #805a23}
+.quest button{background:linear-gradient(110deg,#fff0bd,#e8b84e);color:#211505}
+.ref-link{border-color:#62471f;background:#0c0906}.ref-link span{color:#ffe4a0}
+.ref-link button{background:#4b3312;color:#ffe4a0}
+.mini-stat,.profile-row{border-color:#60471f;background:#171108}.mini-stat b,.profile-row b{color:#ffe4a0}
+.bottom-nav{border-top:1px solid #765626;background:#090704f5;box-shadow:0 -9px 28px #000b}
+.nav-item.selected{color:#ffe4a0;background:#e9b94e18}.nav-item.selected span{filter:drop-shadow(0 0 8px #e9b94e99)}
+.notice{border-color:#9b742f;background:#24190b;color:#fff0c5}
+.utility-button{border-color:#775525;background:#21170b;color:#ffe4a0}
+.boost-intro,.boost-option,.permanent-option,.referral-network-card{border-color:#735323;background:radial-gradient(ellipse at 80% 0,#85551f35,transparent 55%),linear-gradient(145deg,#21170b,#100d08)}
+.boost-intro .eyebrow,.boost-multiplier{color:#ffe4a0}
+.boost-intro p,.boost-option>p,.permanent-option p{color:#b9a98b}
+.boost-symbol,.permanent-icon{border-color:#9a702d;background:#4b3210;color:#ffe4a0}
+.preview-pill{border-color:#87652d;color:#ffe4a0}
+.boost-option.featured{border-color:#c3943b}
+.boost-facts b,.permanent-meta b{color:#ffe4a0}
+.permanent-option button{border-color:#765525;background:#34230d;color:#f3d58c}
+.referral-network-heading b{color:#ffe4a0}
+#referralNote{color:#c2b18e}
+.referral-user-row{border-color:#5b431f;background:#100d08}
+.referral-user-row span{color:#fff0cf}
+.referral-user-row small{color:#e8c879}
+.referral-status.qualified{color:#7ee0a0}.referral-status.pending{color:#e9bf70}
+@media(max-width:390px){.miner-level-list{gap:8px}.miner-showcase-card{padding:8px}.miner-crate-art{height:94px}.crate-box{transform:translateX(-50%) scale(.88) skewY(-7deg)}}
+@media(min-width:480px){.miner-level-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
