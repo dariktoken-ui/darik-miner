@@ -352,10 +352,12 @@
   }
   $("mineButton").addEventListener("click", async () => {
     if (state.activeSession) return;
+    if (!tg?.initData) { notice("برای شروع استخراج، برنامه را از دکمه داخل ربات تلگرام باز کن."); return; }
+    if (!state.wallet) { notice("ابتدا کیف پول Tonkeeper را با دکمه بالای صفحه متصل کن."); connectWallet(); return; }
     $("mineButton").disabled = true;
     try {
       const result = await api("start_mining");
-      if (!result?.ok || !result.started_at) throw new Error(result?.error || "شروع استخراج ناموفق بود.");
+      if (!result?.ok || !result.started_at) throw new Error(result?.detail || result?.error || "سرور شروع استخراج را تأیید نکرد.");
       state.activeSession = { id: result.id, started_at: result.started_at, last_accrued_at: result.last_accrued_at || result.started_at, hash_rate: result.hash_rate || 25.6 };
       state.miningStart = new Date(result.started_at).getTime();
       state.hashrate = Number(result.hash_rate || 25.6);
@@ -454,14 +456,16 @@
       const desc = document.createElement("small"); desc.textContent = (language === "en" ? (q.description_en || q.description) : (q.description_fa || q.description)) || tr("برای تکمیل مأموریت انجام بده.","Complete this mission.");
       info.append(title, desc);
       const reward = document.createElement("span"); reward.className = "reward"; reward.textContent = tr("۵ DRK · پس از تأیید","5 DRK · after approval");
-      const btn = document.createElement("button"); btn.textContent = isDone ? tr("ثبت شده","Submitted") : tr("ارسال","Submit");
+      const actions = document.createElement("div"); actions.className = "quest-actions";
+      if (q.target_url) { const open = document.createElement("a"); open.className = "quest-open"; open.href = q.target_url; open.target = "_blank"; open.rel = "noopener noreferrer"; open.textContent = tr("انجام مأموریت","Open task"); actions.append(open); }
+      const btn = document.createElement("button"); btn.textContent = isDone ? tr("ثبت شده","Submitted") : tr("ارسال برای بررسی","Submit for review");
       btn.disabled = isDone;
       btn.addEventListener("click", async () => {
         btn.disabled = true; btn.textContent = tr("در حال ارسال…","Submitting…");
         try { await api("submit_quest", { questId: id }); btn.textContent = tr("در انتظار بررسی","Pending review"); notice(tr("مأموریت برای بررسی ثبت شد.","Mission submitted for review."), "success"); }
         catch (e) { btn.disabled = false; btn.textContent = tr("ارسال","Submit"); notice(e.message); }
       });
-      card.append(icon, info, reward, btn); $("quests").append(card);
+      actions.append(btn); card.append(icon, info, reward, actions); $("quests").append(card);
     });
   }
   async function api(action, extra = {}) {
@@ -476,6 +480,7 @@
     if (!tg?.initData) { $("quests").innerHTML = '<div class="loading">برای دریافت مأموریت‌ها، از داخل ربات @DarikQuestBot وارد شو.</div>'; return; }
     try {
       const data = await api("bootstrap");
+      if (!data?.profile) throw new Error(data?.detail || data?.error || "پروفایل از سرور دریافت نشد.");
       const profile = data.profile || {};
       if (!state.user?.id || String(profile.telegram_user_id) !== String(state.user.id)) {
         throw new Error(tr("شناسه حساب تلگرام با پروفایل سرور یکسان نیست؛ ورود متوقف شد.", "Telegram account ID does not match the server profile. Sign-in stopped."));
