@@ -367,6 +367,18 @@
 
   let minerPage = 0;
   const MINER_LEVELS = 5000, MINER_PAGE_SIZE = 12;
+  function minerUpgradeCost(level) {
+    if (level <= 10) return 1;
+    if (level <= 25) return 2;
+    if (level <= 50) return 3;
+    if (level <= 100) return 5;
+    if (level <= 200) return 8;
+    if (level <= 350) return 13;
+    if (level <= 500) return 21;
+    if (level <= 1000) return 34;
+    if (level <= 2500) return 55;
+    return 89;
+  }
   function minerRankName(level) {
     if (level <= 10) return tr("نوآموز", "Initiate");
     if (level <= 25) return tr("برنزی", "Bronze");
@@ -410,7 +422,7 @@
       const kicker = document.createElement("span"); kicker.className = "level-kicker"; kicker.textContent = level === current ? tr("ماینر فعال تو", "YOUR ACTIVE MINER") : tr("سطح ماینر", "MINER TIER");
       const title = document.createElement("h4"); title.textContent = minerRankName(level) + " · " + tr("سطح ", "LEVEL ") + fa(level);
       const speed = document.createElement("p"); speed.className = "miner-card-speed"; speed.textContent = level === current ? (formatHashRate(state.hashrate || 25.6) + " · " + tr("هش فعلی سرور","server hash")) : tr("هش با ارتقای تأییدشده تعیین می‌شود", "Hash set by verified upgrade");
-      const price = document.createElement("div"); price.className = "miner-level-meta"; price.textContent = level === current ? tr("وضعیت: فعال", "Status: Active") : tr("قیمت: در انتظار تعیین", "Price: pending");
+      const price = document.createElement("div"); price.className = "miner-level-meta"; price.textContent = level === current ? tr("وضعیت: فعال", "Status: Active") : tr("هزینه ارتقا: " + fa(minerUpgradeCost(level)) + " DRK", "Upgrade cost: " + minerUpgradeCost(level) + " DRK");
       const button = document.createElement("button"); button.type = "button"; button.className = "miner-level-buy"; button.disabled = true; button.textContent = level === current ? tr("ماینر فعال", "ACTIVE MINER") : tr("قفل · خرید هنوز فعال نیست", "LOCKED · PURCHASE NOT LIVE");
       info.append(kicker,title,speed,price); card.append(art,info,button); root.append(card);
     });
