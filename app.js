@@ -326,13 +326,18 @@
 
   function updateMining() {
     const now = Date.now(), session = state.activeSession;
-    const start = session?.started_at ? new Date(session.started_at).getTime() : 0;
-    const active = Boolean(session && start && start <= now);
+    const parsedStart = session?.started_at ? Date.parse(session.started_at) : NaN;
+    const start = Number.isFinite(parsedStart) ? parsedStart : 0;
+    const active = Boolean(session && start > 0 && start <= now);
     const elapsed = active ? Math.max(0, Math.floor((now - start) / 1000)) : 0;
-    const h = Math.floor(elapsed / 3600), m = Math.floor((elapsed % 3600) / 60), sec = elapsed % 60;
-    $("timer").textContent = [h,m,sec].map(x => String(x).padStart(2,"0")).join(":");
+    const days = Math.floor(elapsed / 86400);
+    const hours = Math.floor((elapsed % 86400) / 3600);
+    const minutes = Math.floor((elapsed % 3600) / 60);
+    const seconds = elapsed % 60;
+    const clock = [hours, minutes, seconds].map(x => String(x).padStart(2, "0")).join(":");
+    $("timer").textContent = days ? tr(fa(days) + " روز · " + clock, days + "d · " + clock) : clock;
     $("progressBar").style.width = active ? "100%" : "0%";
-    $("progressText").textContent = active ? tr("پیوسته","LIVE") : "۰٪";
+    $("progressText").textContent = active ? tr("استخراج فعال · شمارش پیوسته","Mining active · elapsed time") : "۰٪";
     $("minerStatus").textContent = active ? tr("در حال استخراج DRK","Mining DRK") : tr("آماده شروع","Ready to start");
     $("mineButton").classList.toggle("running", active);
     $("mineButton").disabled = active;
