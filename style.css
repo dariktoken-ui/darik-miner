@@ -273,3 +273,59 @@ body{background:radial-gradient(ellipse at 50% 2%,#79501e55,transparent 34%),rad
 .referral-status.qualified{color:#7ee0a0}.referral-status.pending{color:#e9bf70}
 @media(max-width:390px){.miner-level-list{gap:8px}.miner-showcase-card{padding:8px}.miner-crate-art{height:94px}.crate-box{transform:translateX(-50%) scale(.88) skewY(-7deg)}}
 @media(min-width:480px){.miner-level-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+
+/* DARIK ACHAEMENID GAME UI — visual polish */
+.app-shell{max-width:560px;padding-bottom:118px}
+.topbar{position:relative;align-items:center;padding:10px 3px 14px}
+.brand-mark{border-radius:14px;transform:rotate(45deg);font-size:23px}
+.brand-mark::first-letter{transform:rotate(-45deg)}
+.welcome{min-height:132px;position:relative;overflow:hidden}
+.welcome:after{content:"𓃭";position:absolute;left:96px;bottom:-34px;font-size:138px;line-height:1;color:#d7a74612;transform:rotate(-12deg);pointer-events:none}
+.coin-art{position:relative;z-index:1;flex-basis:92px;width:92px;height:92px}
+.coin-art:before{inset:-7px;border:1px dashed #eac36b88}
+.mine-hero{min-height:126px;position:relative}
+.mine-hero:after{content:"𐎠";position:absolute;left:112px;top:-23px;font-size:126px;color:#e9b94e0e;pointer-events:none}
+.mine-seal{width:96px;height:96px;flex-basis:96px}
+.mine-summary{position:relative;overflow:hidden}
+.summary-metrics>div{padding:10px 3px}
+.miner-card{border-radius:25px}
+.miner-card:first-of-type{background:radial-gradient(ellipse at 50% -10%,#a36c3044,transparent 55%),linear-gradient(155deg,#2a1b0c,#100b06 72%);border-color:#b88a3e}
+.balance-line strong{font-size:48px}
+.miner-stats{margin-top:12px}
+.feature-card{min-height:116px;border-radius:17px}
+.feature-icon{width:38px;height:38px;border-radius:13px;font-size:19px}
+.level-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:12px 0;padding:13px 14px;border:1px solid #8b642b;border-radius:16px;background:radial-gradient(ellipse at 0 0,#9d681f33,transparent 65%),linear-gradient(120deg,#241707,#100c07)}
+.level-toolbar>div:first-child{display:grid;gap:3px}
+.level-toolbar b{font-size:12px;color:#fff0c9}
+.level-toolbar small{font-size:9px;color:#b9a98a;line-height:1.7}
+.level-count{min-width:64px;text-align:center;padding:8px;border:1px solid #8e682b;border-radius:12px;background:#080704}
+.level-count strong,.level-count small{display:block}
+.level-count strong{font-size:15px;color:#ffe4a0;direction:ltr}
+.level-count small{font-size:8px;color:#ad9a73}
+.miner-pagination{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0 13px;padding:8px;border:1px solid #59401c;border-radius:13px;background:#120d07}
+.miner-pagination button{min-width:74px;padding:8px 12px;border:1px solid #8a642b;border-radius:9px;background:linear-gradient(120deg,#3a260d,#1b1208);color:#ffe4a0;font:700 10px Vazirmatn}
+.miner-pagination button:disabled{opacity:.35}
+.miner-pagination span{font-size:10px;color:#d9c18e}
+.miner-level-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.miner-showcase-card{min-height:230px;border-radius:17px}
+.miner-crate-art{height:118px}
+.miner-showcase-card.is-current{border-color:#43bd8b;box-shadow:0 0 0 1px #43bd8b55,0 0 25px #43bd8b20}
+.rank-hero{padding:18px;border:1px solid #9a7132;border-radius:21px;background:radial-gradient(ellipse at 50% 0,#a36d2c55,transparent 60%),linear-gradient(145deg,#281a0b,#0e0a06);text-align:center;box-shadow:0 14px 34px #0009}
+.rank-hero-top{display:flex;align-items:center;justify-content:space-between}
+.rank-live{display:inline-flex;align-items:center;gap:6px;font-size:9px;color:#9ce7b2}
+.rank-live i{width:7px;height:7px;border-radius:50%;background:#43d47a;box-shadow:0 0 10px #43d47a}
+.rank-crown{width:76px;height:76px;display:grid;place-items:center;margin:14px auto 7px;border:1px solid #e3b85c;border-radius:50%;background:radial-gradient(circle,#80551d,#160e05);color:#ffe5a4;font-size:38px;box-shadow:0 0 0 6px #e9b94e12,0 0 28px #e9b94e33}
+.rank-hero h3{margin:6px 0;color:#fff0cc;font-size:17px}
+.rank-hero p{margin:0 auto 16px;max-width:330px;color:#b9a98b;font-size:10px;line-height:1.9}
+.rank-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #ffffff18;padding-top:13px}
+.rank-stats>div+div{border-right:1px solid #ffffff16}
+.rank-stats b,.rank-stats small{display:block}
+.rank-stats b{font-size:15px;color:#ffe4a0}
+.rank-stats small{font-size:8px;color:#b6a484;margin-top:4px}
+.rank-list-heading{display:flex;align-items:center;justify-content:space-between;margin:20px 3px 10px}
+.rank-list-heading b{font-size:13px;color:#ffe4a0}
+.rank-list-heading small{font-size:9px;color:#b6a484}
+.rank-empty{padding:20px 15px;text-align:center;border:1px dashed #765629;border-radius:14px;background:#171006;color:#b9a98b;font-size:10px;line-height:2}
+.bottom-nav{padding-top:11px}
+@media(max-width:390px){.miner-level-list{gap:8px}.miner-showcase-card{min-height:218px}.miner-crate-art{height:98px}.coin-art{width:78px;height:78px;flex-basis:78px}.balance-line strong{font-size:42px}}
