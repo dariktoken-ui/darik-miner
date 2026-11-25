@@ -494,3 +494,67 @@ body{
  .feature-card{min-height:116px}
  .balance-line strong{font-size:39px}
 }
+
+
+/* Royal dashboard composition: ornamental artwork is real inline SVG, not a screenshot */
+.coin-art{display:grid;place-items:center;overflow:visible}
+.coin-art svg{width:100%;height:100%;filter:drop-shadow(0 4px 14px #e8b84f55)}
+.mine-seal{display:grid;place-items:center;align-content:center;gap:2px}
+.mine-seal svg{width:75%;height:75%;filter:drop-shadow(0 2px 8px #e8b84f55)}
+.mine-seal small{font:800 8px Georgia;letter-spacing:2px}
+.welcome,.mine-hero{isolation:isolate}
+.welcome:before,.mine-hero:before{z-index:-1}
+.welcome>div:first-child{position:relative;z-index:2}
+.welcome .eyebrow,.mine-hero .eyebrow{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border:1px solid #b58a4666;border-radius:999px;background:#08070566;color:#f2cf7d;letter-spacing:1.1px}
+.welcome .eyebrow:before,.mine-hero .eyebrow:before{content:"✦";color:#49d7c5}
+.welcome p,.mine-hero p{line-height:2}
+.mine-summary{padding:16px 17px 12px}
+.summary-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:12px;color:#f9e7bd;font-weight:800}
+.summary-heading b{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid #88632c;border-radius:999px;background:#100b06;font-size:8px;letter-spacing:1px}
+.summary-heading b i{width:6px;height:6px;border-radius:50%;background:#50d99a;box-shadow:0 0 8px #50d99a}
+.summary-metrics{padding:12px 0}
+.summary-metrics>div{position:relative}
+.summary-metrics small{display:block;margin-bottom:7px;color:#bda77f;font-size:9px}
+.summary-metrics strong{font-size:15px;color:#ffebbb}
+.summary-metrics strong i{font-style:normal;font-size:11px}
+.summary-chart{display:grid;grid-template-columns:1fr;gap:8px;padding-top:12px}
+.summary-chart>div:first-child{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.summary-chart span{font-size:10px;font-weight:800}
+.summary-chart small{font-size:8px;color:#bda77f}
+.summary-chart svg{width:100%;height:62px;overflow:visible}
+.miner-card{padding:17px}
+.card-top{padding-bottom:12px;border-bottom:1px solid #8b652c55}
+.balance-label{margin-top:15px;color:#c8b58f}
+.wallet-balance-detail{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;margin-top:8px;border-radius:11px}
+.wallet-balance-detail span{font-size:9px;color:#c5b18b}
+.wallet-balance-detail b{font-size:10px;color:#ffe6a3}
+.miner-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:13px 0;margin:14px 0;gap:0}
+.miner-stats>div{min-width:0;padding:0 8px}
+.miner-stats>div:first-child{padding-right:0}
+.miner-stats>div:last-child{padding-left:0}
+.miner-stats small{display:block;font-size:8px;color:#bda77f;margin-bottom:5px}
+.miner-stats b{font-size:11px;white-space:nowrap}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;color:#d7c49c;font-size:10px;margin-bottom:7px}
+.progress-meta b{color:#ffe6a3}
+.mine-button{width:100%;min-height:48px;font-size:14px}
+.card-footnote{font-size:9px;line-height:1.9}
+.section-title{display:flex;align-items:end;justify-content:space-between;margin:22px 3px 12px;padding-bottom:10px}
+.section-title h2{margin:3px 0 0;font-size:19px}
+.section-note{font-size:9px;color:#c8a65d}
+.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.feature-card{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;text-align:right;padding:14px;gap:5px;min-width:0}
+.feature-card .feature-icon{display:grid;place-items:center;margin-bottom:5px;font-size:21px}
+.feature-card b{font-size:12px;position:relative;z-index:1}
+.feature-card small{font-size:9px;position:relative;z-index:1}
+.feature-card .feature-arrow{position:absolute;left:13px;bottom:13px;font-size:16px}
+.page-heading{display:flex;align-items:center;gap:12px;padding-bottom:14px;margin-bottom:15px}
+.page-heading h2{margin:2px 0;font-size:20px}
+.page-heading p{margin:3px 0 0;color:#c2ae88;font-size:10px;line-height:1.8}
+.back-button{width:38px;height:38px;flex:0 0 38px;border-radius:12px;font-size:18px}
+@media(max-width:390px){
+ .summary-metrics strong{font-size:12px}
+ .summary-metrics small{font-size:8px}
+ .wallet-balance-detail{padding:9px}
+ .wallet-balance-detail b{font-size:9px}
+ .feature-card{padding:12px}
+}
