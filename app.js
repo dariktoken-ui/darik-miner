@@ -6,7 +6,8 @@
   const tg = window.Telegram?.WebApp;
   const $ = (id) => document.getElementById(id);
   const fa = (n) => new Intl.NumberFormat(language === "en" ? "en-US" : "fa-IR").format(Number(n || 0));
-    const state = { drkBalance: 0, hashrate: 25.6, minerLevel: 1, miningStart: 0, activeSession: null, wallet: null, user: null, tonUI: null, quests: [], questCompletions: [] };
+    const DRK_MASTER_RAW = "0:9a5dd3ecd2a79f15dce6dbd5c1a0ffb024213fe47294b60660633b15ac590cdb";
+  const state = { drkBalance: 0, walletDrkBalance: null, walletBalanceUpdatedAt: 0, walletBalanceLoading: false, hashrate: 25.6, minerLevel: 1, miningStart: 0, activeSession: null, wallet: null, user: null, tonUI: null, quests: [], questCompletions: [] };
   let noticeTimer, audioContext = null;
   let soundEnabled = localStorage.getItem("darik_sound") !== "off";
   let language = localStorage.getItem("darik_language") === "en" ? "en" : "fa";
@@ -129,6 +130,8 @@
     set(".miner-card .live-label", en ? ["Miner status", "Darik withdrawal"] : ["وضعیت ماینر", "برداشت داریک"]);
     set(".miner-card .balance-label", en ? ["Darik balance", "Minimum withdrawal threshold"] : ["موجودی داریک", "حداقل برداشت"]);
     set(".balance-line span", "DRK");
+    set("#walletDrkLabel", en ? "DRK in Tonkeeper" : "موجودی DRK در Tonkeeper");
+    set("#combinedDrkLabel", en ? "Wallet + in-app total" : "مجموع موجودی کیف پول و برنامه");
     set("#walletDrkLabel", en ? "DRK in Tonkeeper" : "موجودی DRK در Tonkeeper");
     set("#combinedDrkLabel", en ? "Wallet + in-app total" : "مجموع موجودی کیف پول و برنامه");
     set(".miner-stats small", en ? ["Mining power", "Miner level", "Mining time"] : ["قدرت استخراج", "سطح ماینر", "مدت استخراج"]);
@@ -287,6 +290,7 @@
     const shown = state.drkBalance + pending;
     $("points").textContent = formatDrk(shown);
     $("profilePoints").textContent = formatDrk(shown);
+    updateCombinedBalance();
   }
   function updatePresence(presence, locallyHidden = false) {
     const dot = $("presenceDot");
@@ -430,12 +434,70 @@
     } catch (e) { $("quests").innerHTML = '<div class="loading">دریافت اطلاعات سرور ناموفق بود. اتصال اینترنت را بررسی کن.</div>'; notice(e.message); }
   }
 
+  function normalizeTonAddress(value) {
+    if (!value) return "";
+    const input = String(value).trim();
+    if (/^-?\\d+:[0-9a-fA-F]{64}$/.test(input)) return input.toLowerCase();
+    try {
+      const base64 = input.replace(/-/g, "+").replace(/_/g, "/");
+      const bytes = Uint8Array.from(atob(base64 + "=".repeat((4 - base64.length % 4) % 4)), c => c.charCodeAt(0));
+      if (bytes.length !== 36) return input.toLowerCase();
+      const wc = bytes[1] > 127 ? bytes[1] - 256 : bytes[1];
+      return wc + ":" + Array.from(bytes.slice(2, 34), b => b.toString(16).padStart(2, "0")).join("");
+    } catch (_) { return input.toLowerCase(); }
+  }
+  function setWalletDrkText(value) {
+    const el = $("walletDrkBalance");
+    if (el) el.textContent = value;
+    const profileEl = $("profileWalletDrk");
+    if (profileEl) profileEl.textContent = value;
+  }
+  async function refreshWalletDrkBalance(force = false) {
+    if (!state.wallet) {
+      state.walletDrkBalance = null;
+      state.walletBalanceUpdatedAt = 0;
+      setWalletDrkText(tr("کیف پول متصل نیست", "Wallet not connected"));
+      updateCombinedBalance();
+      return;
+    }
+    if (state.walletBalanceLoading || (!force && Date.now() - state.walletBalanceUpdatedAt < 45000)) return;
+    state.walletBalanceLoading = true;
+    setWalletDrkText(tr("در حال بررسی بلاکچین…", "Checking blockchain…"));
+    try {
+      const url = "https://tonapi.io/v2/accounts/" + encodeURIComponent(state.wallet) + "/jettons";
+      const response = await fetch(url, { headers: { "accept": "application/json" }, cache: "no-store" });
+      if (!response.ok) throw new Error("TONAPI " + response.status);
+      const data = await response.json();
+      const item = (data.balances || []).find(row => normalizeTonAddress(row.jetton?.address || row.jetton_address) === DRK_MASTER_RAW);
+      const decimals = Math.max(0, Math.min(18, Number(item?.jetton?.decimals ?? 9)));
+      state.walletDrkBalance = Number(BigInt(item?.balance || "0")) / (10 ** decimals);
+      state.walletBalanceUpdatedAt = Date.now();
+      setWalletDrkText(formatDrk(state.walletDrkBalance) + " DRK");
+      updateCombinedBalance();
+    } catch (error) {
+      console.warn("DRK wallet balance:", error);
+      state.walletDrkBalance = null;
+      setWalletDrkText(tr("موجودی دریافت نشد؛ دوباره تلاش کن", "Balance unavailable; retry"));
+      updateCombinedBalance();
+    } finally { state.walletBalanceLoading = false; }
+  }
+  function updateCombinedBalance() {
+    const el = $("combinedDrkBalance");
+    if (!el) return;
+    el.textContent = state.wallet && state.walletDrkBalance !== null
+      ? formatDrk(Number(state.drkBalance || 0) + state.walletDrkBalance) + " DRK"
+      : tr("برای جمع کل، کیف پول را متصل کن", "Connect wallet for total");
+  }
   function updateWalletUI(wallet, restored = false) {
+    const previousWallet = state.wallet;
     state.wallet = wallet?.account?.address || null;
     $("walletButton").textContent = shortWallet(state.wallet);
     $("walletButton").title = state.wallet || "اتصال کیف پول";
     $("walletButton").classList.toggle("wallet-connected", Boolean(state.wallet));
-    if (state.wallet && !restored) notice(tr("کیف پول با موفقیت متصل شد.","Wallet connected successfully."), "success");
+    if (state.wallet && previousWallet !== state.wallet) {
+      refreshWalletDrkBalance(true);
+      if (!restored) notice(tr("کیف پول متصل شد؛ موجودی DRK در حال بررسی است.", "Wallet connected; checking DRK balance."), "success");
+    } else if (!state.wallet) { state.walletDrkBalance = null; setWalletDrkText(tr("کیف پول متصل نیست", "Wallet not connected")); updateCombinedBalance(); }
     updateProfile();
   }
   function setupWallet() {
@@ -482,6 +544,7 @@
   let lastMiningSync = 0;
   setInterval(() => {
     updateMining();
+    if (state.wallet && document.visibilityState === "visible") refreshWalletDrkBalance();
     if (tg?.initData && Date.now() - lastMiningSync >= 30000) {
       lastMiningSync = Date.now();
       api("sync_mining").then(data => {
@@ -496,7 +559,7 @@
   pingPresence(true);
   setInterval(() => pingPresence(), 45000);
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") pingPresence(true);
+    if (document.visibilityState === "visible") { pingPresence(true); refreshWalletDrkBalance(true); }
     else updatePresence(null, true);
   });
   window.addEventListener("focus", () => pingPresence(true));
