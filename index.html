@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css?v=darik-achaemenid-20261126a">
+  <link rel="stylesheet" href="./style.css?v=darik-royal-dashboard-20261126b">
   <script src="https://telegram.org/js/telegram-web-app.js?v=darik-main-20261126c"></script>
   <script src="https://unpkg.com/@tonconnect/ui@5.0.4/dist/tonconnect-ui.min.js"></script>
 </head>
@@ -25,18 +25,30 @@
 
     <section class="welcome">
       <div><span class="eyebrow">خوش آمدی به دنیای داریک</span><h1>آینده را <em>استخراج کن</em></h1><p>هر روز فعال باش، مأموریت انجام بده و قدرت استخراجت را افزایش بده.</p></div>
-      <div class="coin-art" aria-hidden="true"><span>D</span></div>
+      <div class="coin-art" aria-hidden="true">
+        <svg viewBox="0 0 120 120" role="img" aria-label="نشان خورشید بالدار هخامنشی">
+          <circle cx="60" cy="60" r="54" fill="#2b1908" stroke="#f0c96e" stroke-width="2"/>
+          <circle cx="60" cy="60" r="47" fill="none" stroke="#f0c96e" stroke-dasharray="2 4" opacity=".8"/>
+          <path d="M60 27c-9 8-12 19-12 31 0 14 5 24 12 34 7-10 12-20 12-34 0-12-3-23-12-31Z" fill="#e8b84f" stroke="#ffe6a3" stroke-width="1.5"/>
+          <path d="M49 42 18 30l14 17L12 45l27 16 12-3M71 42l31-12-14 17 20 0-27 14-12-6" fill="none" stroke="#ffe6a3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M50 67 26 78l25-3M70 67l24 11-25-3" fill="none" stroke="#d7a746" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="60" cy="56" r="5" fill="#2b1908"/><path d="M60 34v-8M60 94v-8" stroke="#fff0c2" stroke-width="2"/>
+        </svg>
+      </div>
     </section>
 
     <section id="screen-miner" class="screen active">
       <div class="mine-hero">
         <div class="mine-hero-copy"><span class="eyebrow">THE DARIK NETWORK</span><h2>قدرت از <em>جامعه</em> می‌آید</h2><p>استخراج خصوصی خود را مدیریت کن و ماینرت را ارتقا بده.</p></div>
-        <div class="mine-seal" aria-label="نشان داریک"><span>D</span><small>DARIK</small></div>
+        <div class="mine-seal" aria-label="نشان داریک">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="#ffe6a3" stroke-width="1.5"/><circle cx="50" cy="50" r="39" fill="none" stroke="#e8b84f" stroke-dasharray="2 4"/><path d="M50 22c-12 9-15 23-10 37 3 8 7 14 10 19 3-5 7-11 10-19 5-14 2-28-10-37Z" fill="#e8b84f"/><path d="M42 37 17 29l13 15-16 0 25 12M58 37l25-8-13 15 16 0-25 12" fill="none" stroke="#ffe6a3" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="49" r="4" fill="#2a1908"/></svg>
+          <small>DARIK</small>
+        </div>
       </div>
       <div class="mine-summary">
-        <div class="summary-heading"><span>وضعیت شبکه</span><b><i></i> PRIVATE NETWORK</b></div>
+        <div class="summary-heading"><span>نمای کلی شبکه</span><b><i></i> PRIVATE NETWORK</b></div>
         <div class="summary-metrics"><div><small>ماینر فعال</small><strong>LEVEL 01</strong></div><div><small>قدرت فعلی</small><strong>25.6 <i>MH/s</i></strong></div><div><small>مدت استخراج</small><strong>پیوسته</strong></div></div>
-        <div class="summary-chart"><div><span>نمای گرافیکی عملکرد</span><small>نرخ پایه استخراج: ۱ DRK در ۲۴ ساعت</small></div>
+        <div class="summary-chart"><div><span>نمودار قدرت استخراج</span><small>نرخ پایه نمایشی: ۱ DRK در ۲۴ ساعت</small></div>
           <svg viewBox="0 0 320 62" role="img" aria-label="نمودار تزئینی"><path d="M0 48 C22 45 28 18 50 28 S82 52 104 34 S137 13 157 29 S190 48 211 25 S247 17 267 28 S297 12 320 7" fill="none" stroke="#e3bd65" stroke-width="2.5" stroke-linecap="round"/><path d="M0 48 C22 45 28 18 50 28 S82 52 104 34 S137 13 157 29 S190 48 211 25 S247 17 267 28 S297 12 320 7 L320 62 L0 62Z" fill="url(#mineChartFill)" opacity=".18"/><defs><linearGradient id="mineChartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3bd65"/><stop offset="1" stop-color="#e3bd65" stop-opacity="0"/></linearGradient></defs></svg>
         </div>
       </div>
