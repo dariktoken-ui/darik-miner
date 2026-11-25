@@ -381,3 +381,116 @@ body{background:radial-gradient(ellipse at 50% -12%,#176b6840,transparent 42%),r
 .referral-user-row{border-color:#315e5a;background:#101e27}
 .referral-user-row span{color:#e3f5ee}
 @media(max-width:390px){.feature-card{min-height:108px}.miner-showcase-card{min-height:218px}}
+
+
+/* DARIK ACHAEMENID GOLD EDITION — visual skin */
+:root{
+ --bg:#080705;--surface:#15110b;--surface2:#21180d;--line:#76521f;
+ --gold:#e8b84f;--gold2:#ffe6a3;--muted:#c0ae8c;--text:#fff6df;
+ --cyan:#36cfc1;--cyan2:#9bf5e8;--green:#58dc8a;
+}
+html{background:#080705}
+body{
+ background:
+  radial-gradient(ellipse at 50% 0%,#8a5c1b40 0,transparent 35%),
+  radial-gradient(ellipse at 0% 36%,#b07b2a17 0,transparent 30%),
+  radial-gradient(ellipse at 100% 62%,#0e776e22 0,transparent 34%),
+  repeating-linear-gradient(135deg,#ffffff03 0 1px,transparent 1px 7px),#080705;
+}
+.app-shell{max-width:540px;padding:12px 12px 112px}
+.topbar{position:relative;padding:8px 7px 14px;border-bottom:1px solid #9a702d66;margin-bottom:15px}
+.topbar:after{content:"";position:absolute;bottom:-3px;left:43%;width:14%;height:5px;background:linear-gradient(90deg,transparent,#f1ca70,transparent);filter:drop-shadow(0 0 5px #e8b84f)}
+.brand{gap:12px}
+.brand-mark{width:48px;height:48px;border-radius:13px 13px 23px 23px;border:2px solid #f0c96e;background:radial-gradient(circle,#a87826 0,#3b260d 58%,#100b05 100%);font-size:27px;box-shadow:0 0 0 3px #e8b84f18,0 0 25px #e8b84f35,inset 0 0 15px #ffe6a344}
+.brand b{font:900 18px Georgia;letter-spacing:3px;color:#ffe6a3;text-shadow:0 2px 12px #e8b84f55}
+.brand small{letter-spacing:4px;color:#e8b84f}
+.test-tag{border-color:#8f682e;background:#1b1309;color:#ffe5a0}
+.utility-button{border:1px solid #765522!important;background:#171008!important;color:#ffe4a0!important}
+.wallet-button{border:1px solid #ffe2a0!important;border-radius:999px!important;background:linear-gradient(120deg,#ffe6a3,#c58b2d)!important;color:#211504!important;box-shadow:0 0 0 3px #e8b84f18,0 7px 22px #0009!important}
+.welcome{
+ min-height:142px;position:relative;overflow:hidden;border:1px solid #a47a36;border-radius:19px;
+ background:linear-gradient(100deg,#120d07eF,#1c1409dd 55%,#0c1716ed),radial-gradient(circle at 80% 50%,#a36c2633,transparent 40%);
+ box-shadow:0 12px 30px #000b,inset 0 0 0 3px #e8b84f0d,inset 0 0 28px #e8b84f10;
+}
+.welcome:before{content:"";position:absolute;inset:7px;border:1px solid #b58a4655;border-radius:13px;pointer-events:none}
+.welcome:after{content:"𓂀";left:105px;bottom:-48px;font-size:170px;color:#e8b84f14;transform:none}
+.welcome h1{font-size:27px;color:#fff0c7;text-shadow:0 3px 14px #000}
+.welcome h1 em,.mine-hero h2 em{color:#ffe19a;text-shadow:0 0 18px #e8b84f55}
+.welcome p{max-width:270px;color:#d5c29e}
+.coin-art{width:100px;height:100px;flex-basis:100px;border:3px double #f5d27b;background:radial-gradient(circle at 35% 30%,#ffe6a3,#bd842c 35%,#5b3510 68%,#130c05 72%);box-shadow:0 0 0 5px #e8b84f1a,0 0 32px #e8b84f55,inset 0 0 0 5px #f8d98a55}
+.coin-art:before{inset:5px;border:1px dashed #fff0b7}
+.coin-art span{font:900 55px Georgia;color:#3a2108;text-shadow:0 2px 1px #ffe6a3}
+.mine-hero{
+ min-height:160px;overflow:hidden;border:1px solid #a47a36;border-radius:19px;
+ background:linear-gradient(105deg,#100c07ed,#1c160ded 56%,#0e211eed),radial-gradient(circle at 88% 55%,#bd872c44,transparent 38%);
+ box-shadow:0 13px 30px #000a,inset 0 0 0 3px #e8b84f0b;
+}
+.mine-hero:before{content:"";position:absolute;inset:7px;border:1px solid #b58a4655;border-radius:13px;pointer-events:none}
+.mine-hero:after{content:"𐎠";left:112px;top:-37px;font-size:150px;color:#e9b94e12}
+.mine-hero-copy{position:relative;z-index:2}
+.mine-hero h2{font-size:22px;color:#fff0c7}
+.mine-hero p{color:#d0bd98}
+.mine-seal{border:3px double #f5d27b;border-radius:50%;background:radial-gradient(circle,#b47b25,#4a2d0c 67%,#110a04);box-shadow:0 0 0 5px #e8b84f19,0 0 28px #e8b84f55,inset 0 0 0 4px #f5d27b55}
+.mine-seal span{font:900 48px Georgia;color:#ffe6a3}
+.mine-seal small{color:#ffe6a3}
+.mine-summary,.miner-card,.active-miner-panel,.info-card,.boost-intro,.boost-option,.permanent-option,.referral-network-card,.rank-hero{
+ border:1px solid #8b652c!important;border-radius:19px!important;
+ background:radial-gradient(ellipse at 50% 0%,#95651f35,transparent 58%),linear-gradient(145deg,#21170b,#100c07 72%)!important;
+ box-shadow:0 12px 28px #0009,inset 0 0 0 3px #e8b84f0b!important;
+}
+.mine-summary{position:relative;overflow:hidden}
+.summary-heading{border-bottom:1px solid #8b652c55}
+.summary-heading b,.summary-metrics strong i,.summary-chart span{color:#ffe3a0}
+.summary-metrics>div+div{border-right-color:#8b652c77}
+.summary-metrics strong{color:#fff1cc}
+.summary-chart{border-top:1px solid #8b652c55}
+.miner-card:first-of-type{background:radial-gradient(ellipse at 50% -10%,#d49a3e38,transparent 55%),linear-gradient(155deg,#2a1b0c,#100b06 72%)!important}
+.balance-line strong{font-size:46px;color:#ffe7a7;text-shadow:0 0 22px #e8b84f4d}
+.balance-line span{color:#e8b84f}
+.wallet-balance-detail{border-color:#765522;background:#0d0a06}
+.wallet-balance-detail.total{background:#201607;border-color:#a47a36}
+.miner-stats{border-top:1px solid #8b652c66;border-bottom:1px solid #8b652c66}
+.miner-stats>div+div{border-right-color:#8b652c66}
+.miner-stats b{color:#ffe3a0}
+.progress-track{height:12px;border:1px solid #765522;background:#090806}
+.progress-track span{background:linear-gradient(90deg,#188e80,#39d6bd,#f4ce76);box-shadow:0 0 12px #39d6bd66}
+.mine-button,.primary-button{border:1px solid #ffe3a0!important;border-radius:13px!important;background:linear-gradient(110deg,#ffe9ad,#e8b84f 55%,#a96d1c)!important;color:#211504!important;font-weight:900!important;box-shadow:0 6px 20px #e8b84f35,inset 0 1px #fff7d7!important}
+.card-footnote{color:#c8b58f}
+.section-title{border-bottom:1px solid #8b652c55}
+.section-title h2{color:#ffe6a3}
+.section-title .eyebrow{color:#d8a84d}
+.feature-grid{gap:10px}
+.feature-card{
+ position:relative;overflow:hidden;min-height:126px;border:1px solid #94702f!important;border-radius:15px!important;
+ background:linear-gradient(145deg,#251a0c,#100c07 70%)!important;
+ box-shadow:0 9px 20px #0009,inset 0 0 0 3px #e8b84f0a!important;
+}
+.feature-card:before{content:"";position:absolute;inset:5px;border:1px solid #b58a463b;border-radius:10px;pointer-events:none}
+.feature-card:after{content:"";position:absolute;top:-28px;right:-25px;width:85px;height:85px;border:1px solid #e8b84f20;border-radius:50%;box-shadow:0 0 0 8px #e8b84f08,0 0 0 16px #e8b84f05}
+.feature-icon{width:45px;height:45px;border:1px solid #c18c35!important;border-radius:50%!important;background:radial-gradient(circle,#8a5c1b,#251707)!important;color:#ffe6a3!important;box-shadow:0 0 17px #e8b84f2b}
+.feature-card b{color:#ffe6a3}
+.feature-card small{color:#c5b18b}
+.feature-arrow{color:#42d6c3!important}
+.page-heading{border-color:#8b652c}
+.page-heading h2{color:#ffe6a3}
+.back-button{border-color:#9a7132!important;background:#211607!important;color:#ffe6a3!important}
+.miner-showcase-card,.miner-level-card{border-color:#8b652c!important;background:linear-gradient(145deg,#24190b,#100c07)!important}
+.miner-showcase-card .miner-level-buy,.miner-level-buy{border-color:#98702e!important;background:linear-gradient(100deg,#3c290f,#1a1208)!important;color:#ffe6a3!important}
+.quest{border-color:#765522!important;background:linear-gradient(120deg,#21170b,#100c07)!important}
+.quest-icon{background:#3b280f!important;border:1px solid #98702e!important;color:#ffe6a3!important}
+.ref-link{border-color:#765522!important;background:#090806!important}
+.ref-link button{background:#3b280f!important;color:#ffe6a3!important}
+.mini-stat,.profile-row{border-color:#765522!important;background:#1b140a!important}
+.bottom-nav{border-top:1px solid #9b7437!important;background:#090806f5!important;box-shadow:0 -10px 30px #000c!important}
+.nav-item.selected{color:#ffe6a3!important;background:linear-gradient(180deg,#8b5d1c55,#e8b84f0c)!important}
+.nav-item.selected span{filter:drop-shadow(0 0 9px #e8b84f99)}
+.notice{border-color:#9b7437!important;background:#21170b!important;color:#fff0c8!important}
+@media(max-width:390px){
+ .app-shell{padding-left:10px;padding-right:10px}
+ .welcome{min-height:132px}
+ .welcome h1{font-size:23px}
+ .coin-art{width:82px;height:82px;flex-basis:82px}
+ .mine-seal{width:82px;height:82px;flex-basis:82px}
+ .feature-card{min-height:116px}
+ .balance-line strong{font-size:39px}
+}
