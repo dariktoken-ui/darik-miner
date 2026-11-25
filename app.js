@@ -296,6 +296,8 @@
     const dot = $("presenceDot");
     if (!dot) return;
     const online = !locallyHidden && Boolean(presence?.is_online);
+    const boardPresence = $("myOnlineStatus");
+    if (boardPresence) boardPresence.textContent = online ? tr("آنلاین", "Online") : tr("آفلاین", "Offline");
     dot.classList.toggle("is-online", online);
     dot.classList.toggle("is-offline", !online);
     const label = dot.parentElement;
