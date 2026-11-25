@@ -150,3 +150,36 @@ body{background:radial-gradient(ellipse at 50% -10%,#1a687455,transparent 42%),r
 .referral-status.qualified{color:#7ee0a0}
 .referral-status.pending{color:#e9bf70}
 #copyRef:disabled,#shareRef:disabled{opacity:.48;filter:saturate(.35);cursor:not-allowed}
+
+/* Darik booster and permanent-upgrade review cards */
+.boost-intro{padding:17px 16px;margin-bottom:13px;border:1px solid #2d7776;border-radius:17px;background:linear-gradient(135deg,#12343a,#121d2c);box-shadow:0 10px 25px #0005}
+.boost-intro h3{font-size:17px;margin:7px 0;color:#f4fbfa}
+.boost-intro p{font-size:10px;line-height:1.9;color:#a9c8ce;margin:5px 0 0}
+.boost-intro .eyebrow{font-size:9px;color:#8afff0;letter-spacing:1px}
+.boost-grid,.permanent-grid{display:grid;gap:12px}
+.boost-option,.permanent-option{padding:16px;border:1px solid #315c68;border-radius:17px;background:radial-gradient(ellipse at 100% 0,#176b6740,transparent 52%),linear-gradient(145deg,#172b37,#101824);box-shadow:0 10px 25px #0005}
+.boost-option.featured{border-color:#98743a;box-shadow:0 0 0 1px #f2bd4b18,0 12px 30px #0006}
+.boost-option-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.boost-symbol,.permanent-icon{display:grid;place-items:center;width:37px;height:37px;border:1px solid #347c78;border-radius:11px;background:#17484a;color:#8afff0;font-size:19px}
+.preview-pill{padding:5px 8px;border:1px solid #80652f;border-radius:20px;color:#ffe39a;font-size:8px}
+.boost-option h3,.permanent-option h3{font-size:14px;color:#f4f8fb;margin:12px 0 3px}
+.boost-multiplier{font-size:31px;font-weight:900;color:#8afff0;direction:ltr;text-align:right}
+.boost-multiplier small{font-size:10px;font-weight:500;color:#b8cbd0}
+.boost-option>p,.permanent-option p{font-size:10px;line-height:1.8;color:#a9bdc8;margin:4px 0 12px}
+.boost-option>p b{color:#ffe39a}
+.boost-facts{display:grid;gap:0;margin:12px 0;border-top:1px solid #ffffff15}
+.boost-facts>div,.permanent-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #ffffff12}
+.boost-facts small,.permanent-meta span{font-size:9px;color:#9fb5c0}
+.boost-facts b,.permanent-meta b{font-size:10px;color:#ffe39a;text-align:left}
+.boost-option .primary-button{font-size:10px;padding:11px}
+.boost-option .primary-button:disabled,.permanent-option button:disabled{opacity:.55;filter:saturate(.45);cursor:not-allowed}
+.boost-disclaimer{margin-top:13px}
+.boost-disclaimer h3{text-align:right}
+.boost-disclaimer p{text-align:right;margin-bottom:0}
+.permanent-option{position:relative}
+.permanent-icon{width:43px;height:43px;font-size:21px}
+.permanent-meta{margin:9px 0 12px;border-top:1px solid #ffffff12}
+.permanent-option button{width:100%;padding:10px;border:1px solid #347c78;border-radius:10px;background:#17343b;color:#9fece4;font:700 10px Vazirmatn}
+html[dir="ltr"] .boost-disclaimer h3,html[dir="ltr"] .boost-disclaimer p{text-align:left}
+html[dir="ltr"] .boost-multiplier{text-align:left}
+@media(min-width:480px){.boost-grid,.permanent-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.boost-disclaimer{grid-column:1/-1}}
