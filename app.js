@@ -361,26 +361,26 @@
   function renderMinerLevels() {
     const root = $("minerLevels");
     if (!root) return;
-    const level = Math.min(1000, Math.max(1, Number(state.minerLevel || 1)));
+    const current = Math.min(1000, Math.max(1, Number(state.minerLevel || 1)));
     root.innerHTML = "";
-    const card = document.createElement("article"); card.className = "miner-level-card";
-    const emblem = document.createElement("div"); emblem.className = "miner-level-icon"; emblem.textContent = String(level).padStart(3, "0");
-    const info = document.createElement("div"); info.className = "miner-level-info";
-    const kicker = document.createElement("span"); kicker.className = "level-kicker"; kicker.textContent = tr("مسیر پیشرفت داریک · ۱۰۰۰ سطح", "DARIK PROGRESSION · 1000 LEVELS");
-    const title = document.createElement("h4"); title.textContent = tr("ماینر سطح ", "Miner Level ") + fa(level) + " / " + fa(1000);
-    const desc = document.createElement("p"); desc.textContent = tr("سطح فعلی حساب تو. ظرفیت شارژ، قدرت استخراج و مزایای هر سطح طبق قوانین نهایی سرور فعال می‌شوند.", "Your current account level. Charge capacity, mining power and level perks will be controlled by the finalized server rules.");
-    const track = document.createElement("div"); track.className = "miner-level-meta";
-    const progress = document.createElement("span"); progress.textContent = tr("پیشرفت سطح", "Level progress");
-    const value = document.createElement("b"); value.textContent = fa(level) + " / " + fa(1000);
-    track.append(progress, value);
-    info.append(kicker, title, desc, track);
-    card.append(emblem, info); root.append(card);
-    const milestones = document.createElement("div"); milestones.className = "miner-level-meta";
-    milestones.style.marginTop = "12px";
-    milestones.textContent = tr("مراحل پیشرفت: ۱ تا ۱۰۰۰ · جزئیات ارتقا پس از نهایی‌شدن قوانین اقتصادی فعال می‌شود.", "Progression range: 1–1000 · Upgrade details unlock after the economy rules are finalized.");
-    root.append(milestones);
+    Array.from({length:12}, (_,i) => current + i).forEach(level => {
+      const card = document.createElement("article");
+      card.className = "miner-level-card miner-showcase-card" + (level === current ? " is-current" : " is-locked");
+      const art = document.createElement("div"); art.className = "miner-crate-art";
+      const glow = document.createElement("span"); glow.className = "crate-glow";
+      const crate = document.createElement("span"); crate.className = "crate-box";
+      const seal = document.createElement("span"); seal.className = "crate-seal"; seal.textContent = "D";
+      art.append(glow, crate, seal);
+      const info = document.createElement("div"); info.className = "miner-level-info";
+      const kicker = document.createElement("span"); kicker.className = "level-kicker"; kicker.textContent = level === current ? tr("ماینر فعال تو", "YOUR ACTIVE MINER") : tr("سطح بعدی", "NEXT MINER");
+      const title = document.createElement("h4"); title.textContent = tr("ماینر سطح ", "Miner Level ") + fa(level);
+      const speed = document.createElement("p"); speed.className = "miner-card-speed"; speed.textContent = level === current ? (Number(state.hashrate || 25.6).toFixed(1) + " MH/s") : tr("قدرت هش پس از نهایی‌سازی", "Hash rate pending");
+      const price = document.createElement("div"); price.className = "miner-level-meta"; price.textContent = level === current ? tr("وضعیت: فعال", "Status: Active") : tr("قیمت: در حال بررسی", "Price: Under review");
+      const button = document.createElement("button"); button.type = "button"; button.className = "miner-level-buy"; button.disabled = true; button.textContent = level === current ? tr("ماینر فعال", "ACTIVE MINER") : tr("قفل · خرید پس از اتصال پرداخت", "LOCKED · PAYMENT NOT LIVE");
+      info.append(kicker,title,speed,price); card.append(art,info,button); root.append(card);
+    });
+    const note = document.createElement("p"); note.className = "miner-level-note"; note.textContent = tr("نمایش ۱۲ سطح نخست از مسیر ۱۰۰۰ سطحی داریک. قیمت‌گذاری و خرید تا اتصال پرداخت امن و تعیین اقتصاد هر سطح غیرفعال است.", "Showing the first 12 levels of Darik’s 1,000-level path. Pricing and purchases remain disabled until secure payments and level economics are finalized."); root.append(note);
   }
-
   function renderQuests(quests, completions = []) {
     state.quests = quests || []; state.questCompletions = completions || [];
     const done = new Set(completions.map(x => x.quest_id || x.questId));
