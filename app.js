@@ -337,8 +337,8 @@
     $("mineButton").classList.toggle("running", active);
     $("mineButton").disabled = active;
     $("mineButton").innerHTML = active ? tr("استخراج فعال است…","Mining is active…") : tr("شروع استخراج <span>↗</span>","Start mining <span>↗</span>");
-    $("hashrate").innerHTML = Number(session?.hash_rate || state.hashrate).toFixed(1) + " <i>MH/s</i>";
-    $("boostRate").textContent = Number(session?.hash_rate || state.hashrate).toFixed(1) + " MH/s";
+    $("hashrate").innerHTML = formatHashRate(session?.hash_rate || state.hashrate);
+    $("boostRate").textContent = formatHashRate(session?.hash_rate || state.hashrate);
     renderPoints();
   }
   $("mineButton").addEventListener("click", async () => {
@@ -361,7 +361,25 @@
   if (boostButton) boostButton.addEventListener("click", () => { notice(tr("ارتقای هش پس از تعیین قیمت و راه‌اندازی پرداخت امن فعال می‌شود.","Hash upgrades will unlock after pricing and secure payments are ready.")); });
 
   let minerPage = 0;
-  const MINER_LEVELS = 500, MINER_PAGE_SIZE = 12;
+  const MINER_LEVELS = 5000, MINER_PAGE_SIZE = 12;
+  function minerRankName(level) {
+    if (level <= 10) return tr("نوآموز", "Initiate");
+    if (level <= 25) return tr("برنزی", "Bronze");
+    if (level <= 50) return tr("نقره‌ای", "Silver");
+    if (level <= 100) return tr("طلایی", "Gold");
+    if (level <= 200) return tr("پلاتینیوم", "Platinum");
+    if (level <= 350) return tr("امپراتوری", "Imperial");
+    if (level <= 500) return tr("هخامنشی", "Achaemenid");
+    if (level <= 1000) return tr("شاهنشاهی", "Shahanshahi");
+    if (level <= 2500) return tr("جاودان", "Immortal");
+    return tr("اسطوره‌ای", "Mythic");
+  }
+  function formatHashRate(value) {
+    const rate = Math.max(0, Number(value) || 0);
+    if (rate >= 1e6) return (rate / 1e6).toFixed(2) + " TH/s";
+    if (rate >= 1e3) return (rate / 1e3).toFixed(2) + " GH/s";
+    return rate.toFixed(rate < 10 ? 3 : 1) + " MH/s";
+  }
   function setMinerPage(next) {
     const pages = Math.ceil(MINER_LEVELS / MINER_PAGE_SIZE);
     minerPage = Math.max(0, Math.min(pages - 1, next));
@@ -385,8 +403,8 @@
       art.append(glow, crate, seal);
       const info = document.createElement("div"); info.className = "miner-level-info";
       const kicker = document.createElement("span"); kicker.className = "level-kicker"; kicker.textContent = level === current ? tr("ماینر فعال تو", "YOUR ACTIVE MINER") : tr("سطح ماینر", "MINER TIER");
-      const title = document.createElement("h4"); title.textContent = tr("ماینر سطح ", "Miner Level ") + fa(level);
-      const speed = document.createElement("p"); speed.className = "miner-card-speed"; speed.textContent = level === current ? (Number(state.hashrate || 25.6).toFixed(1) + " MH/s · " + tr("هش فعلی سرور","server hash")) : tr("هش با ارتقای تأییدشده تعیین می‌شود", "Hash set by verified upgrade");
+      const title = document.createElement("h4"); title.textContent = minerRankName(level) + " · " + tr("سطح ", "LEVEL ") + fa(level);
+      const speed = document.createElement("p"); speed.className = "miner-card-speed"; speed.textContent = level === current ? (formatHashRate(state.hashrate || 25.6) + " · " + tr("هش فعلی سرور","server hash")) : tr("هش با ارتقای تأییدشده تعیین می‌شود", "Hash set by verified upgrade");
       const price = document.createElement("div"); price.className = "miner-level-meta"; price.textContent = level === current ? tr("وضعیت: فعال", "Status: Active") : tr("قیمت: در انتظار تعیین", "Price: pending");
       const button = document.createElement("button"); button.type = "button"; button.className = "miner-level-buy"; button.disabled = true; button.textContent = level === current ? tr("ماینر فعال", "ACTIVE MINER") : tr("قفل · خرید هنوز فعال نیست", "LOCKED · PURCHASE NOT LIVE");
       info.append(kicker,title,speed,price); card.append(art,info,button); root.append(card);
