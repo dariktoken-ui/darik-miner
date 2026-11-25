@@ -358,12 +358,22 @@
   const boostButton = $("boostButton");
   if (boostButton) boostButton.addEventListener("click", () => { notice(tr("ارتقای هش پس از تعیین قیمت و راه‌اندازی پرداخت امن فعال می‌شود.","Hash upgrades will unlock after pricing and secure payments are ready.")); });
 
+  let minerPage = 0;
+  const MINER_LEVELS = 500, MINER_PAGE_SIZE = 12;
+  function setMinerPage(next) {
+    const pages = Math.ceil(MINER_LEVELS / MINER_PAGE_SIZE);
+    minerPage = Math.max(0, Math.min(pages - 1, next));
+    renderMinerLevels();
+  }
   function renderMinerLevels() {
     const root = $("minerLevels");
     if (!root) return;
-    const current = Math.min(1000, Math.max(1, Number(state.minerLevel || 1)));
+    const current = Math.min(MINER_LEVELS, Math.max(1, Number(state.minerLevel || 1)));
+    const pages = Math.ceil(MINER_LEVELS / MINER_PAGE_SIZE);
+    const start = minerPage * MINER_PAGE_SIZE + 1;
+    const end = Math.min(MINER_LEVELS, start + MINER_PAGE_SIZE - 1);
     root.innerHTML = "";
-    Array.from({length:12}, (_,i) => current + i).forEach(level => {
+    Array.from({length:end-start+1}, (_,i) => start + i).forEach(level => {
       const card = document.createElement("article");
       card.className = "miner-level-card miner-showcase-card" + (level === current ? " is-current" : " is-locked");
       const art = document.createElement("div"); art.className = "miner-crate-art";
@@ -372,15 +382,22 @@
       const seal = document.createElement("span"); seal.className = "crate-seal"; seal.textContent = "D";
       art.append(glow, crate, seal);
       const info = document.createElement("div"); info.className = "miner-level-info";
-      const kicker = document.createElement("span"); kicker.className = "level-kicker"; kicker.textContent = level === current ? tr("ماینر فعال تو", "YOUR ACTIVE MINER") : tr("سطح بعدی", "NEXT MINER");
+      const kicker = document.createElement("span"); kicker.className = "level-kicker"; kicker.textContent = level === current ? tr("ماینر فعال تو", "YOUR ACTIVE MINER") : tr("سطح ماینر", "MINER TIER");
       const title = document.createElement("h4"); title.textContent = tr("ماینر سطح ", "Miner Level ") + fa(level);
-      const speed = document.createElement("p"); speed.className = "miner-card-speed"; speed.textContent = level === current ? (Number(state.hashrate || 25.6).toFixed(1) + " MH/s") : tr("قدرت هش پس از نهایی‌سازی", "Hash rate pending");
-      const price = document.createElement("div"); price.className = "miner-level-meta"; price.textContent = level === current ? tr("وضعیت: فعال", "Status: Active") : tr("قیمت: در حال بررسی", "Price: Under review");
-      const button = document.createElement("button"); button.type = "button"; button.className = "miner-level-buy"; button.disabled = true; button.textContent = level === current ? tr("ماینر فعال", "ACTIVE MINER") : tr("قفل · خرید پس از اتصال پرداخت", "LOCKED · PAYMENT NOT LIVE");
+      const speed = document.createElement("p"); speed.className = "miner-card-speed"; speed.textContent = level === current ? (Number(state.hashrate || 25.6).toFixed(1) + " MH/s · " + tr("هش فعلی سرور","server hash")) : tr("هش با ارتقای تأییدشده تعیین می‌شود", "Hash set by verified upgrade");
+      const price = document.createElement("div"); price.className = "miner-level-meta"; price.textContent = level === current ? tr("وضعیت: فعال", "Status: Active") : tr("قیمت: در انتظار تعیین", "Price: pending");
+      const button = document.createElement("button"); button.type = "button"; button.className = "miner-level-buy"; button.disabled = true; button.textContent = level === current ? tr("ماینر فعال", "ACTIVE MINER") : tr("قفل · خرید هنوز فعال نیست", "LOCKED · PURCHASE NOT LIVE");
       info.append(kicker,title,speed,price); card.append(art,info,button); root.append(card);
     });
-    const note = document.createElement("p"); note.className = "miner-level-note"; note.textContent = tr("نمایش ۱۲ سطح نخست از مسیر ۱۰۰۰ سطحی داریک. قیمت‌گذاری و خرید تا اتصال پرداخت امن و تعیین اقتصاد هر سطح غیرفعال است.", "Showing the first 12 levels of Darik’s 1,000-level path. Pricing and purchases remain disabled until secure payments and level economics are finalized."); root.append(note);
+    const label = tr("صفحه ", "Page ") + fa(minerPage + 1) + tr(" از ", " of ") + fa(pages);
+    const range = fa(start) + "–" + fa(end);
+    ["minerPageLabel","minerPageLabelBottom"].forEach(id => { const el=$(id); if(el) el.textContent = id.endsWith("Bottom") ? (fa(minerPage+1)+" / "+fa(pages)) : label; });
+    ["levelCount"].forEach(id => { const el=$(id); if(el) el.textContent=range; });
+    ["minerPrev","minerPrevBottom"].forEach(id => { const el=$(id); if(el) el.disabled=minerPage===0; });
+    ["minerNext","minerNextBottom"].forEach(id => { const el=$(id); if(el) el.disabled=minerPage>=pages-1; });
   }
+  ["minerPrev","minerPrevBottom"].forEach(id => $(id)?.addEventListener("click",()=>setMinerPage(minerPage-1)));
+  ["minerNext","minerNextBottom"].forEach(id => $(id)?.addEventListener("click",()=>setMinerPage(minerPage+1)));
   function renderQuests(quests, completions = []) {
     state.quests = quests || []; state.questCompletions = completions || [];
     const done = new Set(completions.map(x => x.quest_id || x.questId));
