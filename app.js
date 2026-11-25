@@ -462,12 +462,14 @@
     }
     if (state.walletBalanceLoading || (!force && Date.now() - state.walletBalanceUpdatedAt < 45000)) return;
     state.walletBalanceLoading = true;
+    const requestedWallet = state.wallet;
     setWalletDrkText(tr("در حال بررسی بلاکچین…", "Checking blockchain…"));
     try {
       const url = "https://tonapi.io/v2/accounts/" + encodeURIComponent(state.wallet) + "/jettons";
       const response = await fetch(url, { headers: { "accept": "application/json" }, cache: "no-store" });
       if (!response.ok) throw new Error("TONAPI " + response.status);
       const data = await response.json();
+      if (state.wallet !== requestedWallet) return;
       const item = (data.balances || []).find(row => normalizeTonAddress(row.jetton?.address || row.jetton_address) === DRK_MASTER_RAW);
       const decimals = Math.max(0, Math.min(18, Number(item?.jetton?.decimals ?? 9)));
       state.walletDrkBalance = Number(BigInt(item?.balance || "0")) / (10 ** decimals);
@@ -476,6 +478,7 @@
       updateCombinedBalance();
     } catch (error) {
       console.warn("DRK wallet balance:", error);
+      state.walletBalanceUpdatedAt = Date.now();
       state.walletDrkBalance = null;
       setWalletDrkText(tr("موجودی دریافت نشد؛ دوباره تلاش کن", "Balance unavailable; retry"));
       updateCombinedBalance();
@@ -484,8 +487,11 @@
   function updateCombinedBalance() {
     const el = $("combinedDrkBalance");
     if (!el) return;
+    const session = state.activeSession;
+    const elapsed = session?.last_accrued_at ? Math.max(0, (Date.now() - new Date(session.last_accrued_at).getTime()) / 1000) : 0;
+    const pending = session ? (elapsed / 86400) * (Number(session.hash_rate || 25.6) / 25.6) : 0;
     el.textContent = state.wallet && state.walletDrkBalance !== null
-      ? formatDrk(Number(state.drkBalance || 0) + state.walletDrkBalance) + " DRK"
+      ? formatDrk(Number(state.drkBalance || 0) + pending + state.walletDrkBalance) + " DRK"
       : tr("برای جمع کل، کیف پول را متصل کن", "Connect wallet for total");
   }
   function updateWalletUI(wallet, restored = false) {
