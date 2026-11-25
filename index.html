@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css?v=darik-upgrade-preview-20261125a">
-  <script src="https://telegram.org/js/telegram-web-app.js?v=darik-upgrade-preview-20261125a"></script>
+  <link rel="stylesheet" href="./style.css?v=darik-wallet-balance-20261125b">
+  <script src="https://telegram.org/js/telegram-web-app.js?v=darik-wallet-balance-20261125b"></script>
   <script src="https://unpkg.com/@tonconnect/ui@5.0.4/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
@@ -44,6 +44,8 @@
         <div class="card-top"><span class="live-label"><i id="presenceDot"></i> وضعیت حضور</span><span id="minerStatus" class="status-text">آماده شروع</span></div>
         <div class="balance-label">موجودی داریک</div>
         <div class="balance-line"><strong id="points">۰</strong><span>DRK</span></div>
+        <div class="wallet-balance-detail"><span id="walletDrkLabel">موجودی DRK در Tonkeeper</span><b id="walletDrkBalance">کیف پول متصل نیست</b></div>
+        <div class="wallet-balance-detail total"><span id="combinedDrkLabel">مجموع موجودی کیف پول و برنامه</span><b id="combinedDrkBalance">برای جمع کل، کیف پول را متصل کن</b></div>
         <div class="miner-stats">
           <div><small>قدرت استخراج</small><b id="hashrate">25.6 <i>MH/s</i></b></div>
           <div><small>سطح ماینر</small><b>LEVEL 01</b></div>
@@ -133,7 +135,7 @@
 
     <section id="screen-profile" class="screen">
       <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">YOUR ACCOUNT</span><h2>پروفایل</h2><p>اطلاعات حساب تلگرام و کیف پول.</p></div></div>
-      <article class="info-card profile-card"><div class="avatar">D</div><h3 id="profileName">کاربر داریک</h3><div class="profile-row"><span>موجودی داریک</span><b id="profilePoints">۰</b></div><div class="profile-row"><span>وضعیت حساب</span><b>نسخه خصوصی</b></div></article>
+      <article class="info-card profile-card"><div class="avatar">D</div><h3 id="profileName">کاربر داریک</h3><div class="profile-row"><span>موجودی داریک در برنامه</span><b id="profilePoints">۰</b></div><div class="profile-row"><span>موجودی در Tonkeeper</span><b id="profileWalletDrk">کیف پول متصل نیست</b></div><div class="profile-row"><span>وضعیت حساب</span><b>نسخه خصوصی</b></div></article>
     </section>
 
     <nav class="bottom-nav">
@@ -147,6 +149,6 @@
     <div id="notice" class="notice" role="status"></div>
     <footer> DARIK MINER · PRIVATE PREVIEW · قدرت از جامعه می‌آید </footer>
   </main>
-  <script src="./app.js?v=darik-upgrade-preview-20261125a"></script>
+  <script src="./app.js?v=darik-wallet-balance-20261125b"></script>
 </body>
 </html>
