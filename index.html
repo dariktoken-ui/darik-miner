@@ -87,7 +87,13 @@
         <p>با انتخاب ماینر سطح بالاتر، قدرت استخراج حساب افزایش پیدا می‌کند. خرید واقعی تا تکمیل تأیید پرداخت بلاکچین فعال نمی‌شود.</p>
       </article>
       <div class="miner-shop-heading"><div><span class="eyebrow">UPGRADE YOUR MINER</span><h3>انتخاب ماینر بعدی</h3></div><span>سطح‌های بالاتر</span></div>
+      <div class="level-toolbar">
+        <div><span class="eyebrow">500 MINER TIERS</span><b>مسیر ارتقای ۵۰۰ سطحی</b><small>سطح فعلی با داده حساب نمایش داده می‌شود؛ خرید تا اتصال پرداخت امن غیرفعال است.</small></div>
+        <div class="level-count"><strong id="levelCount">۱–۱۲</strong><small>از ۵۰۰</small></div>
+      </div>
+      <div class="miner-pagination"><button id="minerPrev" type="button" disabled>قبلی</button><span id="minerPageLabel">صفحه ۱ از ۴۲</span><button id="minerNext" type="button">بعدی</button></div>
       <div id="minerLevels" class="miner-level-list"></div>
+      <div class="miner-pagination bottom-pager"><button id="minerPrevBottom" type="button" disabled>قبلی</button><span id="minerPageLabelBottom">۱ / ۴۲</span><button id="minerNextBottom" type="button">بعدی</button></div>
     </section>
 
     <section id="screen-tasks" class="screen">
@@ -130,7 +136,14 @@
 
     <section id="screen-leaderboard" class="screen">
       <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">TOP MINERS</span><h2>رتبه‌بندی</h2><p>جدول رتبه‌بندی کاربران داریک.</p></div></div>
-      <article class="info-card"><span class="big-icon">♛</span><h3>جدول رتبه‌بندی</h3><p>برای نمایش رتبه‌های واقعی، باید داده کاربران از سرور دریافت شود. این بخش هنوز به دیتابیس متصل نشده است.</p></article>
+      <article class="rank-hero">
+        <div class="rank-hero-top"><span class="eyebrow">DARIK TOP 200</span><span class="rank-live"><i></i> حضور آنلاین</span></div>
+        <div class="rank-crown">♛</div><h3>۲۰۰ جایگاه برتر داریک</h3>
+        <p>رتبه‌بندی بر اساس اطلاعات تأییدشده حساب و وضعیت حضور آنلاین نمایش داده می‌شود.</p>
+        <div class="rank-stats"><div><b>۲۰۰</b><small>جایگاه رتبه‌بندی</small></div><div><b id="myOnlineStatus">در حال بررسی</b><small>وضعیت حضور تو</small></div><div><b id="myRank">—</b><small>رتبه من</small></div></div>
+      </article>
+      <div class="rank-list-heading"><b>فهرست ۲۰۰ نفر برتر</b><small>داده زنده سرور</small></div>
+      <div id="leaderboardRows" class="leaderboard-rows"><div class="rank-empty">رتبه‌بندی زنده هنوز از سمت سرور ارائه نمی‌شود؛ هیچ رتبه یا کاربر ساختگی نمایش داده نمی‌شود.</div></div>
     </section>
 
     <section id="screen-profile" class="screen">
