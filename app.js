@@ -186,7 +186,7 @@
   }
   if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor?.("#080807"); tg.setBackgroundColor?.("#080807"); }
   state.user = tg?.initDataUnsafe?.user || null;
-  $("profileName").textContent = state.user ? [state.user.first_name, state.user.last_name].filter(Boolean).join(" ") : "کاربر داریک";
+  $("profileName").textContent = "عضو شبکه داریک";
   $("username")?.textContent;
 
   function go(screen) {
@@ -229,7 +229,7 @@
         const row = document.createElement("div");
         row.className = "referral-user-row";
         const identity = document.createElement("span");
-        identity.textContent = "ID · " + fa(item.telegram_user_id);
+        identity.textContent = tr("عضو شبکه · شماره ", "Network member · #") + fa(referralOffset + items.indexOf(item) + 1);
         const details = document.createElement("div");
         details.className = "referral-row-details";
         const depth = document.createElement("small");
@@ -441,7 +441,7 @@
       if (!state.user?.id || String(profile.telegram_user_id) !== String(state.user.id)) {
         throw new Error(tr("شناسه حساب تلگرام با پروفایل سرور یکسان نیست؛ ورود متوقف شد.", "Telegram account ID does not match the server profile. Sign-in stopped."));
       }
-      $("profileName").textContent = [profile.first_name || state.user.first_name, state.user.last_name].filter(Boolean).join(" ");
+      $("profileName").textContent = tr("عضو شبکه داریک", "Darik network member");
       state.drkBalance = Number(profile.drk_balance || 0);
       state.minerLevel = Number(profile.miner_level || 1);
       renderMinerLevels();
