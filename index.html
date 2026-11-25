@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css?v=darik-private-referral-20261125d">
+  <link rel="stylesheet" href="./style.css?v=darik-upgrade-preview-20261125a">
   <script src="https://telegram.org/js/telegram-web-app.js?v=darik-private-referral-20261125d"></script>
   <script src="https://unpkg.com/@tonconnect/ui@5.0.4/dist/tonconnect-ui.min.js"></script>
 </head>
@@ -95,7 +95,12 @@
 
     <section id="screen-boost" class="screen">
       <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">MINER POWER</span><h2>بوست قدرت استخراج</h2><p>ارتقای آزمایشی برای نمایش ساختار ماینر.</p></div></div>
-      <article class="info-card"><span class="big-icon">⚡</span><h3>قدرت فعلی: <b id="boostRate">25.6 MH/s</b></h3><p>در نسخه خصوصی، ارتقا فقط نمایشی است و خرید یا پرداختی انجام نمی‌شود.</p><button id="boostButton" class="primary-button">افزایش آزمایشی قدرت</button></article>
+      <div class="boost-intro"><span class="eyebrow">BOOST LAB · PRIVATE REVIEW</span><h3>قدرت فعلی: <b id="boostRate">25.6 MH/s</b></h3><p>پیش‌نمایش اقتصادی بوسترها؛ هیچ خرید، پرداخت یا فعال‌سازی در این نسخه انجام نمی‌شود.</p></div>
+      <div class="boost-grid">
+        <article class="boost-option"><div class="boost-option-top"><span class="boost-symbol">⚡</span><span class="preview-pill">پیشنهادی · غیرفعال</span></div><h3>بوستر دوبرابر</h3><div class="boost-multiplier">2× <small>قدرت هش</small></div><p>مدت اثر: <b>۳ ساعت</b></p><div class="boost-facts"><div><small>DRK اضافه نسبت به حالت پایه</small><b>۰٫۱۲۵ DRK</b></div><div><small>هزینه پیشنهادی برای بررسی</small><b>۰٫۰۰۱ GRAM</b></div><div><small>وضعیت</small><b>غیرفعال</b></div></div><button class="primary-button" type="button" disabled>پس از بررسی فعال می‌شود</button></article>
+        <article class="boost-option featured"><div class="boost-option-top"><span class="boost-symbol">✦</span><span class="preview-pill">پیشنهادی · غیرفعال</span></div><h3>بوستر سه‌برابر</h3><div class="boost-multiplier">3× <small>قدرت هش</small></div><p>مدت اثر: <b>۶ ساعت</b></p><div class="boost-facts"><div><small>DRK اضافه نسبت به حالت پایه</small><b>۰٫۵ DRK</b></div><div><small>هزینه پیشنهادی برای بررسی</small><b>۰٫۰۰۴ GRAM</b></div><div><small>وضعیت</small><b>غیرفعال</b></div></div><button class="primary-button" type="button" disabled>پس از بررسی فعال می‌شود</button></article>
+      </div>
+      <article class="info-card boost-disclaimer"><h3>روش محاسبه سود خریدار</h3><p>نرخ پایه فعلی: ۲۵٫۶ MH/s = روزانه ۱ DRK. مقدار اضافه بالا نسبت به استخراج عادی محاسبه شده است؛ ارزش دلاری DRK، کارمزد شبکه و سود خالص باید با قیمت و هزینه واقعی روز بررسی شوند. قیمت‌های GRAM صرفاً پیش‌نویس‌اند.</p></article>
     </section>
 
     <section id="screen-referrals" class="screen">
@@ -112,7 +117,13 @@
 
     <section id="screen-shop" class="screen">
       <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">DARIK SHOP</span><h2>فروشگاه</h2><p>بخش ارتقاهای آینده داریک.</p></div></div>
-      <article class="info-card"><span class="big-icon">◇</span><h3>فروشگاه به‌زودی</h3><p>خرید بوست و ارتقا پس از تکمیل اتصال امن کیف پول و سیستم پرداخت فعال می‌شود. فعلاً هیچ پرداختی انجام نده.</p></article>
+      <div class="boost-intro"><span class="eyebrow">DARIK UPGRADE STORE</span><h3>ارتقاهای دائمی ماینر</h3><p>این گزینه‌ها برای مقایسه و بررسی طراحی شده‌اند؛ قیمت و قدرت نهایی هنوز تعیین نشده است.</p></div>
+      <div class="permanent-grid">
+        <article class="permanent-option"><span class="permanent-icon">♜</span><h3>ارتقای سطح ماینر</h3><p>افزایش دائمی سطح و باز شدن قابلیت‌های مرحله‌ای تا سطح ۱۰۰۰.</p><div class="permanent-meta"><span>قیمت</span><b>در حال محاسبه</b></div><button type="button" disabled>غیرفعال تا بررسی</button></article>
+        <article class="permanent-option"><span class="permanent-icon">⌁</span><h3>افزایش دائمی هش</h3><p>افزایش قدرت پایه استخراج؛ مقدار هش و بازگشت هزینه پس از محاسبه ذخیره پاداش تعیین می‌شود.</p><div class="permanent-meta"><span>قیمت</span><b>در حال محاسبه</b></div><button type="button" disabled>غیرفعال تا بررسی</button></article>
+        <article class="permanent-option"><span class="permanent-icon">◈</span><h3>ظرفیت و شارژ ویژه</h3><p>ظرفیت بیشتر و امکانات مدیریت زمان استخراج؛ جزئیات پس از نهایی شدن مکانیزم شارژ مشخص می‌شود.</p><div class="permanent-meta"><span>قیمت</span><b>در حال محاسبه</b></div><button type="button" disabled>غیرفعال تا بررسی</button></article>
+      </div>
+      <article class="info-card boost-disclaimer"><h3>قانون فعال‌سازی</h3><p>هیچ ارتقایی با کلیک فعال نمی‌شود. پس از بررسی اقتصادی، تعیین سقف پاداش، تأیید قیمت‌ها و پیاده‌سازی تأیید پرداخت سمت سرور، هر گزینه جداگانه فعال خواهد شد.</p></article>
     </section>
 
     <section id="screen-leaderboard" class="screen">
@@ -136,6 +147,6 @@
     <div id="notice" class="notice" role="status"></div>
     <footer> DARIK MINER · PRIVATE PREVIEW · قدرت از جامعه می‌آید </footer>
   </main>
-  <script src="./app.js?v=darik-presence-20261125b"></script>
+  <script src="./app.js?v=darik-upgrade-preview-20261125a"></script>
 </body>
 </html>
