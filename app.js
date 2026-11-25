@@ -355,7 +355,8 @@
       notice(e.message || "شروع استخراج انجام نشد.");
     }
   });
-  $("boostButton").addEventListener("click", () => { notice(tr("ارتقای هش پس از تعیین قیمت و راه‌اندازی پرداخت امن فعال می‌شود.","Hash upgrades will unlock after pricing and secure payments are ready.")); });
+  const boostButton = $("boostButton");
+  if (boostButton) boostButton.addEventListener("click", () => { notice(tr("ارتقای هش پس از تعیین قیمت و راه‌اندازی پرداخت امن فعال می‌شود.","Hash upgrades will unlock after pricing and secure payments are ready.")); });
 
   function renderMinerLevels() {
     const root = $("minerLevels");
