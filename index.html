@@ -90,7 +90,135 @@ nav button.on{color:var(--gold)}nav button.on span{border-color:var(--tq);box-sh
 #toast.show{transform:translate(-50%,0)}
 .note{color:var(--mut);font-size:12px;text-align:center;margin:10px 0}
 @media (prefers-reduced-motion:reduce){.tab.on,.coin.on{animation:none}}
-\n/* Actual miner shop cards: match the 3D reactor artwork in #miner */\n.mi{display:block;height:116px;margin:8px 0 10px;padding:7px;border:1px solid #398f91;border-radius:16px;background:radial-gradient(ellipse at 50% 78%,#39d7ce30,transparent 58%),linear-gradient(145deg,#102c3a,#071521 72%);filter:drop-shadow(0 8px 8px #0009);overflow:visible}\n.mc{position:relative;overflow:hidden;border:1px solid #347c82;border-radius:20px;background:radial-gradient(ellipse at 50% 0%,#1c777735,transparent 58%),linear-gradient(150deg,#142c3a,#091724 80%);box-shadow:0 12px 26px #0008,inset 0 0 0 2px #39d7ce0b}\n.mc:before{content:"";position:absolute;inset:6px;border:1px solid #e9bd6140;border-radius:15px;pointer-events:none}\n.mc.cur{border-color:#55e2c1;box-shadow:0 0 0 1px #55e2c166,0 0 24px #39d7ce30}\n.mc.nx{border-color:#e9bd61}\n.mc .lt{position:relative;background:#0b202b;border:1px solid #b58c45;color:#fff0bd}\n.mc .pr{position:relative;border-color:#b58c45;color:#fff0bd;background:linear-gradient(100deg,#102b37,#091722)}\n.mc.cur .pr{border-color:#39d7ce;color:#a5fff2}\n.mc .sp{position:relative;color:#b2c8d0}\n.mc .sp b{color:#a5fff2}\n.mc .mb{position:relative}\n@media(prefers-reduced-motion:reduce){.mi{filter:none}}\n</style>
+\n/* Actual miner shop cards: match the 3D reactor artwork in #miner */\n.mi{display:block;height:116px;margin:8px 0 10px;padding:7px;border:1px solid #398f91;border-radius:16px;background:radial-gradient(ellipse at 50% 78%,#39d7ce30,transparent 58%),linear-gradient(145deg,#102c3a,#071521 72%);filter:drop-shadow(0 8px 8px #0009);overflow:visible}\n.mc{position:relative;overflow:hidden;border:1px solid #347c82;border-radius:20px;background:radial-gradient(ellipse at 50% 0%,#1c777735,transparent 58%),linear-gradient(150deg,#142c3a,#091724 80%);box-shadow:0 12px 26px #0008,inset 0 0 0 2px #39d7ce0b}\n.mc:before{content:"";position:absolute;inset:6px;border:1px solid #e9bd6140;border-radius:15px;pointer-events:none}\n.mc.cur{border-color:#55e2c1;box-shadow:0 0 0 1px #55e2c166,0 0 24px #39d7ce30}\n.mc.nx{border-color:#e9bd61}\n.mc .lt{position:relative;background:#0b202b;border:1px solid #b58c45;color:#fff0bd}\n.mc .pr{position:relative;border-color:#b58c45;color:#fff0bd;background:linear-gradient(100deg,#102b37,#091722)}\n.mc.cur .pr{border-color:#39d7ce;color:#a5fff2}\n.mc .sp{position:relative;color:#b2c8d0}\n.mc .sp b{color:#a5fff2}\n.mc .mb{position:relative}\n@media(prefers-reduced-motion:reduce){.mi{filter:none}}\n
+/* DARIK PREMIUM UI — overrides for the actual inline stylesheet */
+:root{
+ --bg:#050a10;--gold:#e8bd67;--gold2:#a8792f;--gl:#fff0c5;
+ --tq:#55e2d0;--tq2:#167f83;--txt:#f4f1e8;--mut:#9baeb4;
+ --ln:rgba(232,189,103,.27);
+}
+html,body{background:#050a10;color:var(--txt)}
+#app{
+ background:
+ radial-gradient(ellipse 100% 35% at 50% -8%,rgba(232,189,103,.17),transparent 72%),
+ radial-gradient(ellipse 75% 40% at 0% 48%,rgba(37,178,174,.12),transparent 70%),
+ radial-gradient(ellipse 70% 36% at 100% 85%,rgba(24,112,137,.12),transparent 70%),
+ linear-gradient(160deg,#08131d 0%,#050a10 48%,#07131a 100%);
+ border-inline:1px solid rgba(232,189,103,.09);
+}
+main{padding:16px 15px 126px}
+.tab.on{animation:darikEnter .32s cubic-bezier(.2,.7,.2,1)}
+@keyframes darikEnter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.top{padding:5px 2px 12px}
+#st,.lvb,.btn,.claim,.rb,.pill,.plate,.earn,.card,.pnl,.ban,.md,.chart,nav{
+ backdrop-filter:blur(12px);
+}
+.top .btn{min-height:44px;padding:10px 17px;border:1px solid #9cece0aa;box-shadow:0 5px 18px #35cbbb24,inset 0 1px #ffffff70}
+.lvb{background:linear-gradient(145deg,#fff0c2,#d6a84e 55%,#8e6125);box-shadow:0 5px 16px #d6a84e25}
+.st{font-size:11px;letter-spacing:.2px}
+.pill{border-color:#4a827e;background:#0a2027;color:#c5e9df;box-shadow:inset 0 1px #ffffff0b}
+.pill b{color:#72f0df}
+.plate{
+ position:relative;width:94%;margin:14px auto 0;padding:13px 12px 15px;
+ border:1px solid #c99b50;border-radius:24px;
+ background:radial-gradient(ellipse at 50% 0,#d5a74a1c,transparent 65%),linear-gradient(145deg,#142431,#09131d 72%);
+ box-shadow:0 14px 32px #0008,0 0 0 4px #c99b5010,inset 0 1px #fff2c51c;
+}
+.plate:before{content:"";position:absolute;inset:6px;border:1px solid #e8bd6726;border-radius:18px;pointer-events:none}
+.plate small{color:#e8bd67;letter-spacing:4px}
+.amt{font-size:clamp(32px,9vw,43px);color:#fff0c5;text-shadow:0 0 22px #e8bd6730}
+.amt i{color:#e8bd67}
+.earn{
+ width:72%;margin:13px auto 15px;padding:9px 12px;border:1px solid #4acbbb;
+ border-radius:16px;background:linear-gradient(145deg,#103a3a,#092328);
+ color:#8ff5e6;font-size:26px;box-shadow:0 8px 24px #2fe6d11c,inset 0 1px #ffffff12;
+}
+.stage{justify-content:center;gap:24px;margin:18px 0}
+.rb{width:45px;height:45px;border:1px solid #c99b50;color:#f1d99d;background:linear-gradient(145deg,#1b3440,#0b1720);box-shadow:0 5px 14px #0007}
+.coin{
+ width:clamp(150px,46vw,184px);height:clamp(150px,46vw,184px);
+ border:1px solid #f6d88c;
+ background:
+ radial-gradient(circle at 32% 25%,#fff6d2 0 5%,#e6bb63 18%,#9c702d 48%,#342713 72%,#111a20 100%);
+ box-shadow:inset 0 0 0 5px #61451d,inset 0 0 0 8px #f5d88b,inset 0 0 0 11px #705022,
+ 0 0 0 5px #e8bd6710,0 0 34px #d7a94a38,0 18px 35px #0009;
+ position:relative;
+}
+.coin:before,.coin:after{content:"";position:absolute;inset:14px;border:1px solid #fff0bd88;border-radius:50%;pointer-events:none}
+.coin:after{inset:23px;border-style:dashed;opacity:.6}
+.coin b{font-size:clamp(43px,13vw,54px);color:#49300d;text-shadow:0 1px #fff0bd,0 4px 12px #0005}
+.coin.on{animation:darikCoin 3.2s ease-in-out infinite;box-shadow:inset 0 0 0 5px #61451d,inset 0 0 0 8px #f5d88b,inset 0 0 0 11px #705022,0 0 32px #e8bd6755,0 0 65px #39d7ce40}
+@keyframes darikCoin{50%{transform:translateY(-5px) rotateY(5deg)}}
+.bolt{margin:12px 2px 17px}
+.bolt .bi{border:1px solid #e8bd67;background:radial-gradient(circle,#4b3517,#111a20);box-shadow:0 0 18px #e8bd6730}
+.bar{border:1px solid #b98b43;background:#07141d}
+.bar i{background:linear-gradient(90deg,#98702d,#e8bd67,#fff0c5)}
+.claim{
+ padding:15px 10px;border:1px solid #ffe5a2;border-radius:15px;
+ background:linear-gradient(110deg,#9b702e,#e8bd67 48%,#fff0c5 100%);
+ color:#1d170c;font-size:20px;letter-spacing:1.5px;
+ box-shadow:0 7px 0 #69491d,0 14px 30px #c18d3b2b,inset 0 1px #fff9e8;
+}
+.card{
+ border:1px solid #3c5d61;border-radius:19px;
+ background:linear-gradient(145deg,rgba(24,54,62,.82),rgba(10,21,30,.94));
+ box-shadow:0 10px 26px #0006,inset 0 1px #ffffff10;
+}
+.ic{border:1px solid #d4ad60;background:radial-gradient(circle,#60451d,#14212a 75%);box-shadow:0 0 16px #d5a74725}
+.btn{border-radius:12px;background:linear-gradient(145deg,#fff0bd,#e3b95e 55%,#a8792f);box-shadow:0 4px 0 #68491c;color:#201708}
+.btn.tq{border:1px solid #8ff6ea;background:linear-gradient(145deg,#a8fff0,#4bd9c8 60%,#167f83);box-shadow:0 4px 0 #07545a;color:#052b2a}
+input{border:1px solid #4d8986;background:#091923;border-radius:13px}
+.cap{padding:12px;border:1px solid #365d61;border-radius:17px;background:#0c1d26}
+.mg{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mc{
+ position:relative;overflow:hidden;padding:11px 10px 12px;
+ border:1px solid #45666a;border-radius:20px;text-align:center;
+ background:radial-gradient(ellipse at 50% 0%,#3d99912b,transparent 55%),linear-gradient(155deg,#172d38,#09151f 76%);
+ box-shadow:0 12px 25px #0008,inset 0 1px #ffffff12;
+}
+.mc:before{content:"";position:absolute;inset:5px;border:1px solid #e8bd6724;border-radius:15px;pointer-events:none}
+.mc.cur{border-color:#6ce8d5;box-shadow:0 0 0 1px #55e2d055,0 0 25px #39d7ce25,0 12px 25px #0008}
+.mc.nx{border-color:#d6ad61}
+.lt{position:relative;background:#102733;border:1px solid #8f743f;color:#fff0c5;border-radius:9px;padding:4px 12px}
+.mi{
+ position:relative;display:block;width:100%;height:112px;margin:8px 0 9px;padding:5px;
+ border:1px solid #3e8888;border-radius:14px;overflow:visible;
+ background:radial-gradient(ellipse at 50% 80%,#39d7ce28,transparent 62%),linear-gradient(145deg,#102d3b,#07131e);
+ filter:drop-shadow(0 7px 7px #0009);
+}
+.pr{position:relative;border:1px solid #bd9651;border-radius:11px;background:#0c1b25;color:#f2d28c;font-size:16px;padding:7px}
+.cur .pr{border-color:#55e2d0;color:#9ff7e9}
+.sp{position:relative;color:#9eb5b9;font-size:11px}
+.sp b{color:#a5fff2}
+.mb{position:relative;border-radius:10px;padding:10px 5px}
+.mb.act{background:linear-gradient(145deg,#a8fff0,#4bd9c8 60%,#167f83);color:#052b2a}
+.mb.need{background:linear-gradient(145deg,#fff0bd,#d5a74a);color:#241907}
+.mb.lk,.mb.own{border:1px solid #3b555c;background:#10212b;color:#a5b5b5}
+.jt{position:relative;color:#c1d0ce}
+.pnl{border:1px solid #3c5d61;border-radius:20px;padding:14px;background:linear-gradient(145deg,#142a34,#09151f);box-shadow:0 10px 25px #0006}
+.pnl .hd{align-items:center}
+.big2{color:#8ff5e6}
+.chart{border:1px solid #356b6b;background:#071a22}
+.chip{border:1px solid #398c83;background:#0b292c;color:#8ff5e6}
+.ban{border:1px solid #78603a;background:linear-gradient(120deg,#302414,#0e252b);box-shadow:0 10px 25px #0005}
+.ban h1{font-size:27px}
+nav{
+ left:12px;right:12px;bottom:calc(9px + env(safe-area-inset-bottom,0px));
+ border:1px solid #9b7b43;border-radius:22px;padding:7px 5px 6px;
+ background:linear-gradient(145deg,rgba(17,37,47,.96),rgba(5,14,22,.97));
+ box-shadow:0 12px 34px #000b,0 0 22px #d5a74716,inset 0 1px #ffffff13;
+}
+nav button{font-size:10px;color:#9eb0b4;gap:3px}
+nav button span{width:39px;height:39px;border:1px solid #846633;background:radial-gradient(circle,#243b40,#0a1720);font-size:19px}
+nav button.on{color:#ffe7ae}
+nav button.on span{border-color:#68e3d1;box-shadow:0 0 17px #39d7ce4a;background:radial-gradient(circle,#27615c,#0b1d25)}
+.md{border:1px solid #bd9651;border-radius:21px;background:linear-gradient(145deg,#162a34,#09141e);box-shadow:0 20px 50px #000b}
+.md h3{color:#ffe4a5}
+.note{color:#9db1b5}
+@media(max-width:360px){main{padding-inline:11px}.mg{gap:9px}.mc{padding:9px 7px}.mi{height:100px}.coin{width:146px;height:146px}}
+@media(prefers-reduced-motion:reduce){.coin.on,.tab.on{animation:none}}
+
+</style>
 </head>
 <body>
 <div id="app">
