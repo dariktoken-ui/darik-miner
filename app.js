@@ -289,7 +289,7 @@
     let pending = 0;
     if (session?.last_accrued_at) {
       const elapsed = Math.max(0, (Date.now() - new Date(session.last_accrued_at).getTime()) / 1000);
-      pending = (elapsed / 86400) * (Number(session.hash_rate || 25.6) / 25.6);
+      pending = (elapsed / 259200) * (Number(session.hash_rate || 25.6) / 25.6);
     }
     const shown = state.drkBalance + pending;
     $("points").textContent = formatDrk(shown);
@@ -571,7 +571,7 @@
     if (!el) return;
     const session = state.activeSession;
     const elapsed = session?.last_accrued_at ? Math.max(0, (Date.now() - new Date(session.last_accrued_at).getTime()) / 1000) : 0;
-    const pending = session ? (elapsed / 86400) * (Number(session.hash_rate || 25.6) / 25.6) : 0;
+    const pending = session ? (elapsed / 259200) * (Number(session.hash_rate || 25.6) / 25.6) : 0;
     el.textContent = state.wallet && state.walletDrkBalance !== null
       ? formatDrk(Number(state.drkBalance || 0) + pending + state.walletDrkBalance) + " DRK"
       : tr("برای جمع کل، کیف پول را متصل کن", "Connect wallet for total");
