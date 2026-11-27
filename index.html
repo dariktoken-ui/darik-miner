@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>داریک | DARIK</title>
+<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&family=Cinzel:wght@700;800&display=swap">
 <style>
@@ -204,7 +205,7 @@ function render(){
  $("coin").classList.toggle("on",S.mining);
  $("ctrl").style.display=S.ok?"block":"none";$("gate").style.display=S.ok?"none":"block";
  if(!S.ok){$("g1").style.borderColor=S.wallet?"var(--tq)":"var(--gold)";$("g2").style.borderColor=nT()===TASKS.length?"var(--tq)":"var(--gold)";$("g2t").textContent=fp(nT())+" از "+fp(TASKS.length);$("capq").textContent=fp(CAP.a)+" + "+fp(CAP.b)+" = ؟"}
- if(S.wallet){$("wbtn").textContent="◈ متصل شد"}
+ if(S.wallet){$("wbtn").textContent="◈ "+S.wallet.slice(0,6)+"…"+S.wallet.slice(-4)}else{$("wbtn").textContent="◈ اتصال تون‌کیپر"}
  $("p_as").textContent=nf.format(assets());$("p_pool").textContent=nf.format(S.bal)+" DRK";
 }
 function start(){
@@ -212,7 +213,23 @@ function start(){
  if(S.mining){toast("ماینر آنلاین است؛ "+fmtT(S.until-Date.now())+" باقی مانده");return}
  S.mining=true;S.last=Date.now();S.until=S.last+CFG.sess*1000;toast("ماینر ۲ ساعت آنلاین شد");render();save()}
 function claim(){if(S.pend<=0){toast("پاداشی برای دریافت نیست");return}var p=S.pend;S.bal+=p;S.pend=0;beep();toast("+"+nf.format(p)+" DRK به کیف Pool اضافه شد");render();save()}
-function connect(){var a=prompt("آدرس کیف‌پول تون را وارد کنید (در نسخه نهایی با TON Connect وصل می‌شود)");if(a&&a.length>20){S.wallet=a.trim();toast("کیف‌پول ثبت شد");render();save()}}
+var tonConnectUI=null;
+function initTonConnect(){
+ try{
+  if(!window.TON_CONNECT_UI||!window.TON_CONNECT_UI.TonConnectUI){toast("کتابخانه اتصال کیف‌پول بارگذاری نشد؛ صفحه را دوباره باز کنید");return}
+  tonConnectUI=new window.TON_CONNECT_UI.TonConnectUI({manifestUrl:"https://dariktoken-ui.github.io/darik-miner/tonconnect-manifest.json"});
+  tonConnectUI.onStatusChange(function(wallet){
+   S.wallet=wallet&&wallet.account?wallet.account.address:"";
+   render();save();
+   if(S.wallet)toast("کیف‌پول با موفقیت متصل شد");
+  });
+ }catch(e){console.error("TON Connect init error",e);toast("راه‌اندازی اتصال تون‌کیپر ناموفق بود")}
+}
+function connect(){
+ if(!tonConnectUI){initTonConnect()}
+ if(!tonConnectUI){toast("اتصال کیف‌پول آماده نیست؛ صفحه را دوباره باز کنید");return}
+ tonConnectUI.openModal().catch(function(e){console.error("TON Connect modal error",e);toast("باز کردن تون‌کیپر ناموفق بود")});
+}
 function solveCap(){if(!S.wallet){toast("اول تون‌کیپر را وصل کنید");return}if(nT()<TASKS.length){toast("همه ماموریت‌ها را انجام دهید");return}
  if(parseInt($("capa").value,10)!==CAP.a+CAP.b){toast("پاسخ کپچا درست نیست");CAP.a=2+Math.floor(Math.random()*8);CAP.b=2+Math.floor(Math.random()*8);$("capa").value="";render();return}
  S.ok=true;toast("ماینر برای همیشه فعال شد");render();save()}
@@ -259,6 +276,7 @@ setInterval(function(){var now=Date.now();
  S.last=now;if(!S.pts.length||now-S.pts[S.pts.length-1][0]>=60000){S.pts.push([now,S.earned]);while(S.pts[0][0]<now-864e5)S.pts.shift()}
  render()},1000);
 setInterval(save,5000);document.addEventListener("visibilitychange",save);
+S.wallet="";initTonConnect();
 render();
 </script>
 </body>
