@@ -265,6 +265,50 @@ input{background:rgba(4,18,27,.65);border:1px solid #9bd9d266;backdrop-filter:bl
 .pill,.chip,.lt{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 @media(prefers-reduced-motion:no-preference){.card,.mc,.btn,.coin{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}.mc:active{transform:scale(.985)}}
 
+
+/* DARIK V2 — premium glass finish (visual layer only) */
+:root{--gold:#f4cf82;--gold2:#a77b39;--tq:#78f4e1;--mut:#a9bdc7}
+#app{max-width:520px;overflow:hidden;background-color:#06121c;background-image:radial-gradient(ellipse 85% 34% at 50% 0%,rgba(245,201,112,.22),transparent 70%),radial-gradient(ellipse 55% 38% at 0% 48%,rgba(50,208,201,.16),transparent 75%),radial-gradient(ellipse 55% 42% at 100% 78%,rgba(46,130,171,.15),transparent 75%),linear-gradient(155deg,#0c2230 0%,#07131e 48%,#081a24 100%)}
+#app:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.18;background-image:linear-gradient(115deg,transparent 0 48%,#d7bd7620 49%,transparent 50%),radial-gradient(circle at 50% 26%,transparent 0 120px,#d7bd7610 121px,transparent 123px);background-size:100% 100%,100% 460px}
+main{position:relative;z-index:1;padding:18px 16px calc(132px + env(safe-area-inset-bottom,0px))}
+.tab{isolation:isolate}
+.tab h1{font-size:clamp(27px,7vw,34px);letter-spacing:-.6px;text-shadow:0 5px 24px #e6bd6940}
+.tab>p{color:#c7d6d9;font-size:13px}
+.ln{width:190px;height:1px;margin:9px auto 18px;background:linear-gradient(90deg,transparent,#f5d38b 30%,#6de7d8 70%,transparent);box-shadow:0 0 14px #e8bd6755}
+.top{padding:7px 3px 14px}
+.top .btn{border-radius:14px;min-height:46px}
+.card,.pnl,.mc,.plate,.md,.ban,.chart,nav,.cap,.h{border-color:rgba(205,232,237,.22);box-shadow:0 16px 38px #0008,inset 0 1px 0 #ffffff20}
+.card{border-radius:22px;background:linear-gradient(140deg,rgba(255,255,255,.12),rgba(255,255,255,.035) 58%,rgba(73,199,190,.055));}
+.g b{color:#fff4dc}
+.g small{color:#a9bdc7}
+.plate{position:relative;overflow:hidden;margin-top:16px;padding:17px 12px 18px;border-radius:30px;background:radial-gradient(ellipse at 50% -10%,#f3d18b35,transparent 62%),linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.035) 55%,rgba(47,188,181,.10));}
+.plate:after{content:"";position:absolute;left:-15%;right:-15%;bottom:-62px;height:100px;border-radius:50%;background:#e9c36b18;filter:blur(28px);pointer-events:none}
+.plate small{font-size:11px;letter-spacing:5px;color:#f4d58f}
+.amt{font-size:clamp(34px,10vw,46px);text-shadow:0 0 28px #f2ca7850}
+.earn{width:75%;border-radius:18px;padding:10px;background:linear-gradient(135deg,#123c42cc,#09232dcc);border-color:#7af4e288;box-shadow:0 10px 30px #36d9ca20,inset 0 1px #fff4}
+.stage{position:relative;padding:9px 0;margin:16px 0 18px}
+.coin{width:clamp(158px,49vw,196px);height:clamp(158px,49vw,196px);box-shadow:inset 0 0 0 5px #785321,inset 0 0 0 9px #ffe8a9,inset 0 0 0 13px #88612a,0 0 0 7px #f0c87515,0 0 52px #e8bd6760,0 22px 40px #000b}
+.coin b{font-size:clamp(45px,14vw,58px)}
+.rb{width:48px;height:48px;border:1px solid #e8c77caa}
+.bolt{margin:14px 2px 19px}
+.bolt .bi{width:51px;height:51px;border-width:1px}
+.bar{height:38px;border-radius:0 15px 15px 0}
+.claim{font-size:21px;padding:16px 12px;border-radius:17px;letter-spacing:.5px}
+.cap{border-radius:22px;background:linear-gradient(145deg,#ffffff12,#ffffff04);padding:14px}
+.mc{border-radius:22px}
+nav{z-index:10;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:8px 5px 7px;border-radius:25px;background:rgba(7,20,29,.88);border-color:#e2c17b66;backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%)}
+nav button{font-size:10px;font-weight:600}
+nav button span{width:41px;height:41px;border-radius:15px;font-size:20px}
+nav button.on span{border-color:#7bf0df;background:linear-gradient(145deg,#2b776d,#12313b);box-shadow:0 0 20px #49e3d34a}
+.ov{z-index:25}
+.md{background:linear-gradient(145deg,#19313d,#091722);backdrop-filter:blur(26px)}
+#toast{z-index:40;box-shadow:0 8px 25px #0008}
+button{transition:filter .18s ease,transform .18s ease}
+button:active{filter:brightness(1.12)}
+@media(min-width:520px){#app{border-inline:1px solid #e8bd6722;box-shadow:0 0 80px #000}}
+@media(max-width:370px){main{padding-inline:12px}.stage{gap:12px}.rb{width:42px;height:42px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
 </style>
 </head>
 <body>
