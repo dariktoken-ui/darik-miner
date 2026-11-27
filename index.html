@@ -233,6 +233,38 @@ nav button.on span{border-color:#68e3d1;box-shadow:0 0 17px #39d7ce4a;background
 #minerlist .mc.nx{background:radial-gradient(ellipse at 50% 28%,#a77a2c22,transparent 52%),linear-gradient(155deg,#26313a,#0b151e 78%)}
 @media(max-width:360px){#minerlist .mc .mi{height:108px}#minerlist .mc{padding:10px 7px}}
 
+
+/* DARIK GLASSMORPHISM REDESIGN — visual-only layer */
+:root{--bg:#071019;--gold:#f0c875;--gold2:#b58a43;--gl:#fff0c7;--tq:#73f0df;--tq2:#28a99e;--txt:#f5f5f0;--mut:#a8bac4;--ln:rgba(202,231,239,.20)}
+html,body{background:#061019}
+#app{background:radial-gradient(ellipse at 50% 0%,#d7b76a24,transparent 42%),radial-gradient(ellipse at 0% 45%,#45d8d022,transparent 42%),radial-gradient(ellipse at 100% 75%,#4d9fc01c,transparent 42%),linear-gradient(145deg,#0a1b29,#07111c 55%,#0b1d27)}
+main{padding-top:18px}
+.card,.pnl,.mc,.plate,.md,.ban,.chart,nav,.cap,.h{background:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.025));border:1px solid rgba(220,241,245,.19);backdrop-filter:blur(22px) saturate(145%);-webkit-backdrop-filter:blur(22px) saturate(145%);box-shadow:0 14px 34px #0007,inset 0 1px 0 rgba(255,255,255,.16)}
+.card{border-radius:23px}
+.plate{width:95%;border-radius:28px;background:linear-gradient(135deg,rgba(245,205,122,.20),rgba(255,255,255,.035) 48%,rgba(58,196,188,.10));border-color:#e7c77b88;box-shadow:0 18px 40px #0008,inset 0 1px 0 #fff5}
+.plate:before{border-color:#fff4}
+.earn{border-radius:20px;background:linear-gradient(135deg,rgba(69,220,202,.22),rgba(9,47,56,.55));border:1px solid #7af3e477;box-shadow:0 10px 30px #2fe6d122,inset 0 1px #fff4}
+.coin{border:1px solid #fff0bd;background:radial-gradient(circle at 32% 25%,#fff8d8 0 4%,#f1cb73 19%,#b88436 48%,#58401d 73%,#17242b 100%);box-shadow:inset 0 0 0 5px #775522,inset 0 0 0 9px #f6df9b,inset 0 0 0 12px #8a642d,0 0 0 8px #f0c87512,0 0 48px #e8bd6755,0 20px 38px #0009}
+.coin:before,.coin:after{border-color:#fff8d4aa}
+.rb,.ic,.bolt .bi,nav button span{background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.035));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 20px #0006,inset 0 1px #fff4}
+.ic{border-color:#e8c77c99}
+.btn,.btn.tq,.claim{border:1px solid #fff7;border-radius:15px;box-shadow:0 8px 20px #0005,inset 0 1px #ffffff99}
+.btn{background:linear-gradient(135deg,#fff0c4,#e6bd69 58%,#ae7d34)}
+.btn.tq{background:linear-gradient(135deg,#c5fff5,#6ce5d5 58%,#258f8b)}
+.claim{background:linear-gradient(135deg,#fff5d8,#e9c16d 58%,#ae7b32);border-radius:19px}
+.mc{border-radius:23px;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.035));}
+.mc:before{border-color:#ffffff26}
+.mc.cur{border-color:#80f4df;box-shadow:0 0 0 1px #80f4df66,0 0 28px #48dcca30,inset 0 1px #fff5}
+.mc.nx{border-color:#e8c77caa}
+.mi{border:1px solid #8cece466;border-radius:17px;background:linear-gradient(145deg,rgba(71,210,199,.18),rgba(13,33,47,.55));filter:drop-shadow(0 10px 12px #0008)}
+.pr{border-radius:13px;background:rgba(5,19,28,.55);backdrop-filter:blur(12px)}
+nav{border-radius:25px;background:rgba(8,24,34,.72);border-color:#d9c18a66;box-shadow:0 16px 42px #000b,inset 0 1px #fff4}
+nav button.on span{box-shadow:0 0 22px #73f0df77}
+.md{background:linear-gradient(145deg,rgba(25,53,65,.96),rgba(7,19,29,.97));border-color:#e7c77b99}
+input{background:rgba(4,18,27,.65);border:1px solid #9bd9d266;backdrop-filter:blur(12px)}
+.pill,.chip,.lt{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+@media(prefers-reduced-motion:no-preference){.card,.mc,.btn,.coin{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}.mc:active{transform:scale(.985)}}
+
 </style>
 </head>
 <body>
