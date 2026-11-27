@@ -1,178 +1,265 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#080807">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Darik Miner | داریک ماینر</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css?v=darik-achaemenid-skin-20261127b">
-  <script src="https://telegram.org/js/telegram-web-app.js?v=darik-main-20261127a"></script>
-  <script src="https://unpkg.com/@tonconnect/ui@5.0.4/dist/tonconnect-ui.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>داریک | DARIK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&family=Cinzel:wght@700;800&display=swap">
+<style>
+:root{--bg:#070605;--gold:#f2c14e;--gold2:#b8862b;--gl:#ffe9a6;--tq:#2fe6d1;--tq2:#0e8f95;--txt:#f6eed8;--mut:#a89f86;--ln:rgba(242,193,78,.32);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--txt);font-family:"Vazirmatn",Tahoma,system-ui,sans-serif}
+body{display:flex;justify-content:center}
+button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
+#app{width:100%;max-width:480px;height:100%;position:relative;display:flex;flex-direction:column;background:radial-gradient(90% 40% at 50% -5%,rgba(242,193,78,.32),transparent 70%),radial-gradient(70% 35% at 0% 55%,rgba(47,230,209,.10),transparent 70%),radial-gradient(70% 35% at 100% 85%,rgba(242,193,78,.12),transparent 70%),repeating-linear-gradient(90deg,rgba(242,193,78,.04) 0 1px,transparent 1px 44px),#070605}
+main{flex:1;overflow-y:auto;padding:14px 14px 120px}
+.tab{display:none}.tab.on{display:block;animation:fi .25s ease}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1{margin:6px 0 4px;text-align:center;font-size:34px;font-weight:800;background:linear-gradient(180deg,#fff3c8,#f2c14e 60%,#a9751c);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1+p{text-align:center;color:var(--txt);margin:0 0 6px}
+.ln{width:150px;height:2px;margin:6px auto 16px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.card{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:14px;border:1.5px solid var(--ln);border-radius:24px;background:linear-gradient(145deg,rgba(255,214,120,.10),rgba(255,214,120,.02));box-shadow:0 10px 28px -12px #000,inset 0 1px 0 rgba(255,235,170,.14);backdrop-filter:blur(6px)}
+.ic{flex:none;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-size:26px;background:radial-gradient(circle,#2a2010,#0b0905);border:2.5px solid var(--gold);box-shadow:0 0 14px rgba(242,193,78,.3)}
+.g{flex:1;min-width:0}.g b{display:block;font-size:17px}.g small{display:block;color:var(--mut);font-size:13px;margin-top:3px;word-break:break-all}
+.rw{color:var(--gold);font-weight:800}
+.btn{flex:none;border-radius:999px;padding:10px 18px;font-weight:800;font-size:15px;color:#1a1200;background:linear-gradient(180deg,#ffe58f,var(--gold) 50%,var(--gold2));box-shadow:0 3px 0 #6b4a0e}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #6b4a0e}
+.btn.tq{color:#022b2b;background:linear-gradient(180deg,#8ff6ea,var(--tq) 50%,var(--tq2));box-shadow:0 3px 0 #08565a}
+.btn[disabled],.btn.off{background:#2b2618;color:var(--mut);box-shadow:none}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.lvb{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 14px;background:linear-gradient(180deg,#ffe58f,var(--gold2));color:#1a1200;font-weight:800;margin-inline-start:6px}
+.st{border-radius:999px;padding:6px 14px;font-size:13px;font-weight:800;color:#ff8f8f;border:1.5px solid #8a2f2f;background:#2a0f0f}
+.st.on{color:var(--tq);border-color:var(--tq);background:#06231f}
+.pill{display:inline-block;margin-top:8px;border:1.5px solid var(--ln);border-radius:999px;padding:6px 14px;font-size:14px;background:rgba(0,0,0,.4)}
+.pill b{color:var(--tq)}
+.plate{margin:8px auto 0;width:92%;text-align:center;padding:8px 10px 12px;border-radius:30px;background:linear-gradient(180deg,#14100a,#070605);border:2px solid var(--gold);box-shadow:0 0 0 4px #0b0905,0 0 0 5px var(--gold2),0 0 30px rgba(242,193,78,.3)}
+.plate small{letter-spacing:5px;color:var(--gold);font-family:Cinzel,serif}
+.amt{font-size:38px;font-weight:800;color:var(--gl)}.amt i{font-style:normal;font-size:18px;color:var(--gold);margin-inline-start:8px;padding-inline-start:10px;border-inline-start:2px solid var(--gold2)}
+.earn{margin:12px auto;width:76%;text-align:center;padding:10px;border-radius:22px;font-size:30px;font-weight:800;color:var(--tq);background:linear-gradient(180deg,#07302c,#041a18);border:1.5px solid #138a80}
+.earn i{font-style:normal;font-size:15px;margin-inline-start:6px}
+.stage{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:14px 0}
+.rb{width:54px;height:54px;border-radius:50%;font-size:24px;border:2.5px solid var(--gold);background:radial-gradient(circle,#2a2010,#0b0905)}
+.coin{width:190px;height:190px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 28%,#fff0b0,#e5ad3a 42%,#8a5d12);box-shadow:inset 0 0 0 7px #7a5410,inset 0 0 0 12px #ffe08a,inset 0 0 0 14px #8a5d12,0 0 46px rgba(242,193,78,.45);transition:box-shadow .4s}
+.coin b{font:800 54px Cinzel,serif;color:#4a3004;letter-spacing:2px;text-shadow:0 1px 0 #ffe9a6}
+.coin.on{box-shadow:inset 0 0 0 7px #7a5410,inset 0 0 0 12px #ffe08a,inset 0 0 0 14px #8a5d12,0 0 26px rgba(242,193,78,.5),0 0 70px rgba(47,230,209,.55);animation:fl 3s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-6px)}}
+.bolt{display:flex;align-items:center;gap:0;margin:6px 4px 14px;direction:ltr;cursor:pointer}
+.bolt .bi{z-index:1;flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:26px;background:#150f06;border:3px solid var(--gold)}
+.bar{position:relative;flex:1;height:36px;margin-left:-14px;border-radius:0 20px 20px 0;border:2.5px solid var(--gold2);background:#0b0905;overflow:hidden}
+.bar i{position:absolute;inset:0;width:100%;background:linear-gradient(90deg,var(--gold2),var(--gold),var(--gl));transition:width .6s}
+.bar span{position:absolute;inset:0;display:grid;place-items:center;color:#1a1200;font-weight:800;font-size:13px;direction:rtl}
+.claim{display:block;width:100%;padding:20px 8px;border-radius:999px;font-size:26px;font-weight:800;letter-spacing:1px;color:#2a1c00;background:linear-gradient(180deg,#fff0b0,var(--gold) 45%,var(--gold2));box-shadow:0 6px 0 #6b4a0e,0 16px 34px -8px rgba(242,193,78,.6),inset 0 1px 0 #fff7d6}
+.claim:active{transform:translateY(4px);box-shadow:0 2px 0 #6b4a0e}
+input{width:100%;background:#000;border:1.5px solid var(--ln);border-radius:16px;padding:14px;color:var(--txt);font:inherit;font-size:20px;margin:10px 0;direction:ltr;text-align:left}
+.cap{display:block;margin-top:10px}
+.wings{display:block;width:150px;height:26px;margin:2px auto 0;fill:none;stroke:var(--gold);stroke-width:1.6;stroke-linecap:round}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mc{border:1.5px solid var(--ln);border-radius:26px;padding:10px;text-align:center;background:linear-gradient(170deg,rgba(255,214,120,.10),rgba(8,6,3,.92))}
+.mc.cur{border-color:var(--tq);box-shadow:0 0 20px rgba(47,230,209,.25)}.mc.nx{border-color:var(--gold)}
+.lt{display:inline-block;background:#2a2412;border-radius:12px;padding:3px 12px;font-size:13px}
+.mi{width:100%;height:100px}
+.pr{border:2px solid var(--gold);border-radius:999px;padding:8px 4px;font-size:18px;font-weight:800;color:var(--gold);margin:6px 0;background:#050403}
+.cur .pr{border-color:var(--tq);color:var(--tq)}
+.sp{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-bottom:10px}.sp b{color:var(--gold)}
+.mb{display:block;width:100%;border-radius:999px;padding:11px 4px;font-size:14px;font-weight:800}
+.mb.act{background:linear-gradient(180deg,#8ff6ea,var(--tq) 50%,var(--tq2));color:#022b2b}
+.mb.need{background:linear-gradient(180deg,#ffe58f,var(--gold2));color:#1a1200}
+.mb.lk,.mb.own{border:1.5px solid var(--ln);background:#0c0a06;color:var(--mut)}
+.jt{font-size:13px;margin-top:8px}.jt b{color:var(--tq)}
+.pnl{display:block;margin-bottom:12px}.pnl .hd{display:flex;justify-content:space-between;align-items:flex-start}
+.chip{border-radius:999px;padding:6px 12px;font-size:13px;font-weight:800;color:var(--tq);border:1.5px solid #138a80;background:#06231f}
+.big2{font-size:26px;font-weight:800;color:var(--tq)}
+.chart{margin:10px 0;border-radius:18px;background:#031311;border:1px solid #0f4f4a;padding:6px}
+.ban{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px;padding:6px 8px;border-radius:24px;background:linear-gradient(120deg,rgba(242,193,78,.2),rgba(47,230,209,.1));border:1.5px solid var(--ln)}
+.ban h1{margin:0;font-size:30px}.ban svg{width:110px;height:70px}
+nav{position:absolute;left:10px;right:10px;bottom:calc(8px + env(safe-area-inset-bottom,0px));display:flex;padding:8px 4px 6px;border:1.5px solid var(--ln);border-radius:30px;background:rgba(9,7,4,.85);backdrop-filter:blur(14px);box-shadow:0 16px 40px -10px #000}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:var(--mut)}
+nav button span{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:21px;border:2px solid #6b5420;background:radial-gradient(circle,#241a0a,#0b0905)}
+nav button.on{color:var(--gold)}nav button.on span{border-color:var(--tq);box-shadow:0 0 18px rgba(47,230,209,.55)}
+.ov{display:none;position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.78);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:18px}
+.ov.on{display:flex}
+.md{width:100%;max-height:86%;overflow-y:auto;border:1.5px solid var(--ln);border-radius:28px;padding:22px;background:#141109;text-align:center}
+.md h3{margin:0 0 12px;font-size:24px;color:var(--gl)}.md p{color:var(--mut);margin:6px 0;font-size:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}.two .btn{padding:14px}
+.mxw{position:relative}.mxw .btn{position:absolute;left:8px;top:18px;padding:8px 14px;font-size:13px}
+.h{text-align:start;border:1.5px solid #2f2a1c;border-radius:20px;padding:14px;margin-bottom:12px;background:#0d0b06;font-size:14px;line-height:1.9;direction:ltr;word-break:break-all}
+.h .t{display:flex;justify-content:space-between;align-items:center;font-size:20px;font-weight:800}
+#toast{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-110px);z-index:30;background:var(--tq);color:#022b2b;padding:10px 18px;border-radius:14px;font-weight:800;transition:transform .3s;max-width:90%;text-align:center}
+#toast.show{transform:translate(-50%,0)}
+.note{color:var(--mut);font-size:12px;text-align:center;margin:10px 0}
+@media (prefers-reduced-motion:reduce){.tab.on,.coin.on{animation:none}}
+</style>
 </head>
 <body>
-  <main class="app-shell">
-    <header class="topbar">
-      <a class="brand" href="#" aria-label="Darik Miner"><span class="brand-mark">D</span><span><b>DARIK</b><small>MINER</small></span></a>
-      <div class="top-actions"><span class="test-tag"><i></i> نسخه اصلی · تست خصوصی</span><button id="languageButton" class="utility-button" type="button" aria-label="Change language">EN</button><button id="soundButton" class="utility-button" type="button" aria-label="Toggle sound">🔊</button><button id="walletButton" class="wallet-button">اتصال کیف پول</button></div>
-    </header>
+<div id="app">
+<div id="toast"></div>
+<svg width="0" height="0" style="position:absolute"><defs><symbol id="miner" viewBox="0 0 120 90"><rect x="20" y="18" width="80" height="9" rx="3" fill="#2a2010" stroke="#c9972f" stroke-width="2"/><rect x="14" y="26" width="92" height="54" rx="9" fill="#15110a" stroke="#c9972f" stroke-width="3"/><circle cx="44" cy="53" r="20" fill="#0b0805" stroke="#c9972f" stroke-width="3"/><path d="M44 37v32M28 53h32M33 42l22 22M55 42L33 64" stroke="#8a6a22" stroke-width="2"/><path d="M72 64L76 46L84 55L92 46L96 64Z" fill="#f2c14e"/></symbol></defs></svg>
+<main>
+<section class="tab on" id="t-mine">
+ <div class="top">
+  <button class="btn tq" id="wbtn" onclick="connect()">◈ اتصال تون‌کیپر</button>
+  <div><span class="lvb">♛ سطح <b id="lv">۱</b></span><span class="st" id="st">آفلاین</span></div>
+ </div>
+ <span class="pill" id="uppill"></span>
+ <svg class="wings" viewBox="0 0 120 26"><path d="M52 13C42 13 28 10 8 3M52 13C42 15 30 16 14 18M52 13C44 13 34 13 20 11M68 13C78 13 92 10 112 3M68 13C78 15 90 16 106 18M68 13C76 13 86 13 100 11"/><circle cx="60" cy="13" r="5"/><path d="M60 18v5M55 23h10"/></svg>
+ <div class="plate"><small>ASSETS</small><div class="amt"><span id="assets">۰</span><i>DRK</i></div></div>
+ <div class="earn"><span id="pend">+۰</span><i>DRK</i></div>
+ <div class="stage"><button class="rb" onclick="toast('تا سطح ۲۰۰ ماینر فقط وقتی اپ باز است کار می‌کند؛ از ۲۰۰ به بعد در پس‌زمینه هم کار می‌کند')">؟</button><div class="coin" id="coin"><b>DRK</b></div><button class="rb" onclick="copyInv()">↗</button></div>
+ <div id="ctrl">
+  <div class="bolt" onclick="start()"><div class="bi">⚡</div><div class="bar"><i id="barfill"></i><span id="bartxt"></span></div></div>
+  <button class="claim" onclick="claim()">CLAIM</button>
+ </div>
+ <div class="card" id="gate" style="display:block"><b style="color:var(--gold);font-size:18px">فعال‌سازی ماینر (فقط یک‌بار)</b>
+  <div class="card" style="margin:10px 0 0;padding:10px"><div class="ic" style="width:44px;height:44px;font-size:18px" id="g1">۱</div><div class="g">اتصال تون‌کیپر</div><button class="btn" onclick="connect()">اتصال</button></div>
+  <div class="card" style="margin:8px 0 0;padding:10px"><div class="ic" style="width:44px;height:44px;font-size:18px" id="g2">۲</div><div class="g">انجام ماموریت‌ها<small id="g2t"></small></div><button class="btn" onclick="go('tasks')">برو</button></div>
+  <div class="cap"><div class="g" style="margin-top:6px">۳. حل کپچا: <b id="capq"></b></div><input id="capa" type="number" inputmode="numeric" placeholder="پاسخ"><button class="claim" style="font-size:18px;padding:14px" onclick="solveCap()">فعال‌سازی ماینر</button></div>
+ </div>
+</section>
 
-    <section class="welcome">
-      <div><span class="eyebrow">خوش آمدی به دنیای داریک</span><h1>آینده را <em>استخراج کن</em></h1><p>هر روز فعال باش، مأموریت انجام بده و قدرت استخراجت را افزایش بده.</p></div>
-      <div class="coin-art" aria-hidden="true">
-        <svg viewBox="0 0 120 120" role="img" aria-label="نشان خورشید بالدار هخامنشی">
-          <circle cx="60" cy="60" r="54" fill="#2b1908" stroke="#f0c96e" stroke-width="2"/>
-          <circle cx="60" cy="60" r="47" fill="none" stroke="#f0c96e" stroke-dasharray="2 4" opacity=".8"/>
-          <path d="M60 27c-9 8-12 19-12 31 0 14 5 24 12 34 7-10 12-20 12-34 0-12-3-23-12-31Z" fill="#e8b84f" stroke="#ffe6a3" stroke-width="1.5"/>
-          <path d="M49 42 18 30l14 17L12 45l27 16 12-3M71 42l31-12-14 17 20 0-27 14-12-6" fill="none" stroke="#ffe6a3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M50 67 26 78l25-3M70 67l24 11-25-3" fill="none" stroke="#d7a746" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="60" cy="56" r="5" fill="#2b1908"/><path d="M60 34v-8M60 94v-8" stroke="#fff0c2" stroke-width="2"/>
-        </svg>
-      </div>
-    </section>
+<section class="tab" id="t-tasks"><h1>جوایز روزانه</h1><p>پاداش‌ها مستقیم به کیف Pool می‌روند</p><div class="ln"></div><div id="tasklist"></div></section>
 
-    <section id="screen-miner" class="screen active">
-      <div class="mine-hero">
-        <div class="mine-hero-copy"><span class="eyebrow">THE DARIK NETWORK</span><h2>قدرت از <em>جامعه</em> می‌آید</h2><p>استخراج خصوصی خود را مدیریت کن و ماینرت را ارتقا بده.</p></div>
-        <div class="mine-seal" aria-label="نشان داریک">
-          <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="#ffe6a3" stroke-width="1.5"/><circle cx="50" cy="50" r="39" fill="none" stroke="#e8b84f" stroke-dasharray="2 4"/><path d="M50 22c-12 9-15 23-10 37 3 8 7 14 10 19 3-5 7-11 10-19 5-14 2-28-10-37Z" fill="#e8b84f"/><path d="M42 37 17 29l13 15-16 0 25 12M58 37l25-8-13 15 16 0-25 12" fill="none" stroke="#ffe6a3" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="49" r="4" fill="#2a1908"/></svg>
-          <small>DARIK</small>
-        </div>
-      </div>
-      <div class="mine-summary">
-        <div class="summary-heading"><span>نمای کلی شبکه</span><b><i></i> PRIVATE NETWORK</b></div>
-        <div class="summary-metrics"><div><small>ماینر فعال</small><strong>LEVEL 01</strong></div><div><small>قدرت فعلی</small><strong>25.6 <i>MH/s</i></strong></div><div><small>مدت استخراج</small><strong>پیوسته</strong></div></div>
-        <div class="summary-chart"><div><span>نمودار قدرت استخراج</span><small>نرخ پایه نمایشی: ۱ DRK در ۲۴ ساعت</small></div>
-          <svg viewBox="0 0 320 62" role="img" aria-label="نمودار تزئینی"><path d="M0 48 C22 45 28 18 50 28 S82 52 104 34 S137 13 157 29 S190 48 211 25 S247 17 267 28 S297 12 320 7" fill="none" stroke="#e3bd65" stroke-width="2.5" stroke-linecap="round"/><path d="M0 48 C22 45 28 18 50 28 S82 52 104 34 S137 13 157 29 S190 48 211 25 S247 17 267 28 S297 12 320 7 L320 62 L0 62Z" fill="url(#mineChartFill)" opacity=".18"/><defs><linearGradient id="mineChartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3bd65"/><stop offset="1" stop-color="#e3bd65" stop-opacity="0"/></linearGradient></defs></svg>
-        </div>
-      </div>
-      <article class="miner-card">
-        <div class="card-top"><span class="live-label"><i id="presenceDot"></i> وضعیت حضور</span><span id="minerStatus" class="status-text">آماده شروع</span></div>
-        <div class="balance-label">موجودی داریک</div>
-        <div class="balance-line"><strong id="points">۰</strong><span>DRK</span></div>
-        <div class="wallet-balance-detail"><span id="walletDrkLabel">موجودی DRK در Tonkeeper</span><b id="walletDrkBalance">کیف پول متصل نیست</b></div>
-        <div class="wallet-balance-detail total"><span id="combinedDrkLabel">مجموع موجودی کیف پول و برنامه</span><b id="combinedDrkBalance">برای جمع کل، کیف پول را متصل کن</b></div>
-        <div class="miner-stats">
-          <div><small>قدرت استخراج</small><b id="hashrate">25.6 <i>MH/s</i></b></div>
-          <div><small>سطح ماینر</small><b>LEVEL 01</b></div>
-          <div><small>مدت استخراج</small><b>پیوسته</b></div>
-        </div>
-        <div class="progress-meta"><span>پیشرفت استخراج</span><b id="progressText">۰٪</b></div>
-        <div class="progress-track"><span id="progressBar"></span></div>
-        <button id="mineButton" class="mine-button">شروع استخراج <span>↗</span></button>
-        <p class="card-footnote">استخراج پایه: روزانه ۱ DRK در نرخ هش ۲۵٫۶ MH/s. موجودی فعلاً درون‌برنامه‌ای است و برداشت بلاکچینی هنوز فعال نیست.</p>
-      </article>
+<section class="tab" id="t-miners">
+ <div class="ban"><h1>فروشگاه ماینر</h1><svg viewBox="0 0 120 90"><use href="#miner"/></svg></div>
+ <div class="card pnl"><div class="hd"><div><small style="color:var(--mut);letter-spacing:2px">DRK PNL • 24H</small><div style="font-size:19px;font-weight:800;margin-top:4px">سطح <span id="p_l"></span> • اوج <span id="p_pk"></span></div></div><span class="chip" id="p_fp"></span></div>
+  <div style="display:flex;justify-content:space-between;margin-top:10px"><small style="color:var(--mut)">سود ۲۴ ساعته</small><span class="big2" id="p_24"></span></div>
+  <div class="chart" id="chart"></div>
+  <div style="display:flex;align-items:center;gap:10px;color:var(--txt)" onclick="toast('نمودار کامل بعد از اتصال به سرور')"><span class="ic" style="width:40px;height:40px;font-size:16px">📊</span>برای دیدن نمودار کامل ۲۴ ساعته لمس کنید</div></div>
+ <div id="minerlist"></div>
+</section>
 
-      <article class="miner-card" style="margin-top:16px">
-        <div class="card-top"><span class="live-label">برداشت داریک</span><span class="status-text">آماده‌سازی</span></div>
-        <div class="balance-label">حداقل برداشت واقعی</div>
-        <div class="balance-line"><strong>۱٬۰۰۰</strong><span>DRK</span></div>
-        <p class="card-footnote">پس از اتصال و تأیید مالکیت Tonkeeper، حل کپچا و پرداخت کارمزد GRAM، درخواست برداشت ثبت می‌شود. کارمزد از موجودی DRK کسر نمی‌شود.</p>
-        <button class="mine-button" type="button" disabled style="opacity:.55;cursor:not-allowed">برداشت واقعی به‌زودی فعال می‌شود</button>
-        <p class="card-footnote">این بخش تا تکمیل و بررسی امن کارمزد، کپچا و تأیید پرداخت روی بلاکچین غیرفعال می‌ماند.</p>
-      </article>
+<section class="tab" id="t-friends"><h1>دوستان</h1><p>دوستانت را دعوت کن و سرعت استخراج را بالا ببر!</p><div class="ln"></div>
+ <div class="card"><div class="ic">🏆</div><div class="g"><b>کارت گواهی اشتراک</b><small>کارت رسمی عضو خانواده داریک را بساز</small></div><button class="btn" onclick="toast('به‌زودی')">ساخت</button></div>
+ <div class="card"><div class="ic">🔗</div><div class="g"><b>لینک دعوت شما</b><small id="inv" style="direction:ltr;text-align:right">https://t.me/DARIK_bot?start=ref123</small></div><button class="btn" onclick="copyInv()">کپی</button></div>
+ <div class="card"><div class="ic">👥</div><div class="g"><b>دعوت‌های شما</b><small id="refs"></small></div><button class="btn" onclick="toast('دعوت‌ها بعد از اتصال به سرور')">باز کردن</button></div>
+ <div class="card"><div class="ic">🎁</div><div class="g"><b>پاداش دعوت</b><small id="rr"></small></div><button class="btn" id="rrb" onclick="claimRef()">دریافت</button></div>
+ <div class="card"><div class="ic">⏳</div><div class="g"><b>کیف تیم <span style="color:var(--tq);font-size:13px">● درحال استخراج</span></b><small>۰ DRK • سهم ۱٪ از درآمد شبکه شما</small></div><button class="btn off" disabled>دریافت</button></div>
+ <svg viewBox="0 0 300 110" style="width:100%;height:110px"><g stroke="#b8862b" stroke-width="2" fill="#f2c14e"><path d="M150 10L45 60M150 10L115 60M150 10L185 60M150 10L255 60M45 60L20 100M45 60L70 100M115 60L95 100M115 60L135 100M185 60L165 100M185 60L205 100M255 60L230 100M255 60L280 100" fill="none"/><circle cx="150" cy="10" r="9"/><circle cx="45" cy="60" r="7"/><circle cx="115" cy="60" r="7"/><circle cx="185" cy="60" r="7"/><circle cx="255" cy="60" r="7"/></g></svg>
+ <button class="btn off" style="display:block;margin:0 auto" onclick="simInv()">شبیه‌سازی یک دعوت (آزمایشی)</button>
+</section>
 
-      <div class="section-title"><div><span class="eyebrow">قدرت بیشتر</span><h2>مرکز ارتقا</h2></div><span class="section-note">ویژگی‌های داریک</span></div>
-      <div class="feature-grid">
-        <button class="feature-card" data-screen="miners"><span class="feature-icon">♜</span><b>ماینرها</b><small>انتخاب و خرید سطح</small><span class="feature-arrow">←</span></button>
-        <button class="feature-card" data-screen="boost"><span class="feature-icon">⚡</span><b>بوست</b><small>افزایش قدرت هش</small><span class="feature-arrow">←</span></button>
-        <button class="feature-card" data-screen="tasks"><span class="feature-icon">✓</span><b>مأموریت‌ها</b><small>فعالیت و امتیاز</small><span class="feature-arrow">←</span></button>
-        <button class="feature-card" data-screen="referrals"><span class="feature-icon">♧</span><b>دعوت دوستان</b><small>گسترش جامعه</small><span class="feature-arrow">←</span></button>
-        <button class="feature-card" data-screen="shop"><span class="feature-icon">◇</span><b>فروشگاه</b><small>ارتقاهای آزمایشی</small><span class="feature-arrow">←</span></button>
-        <button class="feature-card" data-screen="leaderboard"><span class="feature-icon">♛</span><b>رتبه‌بندی</b><small>جدول کاربران</small><span class="feature-arrow">←</span></button>
-        <button class="feature-card" data-screen="profile"><span class="feature-icon">◎</span><b>پروفایل</b><small>حساب کاربری</small><span class="feature-arrow">←</span></button>
-      </div>
-    </section>
+<section class="tab" id="t-profile"><h1>پروفایل</h1><div class="ln"></div>
+ <div class="card"><div class="ic">👤</div><div class="g"><b>شناسه کاربر</b><small id="uid"></small></div></div>
+ <div class="card"><div class="ic">✅</div><div class="g"><b>تأیید حساب</b><small>تأیید نشده</small></div><button class="btn" onclick="toast('به‌زودی')">تأیید</button></div>
+ <div class="card" onclick="tsnd()"><div class="ic" id="sic">🔇</div><div class="g"><b>افکت صدا</b><small id="snd"></small></div></div>
+ <div class="card"><div class="ic">💎</div><div class="g"><b>VIP</b><small>قفل JVault • پاداش دارایی</small></div><button class="btn" onclick="toast('به‌زودی')">باز کردن</button></div>
+ <div class="card"><div class="ic">💰</div><div class="g"><b>دارایی‌ها</b><small><span id="p_as"></span> DRK</small></div></div>
+ <div class="card"><div class="ic">💳</div><div class="g"><b>کیف نگهداری</b><small>۰ DRK</small></div></div>
+ <div class="card"><div class="ic">🏦</div><div class="g"><b>کیف Pool</b><small>موجودی قابل برداشت</small></div><b class="rw" style="color:var(--tq);font-size:20px" id="p_pool"></b></div>
+ <h1 style="font-size:26px">کنترل‌ها</h1><div class="ln"></div>
+ <div class="card"><div class="ic">↗</div><div class="g"><b>برداشت</b><small>انتقال از Pool به کیف‌پول</small></div><button class="btn" onclick="openW()">برداشت</button></div>
+ <div class="card"><div class="ic">🧾</div><div class="g"><b>تاریخچه</b><small>برداشت‌های شما</small></div><button class="btn" onclick="openH()">باز کردن</button></div>
+</section>
+</main>
 
-    <section id="screen-miners" class="screen">
-      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">DARIK MINER GARAGE</span><h2>ماینرهای داریک</h2><p>ماینر فعال خودت را ببین و برای سطح بالاتر آماده شو.</p></div></div>
-      <article class="active-miner-panel">
-        <div class="active-miner-top"><span>ماینر فعال تو</span><b>ACTIVE</b></div>
-        <div class="active-miner-body"><div class="miner-emblem">D</div><div><small>سطح فعلی</small><h3>ماینر پایه · LEVEL 01</h3><strong>25.6 MH/s</strong></div></div>
-        <p>با انتخاب ماینر سطح بالاتر، قدرت استخراج حساب افزایش پیدا می‌کند. خرید واقعی تا تکمیل تأیید پرداخت بلاکچین فعال نمی‌شود.</p>
-      </article>
-      <div class="miner-shop-heading"><div><span class="eyebrow">UPGRADE YOUR MINER</span><h3>انتخاب ماینر بعدی</h3></div><span>سطح‌های بالاتر</span></div>
-      <div class="level-toolbar">
-        <div><span class="eyebrow">DARIK · 5,000 LEVELS</span><b>مسیر ارتقای ۵٬۰۰۰ سطحی</b><small>سطح فعلی با داده حساب نمایش داده می‌شود؛ خرید تا اتصال پرداخت امن غیرفعال است.</small></div>
-        <div class="level-count"><strong id="levelCount">۱–۱۲</strong><small>از ۵٬۰۰۰</small></div>
-      </div>
-      <div class="miner-pagination"><button id="minerPrev" type="button" disabled>قبلی</button><span id="minerPageLabel">صفحه ۱ از ۴۲</span><button id="minerNext" type="button">بعدی</button></div>
-      <div id="minerLevels" class="miner-level-list"></div>
-      <div class="miner-pagination bottom-pager"><button id="minerPrevBottom" type="button" disabled>قبلی</button><span id="minerPageLabelBottom">۱ / ۴۲</span><button id="minerNextBottom" type="button">بعدی</button></div>
-    </section>
+<div class="ov" id="wm"><div class="md"><h3>برداشت DRK</h3><p>موجودی Pool: <b id="wav" style="color:var(--tq)"></b> DRK</p><p>حداقل برداشت: <span id="wmin"></span> DRK • کارمزد: <span id="wfee"></span> GRAM</p><div class="mxw"><input id="wamt" type="number" inputmode="decimal" placeholder="0.00"><button class="btn" onclick="$('wamt').value=S.bal.toFixed(4)">MAX</button></div><p>با برداشت، دارایی و در نتیجه سطح ماینر کم می‌شود.</p><div class="two"><button class="btn off" onclick="closeM()">انصراف</button><button class="btn" onclick="doW()">تأیید</button></div></div></div>
+<div class="ov" id="hm"><div class="md"><h3>تاریخچه برداشت</h3><div id="hist"></div><button class="btn off" style="width:100%;padding:14px" onclick="closeM()">بستن</button></div></div>
 
-    <section id="screen-tasks" class="screen">
-      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">DARIK MISSIONS</span><h2>مأموریت‌ها</h2><p>فعالیت‌ها را انجام بده و برای بررسی بفرست.</p></div></div>
-      <div id="quests" class="quests"><div class="loading">در حال دریافت مأموریت‌ها…</div></div>
-    </section>
-
-    <section id="screen-boost" class="screen">
-      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">MINER POWER</span><h2>بوست قدرت استخراج</h2><p>ارتقای آزمایشی برای نمایش ساختار ماینر.</p></div></div>
-      <div class="boost-intro"><span class="eyebrow">BOOST LAB · PRIVATE REVIEW</span><h3>قدرت فعلی: <b id="boostRate">25.6 MH/s</b></h3><p>پیش‌نمایش اقتصادی بوسترها؛ هیچ خرید، پرداخت یا فعال‌سازی در این نسخه انجام نمی‌شود.</p></div>
-      <div class="boost-grid">
-        <article class="boost-option"><div class="boost-option-top"><span class="boost-symbol">⚡</span><span class="preview-pill">پیشنهادی · غیرفعال</span></div><h3>بوستر دوبرابر</h3><div class="boost-multiplier">2× <small>قدرت هش</small></div><p>مدت اثر: <b>۳ ساعت</b></p><div class="boost-facts"><div><small>DRK اضافه نسبت به حالت پایه</small><b>۰٫۱۲۵ DRK</b></div><div><small>هزینه پیشنهادی برای بررسی</small><b>۰٫۰۰۱ GRAM</b></div><div><small>وضعیت</small><b>غیرفعال</b></div></div><button class="primary-button" type="button" disabled>پس از بررسی فعال می‌شود</button></article>
-        <article class="boost-option featured"><div class="boost-option-top"><span class="boost-symbol">✦</span><span class="preview-pill">پیشنهادی · غیرفعال</span></div><h3>بوستر سه‌برابر</h3><div class="boost-multiplier">3× <small>قدرت هش</small></div><p>مدت اثر: <b>۶ ساعت</b></p><div class="boost-facts"><div><small>DRK اضافه نسبت به حالت پایه</small><b>۰٫۵ DRK</b></div><div><small>هزینه پیشنهادی برای بررسی</small><b>۰٫۰۰۴ GRAM</b></div><div><small>وضعیت</small><b>غیرفعال</b></div></div><button class="primary-button" type="button" disabled>پس از بررسی فعال می‌شود</button></article>
-      </div>
-      <article class="info-card boost-disclaimer"><h3>روش محاسبه سود خریدار</h3><p>نرخ پایه فعلی: ۲۵٫۶ MH/s = روزانه ۱ DRK. مقدار اضافه بالا نسبت به استخراج عادی محاسبه شده است؛ ارزش دلاری DRK، کارمزد شبکه و سود خالص باید با قیمت و هزینه واقعی روز بررسی شوند. قیمت‌های GRAM صرفاً پیش‌نویس‌اند.</p></article>
-    </section>
-
-    <section id="screen-referrals" class="screen">
-      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">DARIK COMMUNITY</span><h2>دعوت دوستان</h2><p>دوستانت را به جامعه داریک دعوت کن.</p></div></div>
-      <article class="info-card"><span class="big-icon">♧</span><h3>با هم قوی‌تریم</h3><p>لینک اختصاصی خودت را بساز و برای دوستانت بفرست؛ پاداش پس از تأیید شرایط ثبت می‌شود.</p><div class="ref-link"><span id="refLink">در حال ساخت لینک دعوت اختصاصی…</span><button id="copyRef">کپی</button></div><button id="shareRef" class="primary-button">اشتراک‌گذاری لینک دعوت</button><small class="disclaimer">عضویت ثبت می‌شود؛ اما معرف فقط پس از تأیید همه مأموریت‌های فعال کاربر دعوت‌شده، او را زیرمجموعه تأییدشده می‌بیند.</small></article>
-      <div class="mini-stat"><span>زیرمجموعه تأییدشده / کل</span><b id="refCount">۰ / ۰</b></div>
-      <article class="referral-network-card">
-        <div class="referral-network-heading"><b>اعضای شبکه دعوت</b><small id="referralMeta">در حال آماده‌سازی…</small></div>
-        <p id="referralNote">فقط شماره عضویت، سطح شبکه و وضعیت تکمیل مأموریت‌ها نمایش داده می‌شود؛ اطلاعات حساب و کیف پول اعضا خصوصی می‌ماند.</p>
-        <div id="referralList" class="referral-list"><div class="loading">برای دریافت فهرست وارد تلگرام شو.</div></div>
-        <button id="loadMoreReferrals" class="referral-load-more" type="button" hidden>نمایش موارد بیشتر</button>
-      </article>
-    </section>
-
-    <section id="screen-shop" class="screen">
-      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">DARIK SHOP</span><h2>فروشگاه</h2><p>بخش ارتقاهای آینده داریک.</p></div></div>
-      <div class="boost-intro"><span class="eyebrow">DARIK UPGRADE STORE</span><h3>ارتقاهای دائمی ماینر</h3><p>این گزینه‌ها برای مقایسه و بررسی طراحی شده‌اند؛ قیمت و قدرت نهایی هنوز تعیین نشده است.</p></div>
-      <div class="permanent-grid">
-        <article class="permanent-option"><span class="permanent-icon">♜</span><h3>ارتقای سطح ماینر</h3><p>افزایش دائمی سطح و باز شدن قابلیت‌های مرحله‌ای تا سطح ۱۰۰۰.</p><div class="permanent-meta"><span>قیمت</span><b>در حال محاسبه</b></div><button type="button" disabled>غیرفعال تا بررسی</button></article>
-        <article class="permanent-option"><span class="permanent-icon">⌁</span><h3>افزایش دائمی هش</h3><p>افزایش قدرت پایه استخراج؛ مقدار هش و بازگشت هزینه پس از محاسبه ذخیره پاداش تعیین می‌شود.</p><div class="permanent-meta"><span>قیمت</span><b>در حال محاسبه</b></div><button type="button" disabled>غیرفعال تا بررسی</button></article>
-        <article class="permanent-option"><span class="permanent-icon">◈</span><h3>ظرفیت و شارژ ویژه</h3><p>ظرفیت بیشتر و امکانات مدیریت زمان استخراج؛ جزئیات پس از نهایی شدن مکانیزم شارژ مشخص می‌شود.</p><div class="permanent-meta"><span>قیمت</span><b>در حال محاسبه</b></div><button type="button" disabled>غیرفعال تا بررسی</button></article>
-      </div>
-      <article class="info-card boost-disclaimer"><h3>قانون فعال‌سازی</h3><p>هیچ ارتقایی با کلیک فعال نمی‌شود. پس از بررسی اقتصادی، تعیین سقف پاداش، تأیید قیمت‌ها و پیاده‌سازی تأیید پرداخت سمت سرور، هر گزینه جداگانه فعال خواهد شد.</p></article>
-    </section>
-
-    <section id="screen-leaderboard" class="screen">
-      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">TOP MINERS</span><h2>رتبه‌بندی</h2><p>جدول رتبه‌بندی کاربران داریک.</p></div></div>
-      <article class="rank-hero">
-        <div class="rank-hero-top"><span class="eyebrow">DARIK TOP 200</span><span class="rank-live"><i></i> حضور آنلاین</span></div>
-        <div class="rank-crown">♛</div><h3>۲۰۰ جایگاه برتر داریک</h3>
-        <p>رتبه‌بندی بر اساس اطلاعات تأییدشده حساب و وضعیت حضور آنلاین نمایش داده می‌شود.</p>
-        <div class="rank-stats"><div><b>۲۰۰</b><small>جایگاه رتبه‌بندی</small></div><div><b id="myOnlineStatus">در حال بررسی</b><small>وضعیت حضور تو</small></div><div><b id="myRank">—</b><small>رتبه من</small></div></div>
-      </article>
-      <div class="rank-list-heading"><b>فهرست ۲۰۰ نفر برتر</b><small>داده زنده سرور</small></div>
-      <div id="leaderboardRows" class="leaderboard-rows"><div class="rank-empty">رتبه‌بندی زنده هنوز از سمت سرور ارائه نمی‌شود؛ هیچ رتبه یا کاربر ساختگی نمایش داده نمی‌شود.</div></div>
-    </section>
-
-    <section id="screen-profile" class="screen">
-      <div class="page-heading"><button class="back-button" data-screen="miner">→</button><div><span class="eyebrow">YOUR ACCOUNT</span><h2>پروفایل</h2><p>خلاصه وضعیت حساب و کیف پول؛ اطلاعات هویتی خصوصی می‌ماند.</p></div></div>
-      <article class="info-card profile-card"><div class="avatar">D</div><h3 id="profileName">کاربر داریک</h3><div class="profile-row"><span>موجودی داریک در برنامه</span><b id="profilePoints">۰</b></div><div class="profile-row"><span>موجودی در Tonkeeper</span><b id="profileWalletDrk">کیف پول متصل نیست</b></div><div class="profile-row"><span>وضعیت حساب</span><b>نسخه خصوصی</b></div></article>
-    </section>
-
-    <nav class="bottom-nav">
-      <button class="nav-item selected" data-screen="miner"><span>⌂</span><small>ماینر</small></button>
-      <button class="nav-item" data-screen="miners"><span>♜</span><small>ماینرها</small></button>
-      <button class="nav-item" data-screen="tasks"><span>✓</span><small>مأموریت</small></button>
-      <button class="nav-item" data-screen="referrals"><span>♧</span><small>دعوت</small></button>
-      <button class="nav-item" data-screen="leaderboard"><span>♛</span><small>رتبه‌ها</small></button>
-      <button class="nav-item" data-screen="profile"><span>◎</span><small>پروفایل</small></button>
-    </nav>
-    <div id="notice" class="notice" role="status"></div>
-    <footer> DARIK MINER · PRIVATE TEST BUILD · 2026-11-27 · قدرت از جامعه می‌آید </footer>
-  </main>
-  <script src="./app.js?v=darik-72h-20261127c"></script>
+<nav id="nav">
+ <button class="on" data-t="mine"><span>⛏</span>ماینر</button>
+ <button data-t="tasks"><span>💼</span>ماموریت</button>
+ <button data-t="miners"><span>⚡</span>فروشگاه</button>
+ <button data-t="friends"><span>👥</span>دوستان</button>
+ <button data-t="profile"><span>👤</span>پروفایل</button>
+</nav>
+</div>
+<script>
+var CFG={minW:1000,fee:1,maxLvl:630,bgLvl:200,sess:7200,refBonus:5};
+var S={bal:0,pend:0,earned:0,today:0,peak:1,lvl:1,until:0,inv:0,refReady:0,ok:false,mining:false,snd:false,wallet:"",hist:[],tasks:{},pts:[],last:Date.now()};
+try{var sv=localStorage.getItem("darik2");if(sv)S=Object.assign(S,JSON.parse(sv))}catch(e){}
+function save(){try{localStorage.setItem("darik2",JSON.stringify(S))}catch(e){}}
+function $(i){return document.getElementById(i)}
+var nf=new Intl.NumberFormat("fa-IR",{maximumFractionDigits:4}),nf2=new Intl.NumberFormat("fa-IR",{minimumFractionDigits:2,maximumFractionDigits:2});
+function fp(s){return String(s).replace(/\d/g,function(d){return "۰۱۲۳۴۵۶۷۸۹"[d]})}
+function fmtT(ms){var s=Math.ceil(ms/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60),c=s%60;return fp(h+":"+String(m).padStart(2,"0")+":"+String(c).padStart(2,"0"))}
+function th(l){return 1+0.02*(l-1)}
+function rate(){return th(S.lvl)/(72*3600)}
+function costAt(l){return Math.round(0.5*Math.pow(l,1.3)*100)/100}
+function need(l){return l<=1?0:costAt(l-1)}
+function lvlOf(a){var lo=1,hi=CFG.maxLvl;while(lo<hi){var m=(lo+hi+1)>>1;if(need(m)<=a)lo=m;else hi=m-1}return lo}
+function assets(){return S.bal}
+function curMult(){if(!S.mining||S.lvl<CFG.bgLvl)return 1;var T=CFG.sess*1000,f=(Date.now()-(S.until-T))/T;return 1-0.6*Math.max(0,Math.min(1,f))}
+function earn(now){var to=Math.min(now,S.until),t0=S.last;if(to<=t0)return 0;var dt=(to-t0)/1000;
+ if(S.lvl<CFG.bgLvl){if(document.hidden||(now-S.last)>3000)return 0;return rate()*dt}
+ var T=CFG.sess*1000,s0=S.until-T,f0=Math.max(0,Math.min(1,(t0-s0)/T)),f1=Math.max(0,Math.min(1,(to-s0)/T));
+ return rate()*dt*(1-0.6*(f0+f1)/2)}
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove("show")},2400)}
+function beep(){if(!S.snd)return;try{var c=new (window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.frequency.value=880;g.gain.value=.08;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.12)}catch(e){}}
+function go(n){document.querySelectorAll(".tab").forEach(function(e){e.classList.remove("on")});$("t-"+n).classList.add("on");document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.t===n)});$("t-"+n).parentNode.scrollTop=0;
+ if(n==="tasks")drawTasks();if(n==="miners")drawMiners();if(n==="friends")drawFriends();if(n==="profile")drawProfile()}
+document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){go(b.dataset.t)}});
+var CAP={a:2+Math.floor(Math.random()*8),b:2+Math.floor(Math.random()*8)};
+var TASKS=[["▶","تماشای ویدیو","یکی از ویدیوهای ما را تا انتها ببینید",0.03,"تماشا"],["💬","لایک و کامنت یوتیوب","ویدیو و شورتس",0.01,"برو"],["🔁","ریتوییت در X","",0.01,"برو"],["🌐","بازدید از سایت","",0.01,"برو"],["🔥","واکنش به آخرین پست","",0.02,"برو"],["🔗","لینک کانال در بایو","لینک کانال را در بایو تلگرام نگه دارید",0.05,"برو"]];
+function nT(){var n=0;for(var i=0;i<TASKS.length;i++)if(S.tasks[i])n++;return n}
+function render(){
+ S.lvl=lvlOf(assets());if(S.lvl>S.peak)S.peak=S.lvl;
+ $("assets").textContent=nf.format(assets());$("lv").textContent=fp(S.lvl);
+ $("st").textContent=S.mining?"آنلاین":"آفلاین";$("st").className="st"+(S.mining?" on":"");
+ $("pend").textContent="+"+nf.format(S.pend);
+ var nx=need(S.lvl+1)-assets();
+ $("uppill").innerHTML=S.lvl>=CFG.maxLvl?"بالاترین سطح":"فقط <b>"+nf.format(Math.max(0,nx))+" DRK</b> تا سطح بعد";
+ var rem=S.mining?Math.max(0,S.until-Date.now()):0;
+ $("barfill").style.width=S.mining?(rem/(CFG.sess*10))+"%":"100%";
+ $("bartxt").textContent=S.mining?fmtT(rem)+" • "+nf2.format(th(S.lvl)*curMult())+" TH/s":"لمس کنید تا ماینر روشن شود";
+ $("coin").classList.toggle("on",S.mining);
+ $("ctrl").style.display=S.ok?"block":"none";$("gate").style.display=S.ok?"none":"block";
+ if(!S.ok){$("g1").style.borderColor=S.wallet?"var(--tq)":"var(--gold)";$("g2").style.borderColor=nT()===TASKS.length?"var(--tq)":"var(--gold)";$("g2t").textContent=fp(nT())+" از "+fp(TASKS.length);$("capq").textContent=fp(CAP.a)+" + "+fp(CAP.b)+" = ؟"}
+ if(S.wallet){$("wbtn").textContent="◈ متصل شد"}
+ $("p_as").textContent=nf.format(assets());$("p_pool").textContent=nf.format(S.bal)+" DRK";
+}
+function start(){
+ if(!S.ok){toast("اول ماینر را فعال کنید");return}
+ if(S.mining){toast("ماینر آنلاین است؛ "+fmtT(S.until-Date.now())+" باقی مانده");return}
+ S.mining=true;S.last=Date.now();S.until=S.last+CFG.sess*1000;toast("ماینر ۲ ساعت آنلاین شد");render();save()}
+function claim(){if(S.pend<=0){toast("پاداشی برای دریافت نیست");return}var p=S.pend;S.bal+=p;S.pend=0;beep();toast("+"+nf.format(p)+" DRK به کیف Pool اضافه شد");render();save()}
+function connect(){var a=prompt("آدرس کیف‌پول تون را وارد کنید (در نسخه نهایی با TON Connect وصل می‌شود)");if(a&&a.length>20){S.wallet=a.trim();toast("کیف‌پول ثبت شد");render();save()}}
+function solveCap(){if(!S.wallet){toast("اول تون‌کیپر را وصل کنید");return}if(nT()<TASKS.length){toast("همه ماموریت‌ها را انجام دهید");return}
+ if(parseInt($("capa").value,10)!==CAP.a+CAP.b){toast("پاسخ کپچا درست نیست");CAP.a=2+Math.floor(Math.random()*8);CAP.b=2+Math.floor(Math.random()*8);$("capa").value="";render();return}
+ S.ok=true;toast("ماینر برای همیشه فعال شد");render();save()}
+var CD=3600*1000;
+function drawTasks(){var h="";TASKS.forEach(function(t,i){var left=(S.tasks[i]||0)+CD-Date.now(),w=left>0;
+ h+='<div class="card"><div class="ic">'+t[0]+'</div><div class="g"><b>'+t[1]+'</b>'+(t[2]?'<small>'+t[2]+'</small>':'')+'<span class="rw">+'+nf.format(t[3])+' DRK</span></div><button class="btn'+(w?' off':'')+'" '+(w?'disabled':'')+' onclick="doTask('+i+')">'+(w?fmtT(left):t[4])+'</button></div>'});
+ $("tasklist").innerHTML=h}
+function doTask(i){S.bal+=TASKS[i][3];S.tasks[i]=Date.now();beep();toast("پاداش به کیف Pool اضافه شد");drawTasks();render();save()}
+function drawChart(){var now=Date.now(),p=S.pts.slice();if(p.length<2)p=[[now-864e5,S.earned],[now,S.earned]];
+ var b=p[0][1],mx=0,i;for(i=0;i<p.length;i++)mx=Math.max(mx,p[i][1]-b);if(mx<=0)mx=1e-6;
+ var pts=p.map(function(q){return (((q[0]-(now-864e5))/864e5)*280+10).toFixed(1)+","+(130-((q[1]-b)/mx)*110).toFixed(1)}).join(" ");
+ var g="";for(i=0;i<5;i++){g+='<line x1="10" x2="290" y1="'+(20+i*27.5)+'" y2="'+(20+i*27.5)+'" stroke="#0f4f4a" stroke-width="1"/>'}
+ $("chart").innerHTML='<svg viewBox="0 0 300 150" style="width:100%;display:block">'+g+'<polyline points="10,130 '+pts+' 290,130" fill="rgba(47,230,209,.12)" stroke="none"/><polyline points="'+pts+'" fill="none" stroke="#2fe6d1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><text x="10" y="146" fill="#7ba9a4" font-size="9">۲۴ ساعت پیش</text><text x="290" y="146" fill="#7ba9a4" font-size="9" text-anchor="end">اکنون</text></svg>';
+ $("p_24").textContent="+"+nf.format(S.pts.length?S.earned-S.pts[0][1]:0)+" DRK"}
+function drawMiners(){
+ $("p_l").textContent=fp(S.lvl);$("p_pk").textContent=fp(S.peak);$("p_fp").textContent=S.peak>S.lvl?"▼ "+fp(S.peak-S.lvl)+" تا اوج":"● در اوج";drawChart();
+ var h='<div class="mg">';
+ for(var l=1;l<=CFG.maxLvl;l++){var cur=l===S.lvl,own=l<S.lvl,nxt=l===S.lvl+1,b;
+  if(cur)b='<div class="mb act">فعال</div>';
+  else if(own)b='<div class="mb own">باز شده</div>';
+  else if(nxt)b='<div class="mb need">🔒 نیاز: '+nf.format(need(l))+' DRK</div><div class="jt">فقط <b>'+nf.format(Math.max(0,need(l)-assets()))+' DRK</b> تا ارتقا</div>';
+  else b='<div class="mb lk">🔒</div>';
+  h+='<div class="mc'+(cur?' cur':nxt?' nx':'')+'"><div class="lt">سطح '+nf.format(l)+'</div><svg class="mi"><use href="#miner"/></svg><div class="pr">'+(l===1?'رایگان':nf.format(need(l))+' DRK')+'</div><div class="sp"><span>سرعت</span><b>'+nf2.format(th(l))+' TH/s</b></div>'+b+'</div>'}
+ $("minerlist").innerHTML=h+'</div>';var cc=document.querySelector(".mc.cur");if(cc)cc.scrollIntoView({block:"center"})}
+function drawFriends(){$("refs").textContent=fp(S.inv)+" تکمیل‌شده • "+fp(S.inv)+" کل";$("rr").textContent=fp(S.refReady)+" آماده • +"+fp(CFG.refBonus)+" DRK برای هر دعوت";$("rrb").className="btn"+(S.refReady?"":" off");$("rrb").disabled=!S.refReady}
+function claimRef(){if(!S.refReady)return;var a=S.refReady*CFG.refBonus;S.bal+=a;S.refReady=0;toast("+"+nf.format(a)+" DRK پاداش دعوت");drawFriends();render();save()}
+function simInv(){S.inv++;S.refReady++;toast("دعوت آزمایشی ثبت شد");drawFriends();save()}
+function copyInv(){try{navigator.clipboard.writeText($("inv").textContent)}catch(e){}toast("لینک دعوت کپی شد")}
+function uid(){try{var u=window.Telegram.WebApp.initDataUnsafe.user;if(u)return String(u.id)}catch(e){}return "نسخه نمایشی"}
+function tsnd(){S.snd=!S.snd;drawProfile();save();beep()}
+function drawProfile(){$("uid").textContent=uid();$("snd").textContent=S.snd?"روشن — برای خاموش‌کردن لمس کنید":"بی‌صدا — برای روشن‌کردن لمس کنید";$("sic").textContent=S.snd?"🔊":"🔇"}
+function openW(){$("wav").textContent=nf.format(S.bal);$("wmin").textContent=nf.format(CFG.minW);$("wfee").textContent=nf.format(CFG.fee);$("wm").classList.add("on")}
+function closeM(){$("wm").classList.remove("on");$("hm").classList.remove("on")}
+function doW(){var a=parseFloat($("wamt").value);
+ if(!S.wallet){toast("اول کیف‌پول را وصل کنید");return}
+ if(!(a>0)){toast("مقدار را وارد کنید");return}
+ if(a<CFG.minW){toast("حداقل برداشت "+nf.format(CFG.minW)+" DRK است");return}
+ if(a>S.bal){toast("موجودی Pool کافی نیست");return}
+ S.bal-=a;S.hist.push({a:a,d:new Date().toISOString().replace("T"," ").slice(0,19),w:S.wallet});closeM();toast("درخواست برداشت ثبت شد");render();save()}
+function openH(){var h="";S.hist.slice().reverse().forEach(function(x){h+='<div class="h"><div class="t"><span>'+x.a.toFixed(4)+' DRK</span><span class="chip" style="font-size:12px">PENDING</span></div>Requested: '+x.a.toFixed(4)+' DRK<br>Fee: '+CFG.fee+' GRAM<br>Receive: '+x.a.toFixed(4)+' DRK<br>Date: '+x.d+'<br>Wallet: '+x.w+'<br>TX: —</div>'});
+ $("hist").innerHTML=h||'<div class="note">هنوز برداشتی ثبت نشده</div>';$("hm").classList.add("on")}
+setInterval(function(){var now=Date.now();
+ if(S.mining){var g=earn(now);S.pend+=g;S.earned+=g;S.today+=g;if(now>=S.until){S.mining=false;toast("جلسه ۲ ساعته تمام شد؛ دوباره روشن کنید");save()}}
+ S.last=now;if(!S.pts.length||now-S.pts[S.pts.length-1][0]>=60000){S.pts.push([now,S.earned]);while(S.pts[0][0]<now-864e5)S.pts.shift()}
+ render()},1000);
+setInterval(save,5000);document.addEventListener("visibilitychange",save);
+render();
+</script>
 </body>
 </html>
