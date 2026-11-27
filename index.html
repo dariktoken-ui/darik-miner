@@ -218,6 +218,21 @@ nav button.on span{border-color:#68e3d1;box-shadow:0 0 17px #39d7ce4a;background
 @media(max-width:360px){main{padding-inline:11px}.mg{gap:9px}.mc{padding:9px 7px}.mi{height:100px}.coin{width:146px;height:146px}}
 @media(prefers-reduced-motion:reduce){.coin.on,.tab.on{animation:none}}
 
+
+/* Miner shop visual refinement — cards and machine presentation */
+#minerlist .mg{align-items:stretch;gap:11px}
+#minerlist .mc{display:flex;flex-direction:column;min-width:0;padding:12px 10px 11px;isolation:isolate}
+#minerlist .mc:after{content:"";position:absolute;z-index:-1;left:12%;right:12%;top:48px;height:70px;border-radius:50%;background:#35d6ca18;filter:blur(18px);pointer-events:none}
+#minerlist .mc .lt{align-self:center;font-size:12px;letter-spacing:.2px}
+#minerlist .mc .mi{height:128px;margin:8px 0 10px;padding:4px;border-radius:15px;background:radial-gradient(ellipse at 50% 70%,#5af5e52b,transparent 66%),linear-gradient(145deg,#183746,#07131e);border-color:#4a9a9b}
+#minerlist .mc .pr{font-size:15px;min-height:39px;display:grid;place-items:center;margin:2px 0 9px}
+#minerlist .mc .sp{padding:0 3px;margin-bottom:11px;gap:5px}
+#minerlist .mc .sp span{white-space:nowrap}
+#minerlist .mc .mb{min-height:38px;display:grid;place-items:center;font-size:13px;line-height:1.35}
+#minerlist .mc.cur{background:radial-gradient(ellipse at 50% 28%,#1e716b35,transparent 52%),linear-gradient(155deg,#173640,#08151f 78%)}
+#minerlist .mc.nx{background:radial-gradient(ellipse at 50% 28%,#a77a2c22,transparent 52%),linear-gradient(155deg,#26313a,#0b151e 78%)}
+@media(max-width:360px){#minerlist .mc .mi{height:108px}#minerlist .mc{padding:10px 7px}}
+
 </style>
 </head>
 <body>
